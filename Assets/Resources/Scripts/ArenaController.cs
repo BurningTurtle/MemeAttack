@@ -18,10 +18,13 @@ public class ArenaController : MonoBehaviour {
         {
             for (float j = 1; j <= gridCols; j++)
             {
-                Grass grass = Instantiate(grass1);
+                Grass grass = null;
                 int id = Random.Range(1, 4);
                 switch(id)
                 {
+                    case 1:
+                        grass = Instantiate(grass1) as Grass;
+                        break;
                     case 2:
                         grass = Instantiate(grass2) as Grass;
                         break;
