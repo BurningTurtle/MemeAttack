@@ -9,16 +9,21 @@ public class ArenaController : MonoBehaviour {
     public int offset = 1;
     public Grass grass1, grass2, grass3, grass4;
 
-	// Use this for initialization
+	// Use this for initialization.
 	void Start ()
     {
+        // Starting point for creating the arena.
         Vector2 startPos = new Vector2(-0.5f, -0.5f);
 
+        // Iterate through each row...
         for (float i = 1; i <= gridRows; i++)
         {
+            // ...while adding columns.
             for (float j = 1; j <= gridCols; j++)
             {
                 Grass grass = null;
+
+                // A random grass tile gets chosen.
                 int id = Random.Range(1, 4);
                 switch(id)
                 {
@@ -36,12 +41,14 @@ public class ArenaController : MonoBehaviour {
                         break;
                 }
 
+                // Set the X and Y coordinate of the new tile to the start position + offset (length & width of one tile) * the number of iterations.
                 float posX = (offset * i) + startPos.x;
                 float posY = (offset * j) + startPos.y;
                 grass.transform.position = new Vector3(posX, posY, 100);
             }
         }
 
+        // Camera is set in the middle.
         GameObject camera = GameObject.Find("Main Camera");
         camera.transform.position = new Vector3(gridRows / 2, gridCols / 2, camera.transform.position.z);
 	}

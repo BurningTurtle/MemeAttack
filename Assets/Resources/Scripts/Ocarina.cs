@@ -17,10 +17,17 @@ public class Ocarina : MonoBehaviour {
         if(given)
         {
             GameObject player = GameObject.Find("Link");
+
+            // Ocarina is set to the character's mouth.
             transform.position = new Vector2(player.transform.position.x + .1f, player.transform.position.y + -.2f);
+
+            // Is it already small?
             if(!small)
             {
+                // If not, make it smaller so it fits onto the character.
                 transform.localScale += new Vector3(-0.15f, -0.15f, 0);
+
+                // Change sprite to darkLink.
                 StartCoroutine(getDark());
                 small = true;
             }
@@ -36,11 +43,11 @@ public class Ocarina : MonoBehaviour {
 
     IEnumerator getDark()
     {
-        Debug.Log("dark triggered");
         yield return new WaitForSeconds(8.475f);
+
+        // De- and reactivating the Animator so the sprite can change.
         GameObject.Find("Link").GetComponent<Animator>().enabled = false;
         GameObject.Find("Link").GetComponent<SpriteRenderer>().sprite = darkLink;
-        Destroy(gameObject);
-        Debug.Log("dark triggered 2");
+        GameObject.Find("Link").GetComponent<Animator>().enabled = true;
     }
 }

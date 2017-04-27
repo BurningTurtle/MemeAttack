@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Grass : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    // (empty) Class for classifying grass tiles.
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
