@@ -27,6 +27,6 @@ public class Player : MonoBehaviour {
 
         // Create new velocity consisting of Horizontal and Vertical numbers and multiply it by the playerSpeed. Then apply it.
         Vector2 targetVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        GetComponent<Rigidbody2D>().velocity = targetVelocity * playerSpeed;
+        GetComponent<Rigidbody2D>().velocity = targetVelocity * playerSpeed * Time.deltaTime;
     }
 }
