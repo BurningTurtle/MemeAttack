@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
     //Show this variable in inspector
     [SerializeField] private float speed = 3f;
 
     //private bool isLink = false;
+
     private bool alive = true;
 
-    private Animator animation;
+    private Animator anim;
 
     private void Start()
     {
-        animation = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -24,17 +26,21 @@ public class PlayerMovement : MonoBehaviour {
             float xValue = Input.GetAxis("Horizontal") * speed;
             float yValue = Input.GetAxis("Vertical") * speed;
             Vector2 movement = new Vector2(xValue, yValue);
-            movement = Vector2.ClampMagnitude(movement, speed); //limit diagonal movement to the same speed as movement along an axis
+
+            //limit diagonal movement to the same speed as movement along an axis
+            movement = Vector2.ClampMagnitude(movement, speed);
 
             movement *= Time.deltaTime;
 
-            animation.SetBool("isWalking", false); //so that player doesn't continue running once he was moving
-            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)  
+            //so that player doesn't continue running once he was moving
+            anim.SetBool("isWalking", false);
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
-                animation.SetBool("isWalking", true); //switches from idle to walk animation
+                //switches from idle to walk animation
+                anim.SetBool("isWalking", true);
                 transform.Translate(movement);
             }
-            
+
         }
     }
 }
