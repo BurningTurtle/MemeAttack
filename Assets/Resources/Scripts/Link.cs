@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Link : MonoBehaviour {
+public class Link : MonoBehaviour
+{
 
     public float playerSpeed = 4f;
     private Animator animator;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         animator = this.GetComponent<Animator>();
     }
 
     // Update is called once per frame
-    void Update () {
-        
+    void Update()
+    {
+
         // Is the character walking?
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
