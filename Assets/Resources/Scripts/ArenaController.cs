@@ -8,6 +8,7 @@ public class ArenaController : MonoBehaviour {
     public int gridCols;
     public int offset = 1;
     public Grass grass1, grass2, grass3, grass4;
+    public MainEnemy mainEnemy;
 
 	// Use this for initialization.
 	void Start ()
@@ -57,4 +58,9 @@ public class ArenaController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    void spawnMainEnemy()
+    {
+        mainEnemy = Instantiate(mainEnemy) as MainEnemy;
+    }
 }

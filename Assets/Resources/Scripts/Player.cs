@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    //Show this variable in inspector
+    // Show this variable in inspector
     [SerializeField] private float speed = 3f;
 
     //private bool isLink = false;
@@ -27,15 +27,15 @@ public class Player : MonoBehaviour
             float yValue = Input.GetAxis("Vertical") * speed;
             Vector2 movement = new Vector2(xValue, yValue);
 
-            //limit diagonal movement to the same speed as movement along an axis
+            // Limit diagonal movement to the same speed as movement along an axis
             movement = Vector2.ClampMagnitude(movement, speed);
 
             movement *= Time.deltaTime;
 
-            //so that player doesn't continue running once he was moving
+            
             if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
-                //switches from idle to walk animation
+                // Switches from idle to walk animation
                 anim.SetBool("isWalking", true);
                 transform.Translate(movement);
             }
