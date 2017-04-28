@@ -2,31 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
-    public float playerSpeed = 4f;
-    private Animator animator;
+    //Show this variable in inspector
+    [SerializeField] private float speed = 3f;
 
-    // Use this for initialization
-    void Start () {
-        animator = this.GetComponent<Animator>();
+    //private bool isLink = false;
+
+    private bool alive = true;
+
+    private Animator anim;
+
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update () {
-        
-        // Is the character walking?
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+    private void Update()
+    {
+        if (alive)
         {
-            animator.SetBool("Walking", true);
-        }
-        else
-        {
-            animator.SetBool("Walking", false);
-        }
+            float xValue = Input.GetAxis("Horizontal") * speed;
+            float yValue = Input.GetAxis("Vertical") * speed;
+            Vector2 movement = new Vector2(xValue, yValue);
 
-        // Create new velocity consisting of Horizontal and Vertical numbers and multiply it by the playerSpeed. Then apply it.
-        Vector2 targetVelocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        GetComponent<Rigidbody2D>().velocity = targetVelocity * playerSpeed * Time.deltaTime;
+            //limit diagonal movement to the same speed as movement along an axis
+            movement = Vector2.ClampMagnitude(movement, speed);
+
+            movement *= Time.deltaTime;
+
+            //so that player doesn't continue running once he was moving
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+            {
+                //switches from idle to walk animation
+                anim.SetBool("isWalking", true);
+                transform.Translate(movement);
+            }
+            else
+            {
+                anim.SetBool("isWalking", false);
+            }
+
+        }
     }
 }
