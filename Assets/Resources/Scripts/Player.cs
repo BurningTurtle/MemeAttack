@@ -33,12 +33,15 @@ public class Player : MonoBehaviour
             movement *= Time.deltaTime;
 
             //so that player doesn't continue running once he was moving
-            anim.SetBool("isWalking", false);
             if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
                 //switches from idle to walk animation
                 anim.SetBool("isWalking", true);
                 transform.Translate(movement);
+            }
+            else
+            {
+                anim.SetBool("isWalking", false);
             }
 
         }
