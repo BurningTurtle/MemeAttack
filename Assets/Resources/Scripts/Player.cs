@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Link : MonoBehaviour {
+public class Player : MonoBehaviour {
 
     public float playerSpeed = 4f;
     private Animator animator;

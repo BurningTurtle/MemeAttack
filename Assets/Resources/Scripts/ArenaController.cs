@@ -49,8 +49,8 @@ public class ArenaController : MonoBehaviour {
         }
 
         // Camera is set in the middle.
-        GameObject camera = GameObject.Find("Main Camera");
-        camera.transform.position = new Vector3(gridRows / 2, gridCols / 2, camera.transform.position.z);
+        // GameObject camera = GameObject.Find("Main Camera");
+        // camera.transform.position = new Vector3(gridRows / 2, gridCols / 2, camera.transform.position.z);
 	}
 	
 	// Update is called once per frame
