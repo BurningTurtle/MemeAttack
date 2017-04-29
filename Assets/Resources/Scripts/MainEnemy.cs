@@ -10,7 +10,6 @@ public class MainEnemy : MonoBehaviour {
 
     private bool alive;
     public float speed = 2f;
-    public float projectileSpeed;
     GameObject player;
     public bool canShootNext;
 
@@ -49,19 +48,25 @@ public class MainEnemy : MonoBehaviour {
     IEnumerator shoot(Vector2 targetVelocity)
     {
         canShootNext = false;
+
+        // Instantiate projectile, move it into the enemy and add a force.
         projectile = Instantiate(projectilePrefab) as GameObject;
         projectile.transform.position = transform.position;
-        projectile.GetComponent<Rigidbody2D>().velocity = targetVelocity  * projectileSpeed;
+        projectile.GetComponent<Rigidbody2D>().AddForce(targetVelocity / 75);
 
-        // If the projectile's magnitude is too low (therefore close to the player), increase it until its value is 5. (So it gets harder if the player is too close.
-        while (projectile.GetComponent<Rigidbody2D>().velocity.magnitude < projectileSpeed)
-        {
-            targetVelocity = targetVelocity * 1.1f;
-            projectile.GetComponent<Rigidbody2D>().velocity = targetVelocity * 1.1f;
-        }
-        //Debug.Log(projectile.GetComponent<Rigidbody2D>().velocity.magnitude);
+        // Destroy the projectile if it didn't hit anything after 2 seconds.
         yield return new WaitForSeconds(2f);
         Destroy(projectile.gameObject);
         canShootNext = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Destory enemy and projectile if it gets hit.
+        if (collision.tag == "PlayerProjectile")
+        {
+            Destroy(gameObject);
+            Destroy(collision.gameObject);
+        }
     }
 }
