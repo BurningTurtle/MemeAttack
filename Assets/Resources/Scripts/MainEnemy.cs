@@ -9,7 +9,7 @@ public class MainEnemy : MonoBehaviour {
     private GameObject projectile;
 
     private bool alive;
-    public float speed = 3.0f;
+    public float speed = 2f;
     public float projectileSpeed;
     GameObject player;
 
@@ -27,8 +27,13 @@ public class MainEnemy : MonoBehaviour {
         {
             // Get Vector to the player.
             Vector2 targetVelocity = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
-            GetComponent<Rigidbody2D>().velocity = targetVelocity * speed;
-            Debug.Log(targetVelocity.x + targetVelocity.y);
+            GetComponent<Rigidbody2D>().velocity = targetVelocity * speed * Time.deltaTime;
+
+            while(GetComponent<Rigidbody2D>().velocity.magnitude < speed)
+            {
+                GetComponent<Rigidbody2D>().velocity *= 1.1f;
+            }
+            //Debug.Log(targetVelocity.x + targetVelocity.y);
 
             // Get "distance" between enemy and player.
             float combinedDistance = Mathf.Abs(targetVelocity.x + targetVelocity.y);
@@ -48,7 +53,7 @@ public class MainEnemy : MonoBehaviour {
         projectile.transform.position = transform.position;
         projectile.GetComponent<Rigidbody2D>().velocity = targetVelocity  * projectileSpeed;
 
-        // If the projectile's magnitude is too low (therefore close to the player), increase it until it's value is 5. (So it gets harder if the player is too close.
+        // If the projectile's magnitude is too low (therefore close to the player), increase it until its value is 5. (So it gets harder if the player is too close.
         while (projectile.GetComponent<Rigidbody2D>().velocity.magnitude < 5)
         {
             targetVelocity = targetVelocity * 1.1f;
