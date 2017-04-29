@@ -54,7 +54,7 @@ public class MainEnemy : MonoBehaviour {
         projectile.transform.position = transform.position;
         projectile.GetComponent<Rigidbody2D>().AddForce(targetVelocity / 75);
 
-        // Destory the projectile if it didn't hit anything after 2 seconds.
+        // Destroy the projectile if it didn't hit anything after 2 seconds.
         yield return new WaitForSeconds(2f);
         Destroy(projectile.gameObject);
         canShootNext = true;
