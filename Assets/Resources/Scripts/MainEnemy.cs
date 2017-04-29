@@ -37,7 +37,7 @@ public class MainEnemy : MonoBehaviour {
 
             // Get "distance" between enemy and player.
             float combinedDistance = Mathf.Abs(targetVelocity.x + targetVelocity.y);
-            if(combinedDistance < 3)
+            if(combinedDistance < 5)
             {
                 if(projectile == null)
                 {
@@ -54,7 +54,7 @@ public class MainEnemy : MonoBehaviour {
         projectile.GetComponent<Rigidbody2D>().velocity = targetVelocity  * projectileSpeed;
 
         // If the projectile's magnitude is too low (therefore close to the player), increase it until its value is 5. (So it gets harder if the player is too close.
-        while (projectile.GetComponent<Rigidbody2D>().velocity.magnitude < 5)
+        while (projectile.GetComponent<Rigidbody2D>().velocity.magnitude < 10)
         {
             targetVelocity = targetVelocity * 1.1f;
             projectile.GetComponent<Rigidbody2D>().velocity = targetVelocity * 1.1f;
