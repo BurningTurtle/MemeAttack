@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "MainEnemyProjectile")
         {
             health -= 1;
+            Destroy(collision.gameObject);
         }
 
         if (readyForDamage)

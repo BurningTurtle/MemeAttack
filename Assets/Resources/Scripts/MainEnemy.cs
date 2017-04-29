@@ -12,12 +12,14 @@ public class MainEnemy : MonoBehaviour {
     public float speed = 2f;
     public float projectileSpeed;
     GameObject player;
+    public bool canShootNext;
 
     // Use this for initialization
     void Start ()
     {
         alive = true;
         player = GameObject.Find("Player");
+        canShootNext = true;
     }
 	
 	// Update is called once per frame
@@ -37,24 +39,22 @@ public class MainEnemy : MonoBehaviour {
 
             // Get "distance" between enemy and player.
             float combinedDistance = Mathf.Abs(targetVelocity.x + targetVelocity.y);
-            if(combinedDistance < 5)
-            {
-                if(projectile == null)
-                {
-                    StartCoroutine(shoot(targetVelocity));
-                }
+            if(combinedDistance < 5 && projectile == null && canShootNext)
+            {               
+                    StartCoroutine(shoot(targetVelocity));      
             }
         }
 	}
 
     IEnumerator shoot(Vector2 targetVelocity)
     {
+        canShootNext = false;
         projectile = Instantiate(projectilePrefab) as GameObject;
         projectile.transform.position = transform.position;
         projectile.GetComponent<Rigidbody2D>().velocity = targetVelocity  * projectileSpeed;
 
         // If the projectile's magnitude is too low (therefore close to the player), increase it until its value is 5. (So it gets harder if the player is too close.
-        while (projectile.GetComponent<Rigidbody2D>().velocity.magnitude < 10)
+        while (projectile.GetComponent<Rigidbody2D>().velocity.magnitude < projectileSpeed)
         {
             targetVelocity = targetVelocity * 1.1f;
             projectile.GetComponent<Rigidbody2D>().velocity = targetVelocity * 1.1f;
@@ -62,5 +62,6 @@ public class MainEnemy : MonoBehaviour {
         //Debug.Log(projectile.GetComponent<Rigidbody2D>().velocity.magnitude);
         yield return new WaitForSeconds(2f);
         Destroy(projectile.gameObject);
+        canShootNext = true;
     }
 }
