@@ -7,9 +7,17 @@ public class DatBoi : MonoBehaviour {
     public float speed = 1f;
     private int health = 10;
 
+    private Animator anim;
+
+    // Keep track of which direction DatBoi is moving to. Important for animation.
+    private float deltaX;
+    private float lastPosition;
+
     private void Start()
     {
         player = GameObject.Find("Player");
+        anim = GetComponent<Animator>();
+        lastPosition = transform.position.x;
     }
 
     private void Update()
@@ -24,7 +32,26 @@ public class DatBoi : MonoBehaviour {
             {
                 GetComponent<Rigidbody2D>().velocity *= 1.1f;
             }
+
+            // Get deltaX for current position.
+            deltaX = lastPosition - transform.position.x;
+
+            // Last position for the next frame is the current position from now.
+            lastPosition = transform.position.x;
+
+            // If DatBoi is moving right
+            if(deltaX < 0)
+            {
+                // DatBoi Mirrored animation is set active (Animator)
+                anim.SetBool("negativeDeltaX", true);
+            }
+            else
+            {
+                // Normal DatBoi animation is set active (Animator)
+                anim.SetBool("negativeDeltaX", false);
+            }
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
