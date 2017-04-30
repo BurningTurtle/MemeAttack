@@ -61,8 +61,8 @@ public class DatBoi : MonoBehaviour {
             // Distance between DatBoi and player
             float distance = Mathf.Abs(playerVector.x + playerVector.y);
 
-            // If DatBoi's distance to the player is smaller than 5 [...] then shoot
-            if(distance < 5 && oshitwaddup == null && canShootNext)
+            // If DatBoi's distance to the player is smaller than 7 [...] then shoot
+            if(distance < 7 && oshitwaddup == null && canShootNext)
             {
                 StartCoroutine(shoot(playerVector));
             }
@@ -79,7 +79,7 @@ public class DatBoi : MonoBehaviour {
         oshitwaddup.transform.position = transform.position;
 
         // Move oshitwaddup to Player
-        oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector / 75);
+        oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector / 50);
 
         // Destroy after 2s if it didn't hit anything
         yield return new WaitForSeconds(2f);

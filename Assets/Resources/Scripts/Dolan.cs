@@ -11,10 +11,15 @@ public class Dolan : MonoBehaviour {
 
     private Animator anim;
 
+    [SerializeField] private GameObject knifePrefab;
+    private GameObject knife;
+    private bool canShootNext;
+
     private void Start()
     {
         player = GameObject.Find("Player");
         anim = GetComponent<Animator>();
+        canShootNext = true;
     }
 
     private void Update()
@@ -29,7 +34,34 @@ public class Dolan : MonoBehaviour {
             {
                 GetComponent<Rigidbody2D>().velocity *= 1.1f;
             }
+
+            // Distance between Dolan and Player
+            float distance = Mathf.Abs(playerVector.x + playerVector.y);
+
+            // If Dolan's distance is smaller than 7 etc., shoot
+            if (distance < 7 && knife == null && canShootNext)
+            {
+                StartCoroutine(shoot(playerVector));
+            }
         }
+    }
+
+    IEnumerator shoot(Vector2 playerVector)
+    {
+        canShootNext = false;
+
+        // Instantiate new knife at Dolan's position
+        knife = Instantiate(knifePrefab) as GameObject;
+        knife.transform.position = this.transform.position;
+
+        // Launch the knife towards the player
+        knife.GetComponent<Rigidbody2D>().AddForce(playerVector / 50);
+
+        // Wait and Destroy the knife
+        yield return new WaitForSeconds(2f);
+        Destroy(knife.gameObject);
+
+        canShootNext = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
