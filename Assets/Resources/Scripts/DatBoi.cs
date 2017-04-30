@@ -14,12 +14,17 @@ public class DatBoi : MonoBehaviour {
     private float deltaX;
     private float lastPosition;
 
+    [SerializeField] private GameObject oshitwaddupPrefab;
+    [SerializeField] private GameObject oshitwaddup;
+    public bool canShootNext;
+
     private void Start()
     {
         player = GameObject.Find("Player");
         anim = GetComponent<Animator>();
         lastPosition = transform.position.x;
         anim.SetBool("isDead", false);
+        canShootNext = true;
     }
 
     private void Update()
@@ -52,8 +57,35 @@ public class DatBoi : MonoBehaviour {
                 // Normal DatBoi animation is set active (Animator)
                 anim.SetBool("negativeDeltaX", false);
             }
+
+            // Distance between DatBoi and player
+            float distance = Mathf.Abs(playerVector.x + playerVector.y);
+
+            // If DatBoi's distance to the player is smaller than 5 [...] then shoot
+            if(distance < 5 && oshitwaddup == null && canShootNext)
+            {
+                StartCoroutine(shoot(playerVector));
+            }
         }
         
+    }
+
+    IEnumerator shoot(Vector2 playerVector)
+    {
+        canShootNext = false;
+
+        // Instantiate oshitwaddup on Datboi
+        oshitwaddup = Instantiate(oshitwaddupPrefab) as GameObject;
+        oshitwaddup.transform.position = transform.position;
+
+        // Move oshitwaddup to Player
+        oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector / 75);
+
+        // Destroy after 2s if it didn't hit anything
+        yield return new WaitForSeconds(2f);
+        Destroy(oshitwaddup.gameObject);
+
+        canShootNext = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -68,9 +100,9 @@ public class DatBoi : MonoBehaviour {
                 // Coroutine because Wait Time is necessary
                 StartCoroutine(die());
             }
-        }
 
-        Destroy(collision.gameObject);
+            Destroy(collision.gameObject);
+        }
     }
 
     IEnumerator die()
