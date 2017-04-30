@@ -75,6 +75,7 @@ public class DatBoi : MonoBehaviour {
 
     IEnumerator die()
     {
+        // Activate Death Animation (Animator)
         anim.SetBool("isDead", true);
 
         // Wait for animation to run ONCE (!) If waiting for longer than 0.3s, animation will restart
