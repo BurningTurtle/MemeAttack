@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dolan : MonoBehaviour {
 
-    [SerializeField] private GameObject player;
+    private GameObject player;
     private bool alive = true;
     private float minimalSpeed = 2f;
     private int health = 10;
@@ -37,7 +37,7 @@ public class Dolan : MonoBehaviour {
             health -= 1;
             if(health <= 0)
             {
-                Destroy(gameObject);
+               Destroy(gameObject);
             }
             Destroy(collision.gameObject);
         }
