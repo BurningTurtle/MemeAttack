@@ -33,7 +33,7 @@ public class DatBoi : MonoBehaviour {
         canShootNext = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         bois = GameObject.FindGameObjectsWithTag("DatBoi");
 
@@ -113,8 +113,10 @@ public class DatBoi : MonoBehaviour {
         oshitwaddup = Instantiate(oshitwaddupPrefab) as GameObject;
         oshitwaddup.transform.position = transform.position;
 
-        // Move oshitwaddup to Player
+        // Move and rotate oshitwaddup to Player
         oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector / 50);
+        float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
+        oshitwaddup.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         // Destroy after 2s if it didn't hit anything
         yield return new WaitForSeconds(2f);
