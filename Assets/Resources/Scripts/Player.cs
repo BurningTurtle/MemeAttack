@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
 
     private Animator anim;
-   [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private GameObject projectilePrefab;
 
 
     private void Start()
