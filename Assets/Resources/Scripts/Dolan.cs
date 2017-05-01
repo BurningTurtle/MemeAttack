@@ -54,8 +54,11 @@ public class Dolan : MonoBehaviour {
         knife = Instantiate(knifePrefab) as GameObject;
         knife.transform.position = this.transform.position;
 
-        // Launch the knife towards the player
+        // Launch and rotate the knife towards the player
         knife.GetComponent<Rigidbody2D>().AddForce(playerVector / 50);
+        float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
+        knife.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
 
         // Wait and Destroy the knife
         yield return new WaitForSeconds(2f);
