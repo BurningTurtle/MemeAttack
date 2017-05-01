@@ -22,7 +22,7 @@ public class Dolan : MonoBehaviour {
         canShootNext = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (alive)
         {
