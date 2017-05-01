@@ -15,8 +15,14 @@ public class DatBoi : MonoBehaviour {
     private float lastPosition;
 
     [SerializeField] private GameObject oshitwaddupPrefab;
-    [SerializeField] private GameObject oshitwaddup;
+    private GameObject oshitwaddup;
     public bool canShootNext;
+
+    // Stuff for Spawning bois
+    GameObject[] bois;
+    [SerializeField] GameObject datBoiPrefab;
+    GameObject boi1, boi2, boi3, boi4;
+    bool canSpawnNext = true;
 
     private void Start()
     {
@@ -29,6 +35,8 @@ public class DatBoi : MonoBehaviour {
 
     private void Update()
     {
+        bois = GameObject.FindGameObjectsWithTag("DatBoi");
+
         if (alive)
         {
             Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
@@ -66,8 +74,38 @@ public class DatBoi : MonoBehaviour {
             {
                 StartCoroutine(shoot(playerVector));
             }
+
+            if (bois.Length < 2 && canSpawnNext == true)
+            {
+                StartCoroutine(SpawnDemBois());
+                canSpawnNext = false;
+            }
         }
         
+    }
+
+    IEnumerator SpawnDemBois()
+    {
+        if (canSpawnNext)
+        {
+            // Give Player time to kill single DatBoi. Prevents Endless Spawning.
+            yield return new WaitForSeconds(5);
+
+            // Cool animation here
+            Debug.Log("Here Come Dem Bois");
+
+            // Instantiate them
+            boi1 = Instantiate(datBoiPrefab) as GameObject;
+            boi2 = Instantiate(datBoiPrefab) as GameObject;
+            boi3 = Instantiate(datBoiPrefab) as GameObject;
+            boi4 = Instantiate(datBoiPrefab) as GameObject;
+
+            // Later they're spawned at the Enemy's entrance. These coordinates for now.
+            boi1.transform.position = new Vector2(5, 10);
+            boi2.transform.position = new Vector2(5, 8);
+            boi3.transform.position = new Vector2(5, 6);
+            boi4.transform.position = new Vector2(5, 4);
+        }
     }
 
     IEnumerator shoot(Vector2 playerVector)
