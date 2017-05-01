@@ -22,6 +22,8 @@ public class DatBoi : MonoBehaviour {
     GameObject[] bois;
     [SerializeField] GameObject datBoiPrefab;
     GameObject boi1, boi2, boi3, boi4;
+    bool canSpawnNext = true;
+
     private void Start()
     {
         player = GameObject.Find("Player");
@@ -73,7 +75,7 @@ public class DatBoi : MonoBehaviour {
                 StartCoroutine(shoot(playerVector));
             }
 
-            if (bois.Length < 2)
+            if (bois.Length < 2 && canSpawnNext == true)
             {
                 StartCoroutine(SpawnDemBois());
                 canSpawnNext = false;
