@@ -2,6 +2,16 @@
 
 public class Knife : MonoBehaviour {
 
+    public bool back;
+
+    private void Update()
+    {
+        if (back)
+        {
+            transform.Rotate(0, 0, 720 * Time.deltaTime);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player")
