@@ -86,26 +86,23 @@ public class DatBoi : MonoBehaviour {
 
     IEnumerator SpawnDemBois()
     {
-        if (canSpawnNext)
-        {
-            // Give Player time to kill single DatBoi. Prevents Endless Spawning.
-            yield return new WaitForSeconds(5);
+        // Give Player time to kill single DatBoi. Prevents Endless Spawning.
+        yield return new WaitForSeconds(5);
 
-            // Cool animation here
-            Debug.Log("Here Come Dem Bois");
+        // Cool animation here
+        Debug.Log("Here Come Dem Bois");
 
-            // Instantiate them
-            boi1 = Instantiate(datBoiPrefab) as GameObject;
-            boi2 = Instantiate(datBoiPrefab) as GameObject;
-            boi3 = Instantiate(datBoiPrefab) as GameObject;
-            boi4 = Instantiate(datBoiPrefab) as GameObject;
+        // Instantiate them
+        boi1 = Instantiate(datBoiPrefab) as GameObject;
+        boi2 = Instantiate(datBoiPrefab) as GameObject;
+        boi3 = Instantiate(datBoiPrefab) as GameObject;
+        boi4 = Instantiate(datBoiPrefab) as GameObject;
 
-            // Later they're spawned at the Enemy's entrance. These coordinates for now.
-            boi1.transform.position = new Vector2(5, 10);
-            boi2.transform.position = new Vector2(5, 8);
-            boi3.transform.position = new Vector2(5, 6);
-            boi4.transform.position = new Vector2(5, 4);
-        }
+        // Later they're spawned at the Enemy's entrance. These coordinates for now.
+        boi1.transform.position = new Vector2(5, 10);
+        boi2.transform.position = new Vector2(5, 8);
+        boi3.transform.position = new Vector2(5, 6);
+        boi4.transform.position = new Vector2(5, 4);
     }
 
     IEnumerator shoot(Vector2 playerVector)
