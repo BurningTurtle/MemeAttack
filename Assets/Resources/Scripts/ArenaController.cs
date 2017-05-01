@@ -63,4 +63,5 @@ public class ArenaController : MonoBehaviour {
     {
         mainEnemy = Instantiate(mainEnemy) as MainEnemy;
     }
+
 }

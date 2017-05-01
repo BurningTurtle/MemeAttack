@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
                 anim.SetBool("isWalking", false);
             }
 
-            Debug.Log(health);
+            // Debug.Log(health);
 
             if (Input.GetMouseButtonDown(0)) //&& !projectileFlying)
             {
