@@ -8,7 +8,20 @@ public class ArenaController : MonoBehaviour {
     public int gridCols;
     public int offset = 1;
     public Grass grass1, grass2, grass3, grass4;
-    public MainEnemy mainEnemy;
+
+    // For ending wave (Keep track of how many enemies there are in the scene)
+    private GameObject[] dolansInScene;
+    private GameObject[] mainEnemiesInScene;
+    private GameObject[] datBoisInScene;
+    private int wave = 1;
+
+    // For not endlessly calling IEnumerator NewWave()
+    private bool alreadyCalled = false;
+
+    // Enemies' Prefabs  
+    [SerializeField] private GameObject mainEnemyPrefab;
+    [SerializeField] private GameObject dolanPrefab;
+    [SerializeField] private GameObject datBoiPrefab;
 
 	// Use this for initialization.
 	void Start ()
@@ -48,20 +61,74 @@ public class ArenaController : MonoBehaviour {
                 grass.transform.position = new Vector3(posX, posY, 100);
             }
         }
-
-        // Camera is set in the middle.
-        // GameObject camera = GameObject.Find("Main Camera");
-        // camera.transform.position = new Vector3(gridRows / 2, gridCols / 2, camera.transform.position.z);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+        // Keep track of enemies in scene
+        mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
+        datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
+        dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
+
+        // If there is no enemy in the scene (anymore)
+        if((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length) < 1 && !alreadyCalled)
+        {
+            StartCoroutine(NewWave());
+
+            // Avoid infinite calling of IEnumerator NewWave() and thus spawning infinitely
+            alreadyCalled = true;
+        }
+
 	}
 
-    void spawnMainEnemy()
+     IEnumerator NewWave()
     {
-        mainEnemy = Instantiate(mainEnemy) as MainEnemy;
-    }
+        switch (wave)
+        {
+            case 1:
 
+                // Cool animation here
+                Debug.Log("Wave 1");
+
+                // Wait for animation to disappear
+                yield return new WaitForSeconds(5f);
+
+                // Spawn 5 Main Enemies at (12,24)
+                for(int i = 0; i < 6; i++)
+                {
+                    GameObject mainEnemy = Instantiate(mainEnemyPrefab) as GameObject;
+                    mainEnemy.transform.position = new Vector2(12, 24);
+                }
+
+                // So that the next wave "is" case 2
+                wave++;
+
+                // Allow if statement in Update() to call this function again
+                alreadyCalled = false;
+
+                break;
+
+            case 2:
+
+                // Cool animation here
+                Debug.Log("Wave2");
+
+                yield return new WaitForSeconds(5f);
+
+                for(int i = 0; i <5; i++)
+                {
+                    GameObject mainEnemy = Instantiate(mainEnemyPrefab) as GameObject;
+                    mainEnemy.transform.position = new Vector2(12, 24);
+                }
+
+                GameObject dolan = Instantiate(dolanPrefab) as GameObject;
+                dolan.transform.position = new Vector2(12, 24);
+
+                wave++;
+                alreadyCalled = false;
+                break;
+
+        }
+    }
 }
