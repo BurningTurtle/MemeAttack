@@ -8,6 +8,8 @@ public class UIController : MonoBehaviour {
     public Image heartsIngame;
     public Sprite[] hearts;
     private GameObject player;
+    public Text waveDisplay;
+    public GameObject arenaController;
 
     // Use this for initialization
     void Start () {
@@ -19,5 +21,24 @@ public class UIController : MonoBehaviour {
         int heartPoints = player.GetComponent<Player>().health / 5;
         Debug.Log(heartPoints);
         heartsIngame.sprite = hearts[heartPoints];
+        // -1 because ArenaController increases wave right after spawn.
+        int wave = arenaController.GetComponent<ArenaController>().wave - 1;
+        waveDisplay.text = "WAVE\n" + wave;
+    }
+
+    IEnumerator newWaveAnimation()
+    {
+        for(int i = 1; i < 3; i++)
+        {
+            waveDisplay.CrossFadeAlpha(0f, 0.25f, true);
+            yield return new WaitForSeconds(0.25f);
+            waveDisplay.CrossFadeAlpha(1f, 0.25f, true);
+            yield return new WaitForSeconds(0.25f);
+        }
+    }
+
+    public void startNewWaveAnimation()
+    {
+        StartCoroutine(newWaveAnimation());
     }
 }
