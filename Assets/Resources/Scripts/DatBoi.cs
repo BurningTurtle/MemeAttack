@@ -8,8 +8,6 @@ public class DatBoi : MonoBehaviour {
     public float speed = 3f;
     private int health = 10;
 
-    private Animator anim;
-
     // Keep track of which direction DatBoi is moving to. Important for animation.
     private float deltaX;
     private float lastPosition;
@@ -19,18 +17,19 @@ public class DatBoi : MonoBehaviour {
     public bool canShootNext;
 
     // Stuff for Spawning bois
-    GameObject[] bois;
     [SerializeField] GameObject datBoiPrefab;
+    GameObject[] bois;
     GameObject boi1, boi2, boi3, boi4;
     bool canSpawnNext = true;
+
+    private SpriteRenderer sr;
 
     private void Start()
     {
         player = GameObject.Find("Player");
-        anim = GetComponent<Animator>();
         lastPosition = transform.position.x;
-        anim.SetBool("isDead", false);
         canShootNext = true;
+        sr = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
@@ -57,13 +56,13 @@ public class DatBoi : MonoBehaviour {
             // If DatBoi is moving right
             if(deltaX < 0)
             {
-                // DatBoi Mirrored animation is set active (Animator)
-                anim.SetBool("negativeDeltaX", true);
+                // Flip DatBoi
+                sr.flipX = true;
             }
             else if (deltaX > 0)
             {
-                // Normal DatBoi animation is set active (Animator)
-                anim.SetBool("negativeDeltaX", false);
+                // Flip DatBoi back to normal
+                sr.flipX = false;
             }
 
             // Distance between DatBoi and player
@@ -144,13 +143,22 @@ public class DatBoi : MonoBehaviour {
 
     IEnumerator die()
     {
-        // Activate Death Animation (Animator)
-        anim.SetBool("isDead", true);
+        for(float f = 1f; f >= 0; f -= 0.1f)
+        {
+            // The colour of DatBoi's sprite
+            Color colour = sr.material.color;
 
-        // Wait for animation to run ONCE (!) If waiting for longer than 0.3s, animation will restart
-        yield return new WaitForSeconds(0.3f);
+            // Reduce colour's alpha by 0.1f for every f >= 0
+            colour.a = f;
 
-        // Then kill him
+            // Apply colour with new alpha value to DatBoi's SpriteRenderer Component
+            sr.material.color = colour;
+
+            // Wait until next frame
+            yield return null;
+        }
+
+        // Kill DatBoi
         alive = false;
         Destroy(this.gameObject);
     } 

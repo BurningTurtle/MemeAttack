@@ -10,16 +10,16 @@ public class Dolan : MonoBehaviour {
     private int health = 10;
     GameObject knife1, knife2, knife3, knife4;
 
-    private Animator anim;
-
     [SerializeField] private GameObject knifePrefab;
     private bool canShootNext;
+
+    private SpriteRenderer sr;
 
     private void Start()
     {
         player = GameObject.Find("Player");
-        anim = GetComponent<Animator>();
         canShootNext = true;
+        sr = GetComponent<SpriteRenderer>();
     }
 
     private void FixedUpdate()
@@ -126,11 +126,22 @@ public class Dolan : MonoBehaviour {
 
     IEnumerator die()
     {
-        // Activate Death Animation (Animator)
-        anim.SetBool("isDead", true);
+        // reduce f by 0.1 until f = 0
+        for(float f = 1; f >= 0; f -= 0.1f)
+        {
+            // Colour of Dolan's sprite
+            Color colour = sr.material.color;
 
-        // Wait for animation to run ONCE (!) If waiting for longer than 0.3s, animation will restart
-        yield return new WaitForSeconds(0.3f);
+            // Alpha of colour is reduced by 0.1 for every f >= 0
+            colour.a = f;
+
+            // Apply colour with less alpha to Dolan's SpriteRenderer
+            sr.material.color = colour;
+
+            // Wait until next frame
+            yield return null;
+        }
+
 
         // Destroy that duckling
         alive = false;
