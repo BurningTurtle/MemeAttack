@@ -34,7 +34,6 @@ public class MainEnemy : MonoBehaviour {
             {
                 GetComponent<Rigidbody2D>().velocity *= 1.1f;
             }
-            //Debug.Log(targetVelocity.x + targetVelocity.y);
 
             // Get "distance" between enemy and player.
             float combinedDistance = Mathf.Abs(targetVelocity.x + targetVelocity.y);
@@ -62,7 +61,7 @@ public class MainEnemy : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Destory enemy and projectile if it gets hit.
+        // Destroy enemy and projectile if it gets hit.
         if (collision.tag == "PlayerProjectile")
         {
             Destroy(gameObject);

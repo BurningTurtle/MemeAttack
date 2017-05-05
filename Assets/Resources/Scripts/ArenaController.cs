@@ -79,12 +79,13 @@ public class ArenaController : MonoBehaviour
         datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
         dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
 
-        // If there is no enemy in the scene (anymore)
+        // If there is no enemy in the scene (anymore)...
         if((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length) < 1 && !alreadyCalled)
-        {
+        {
+            // ... spawn the new wave.
+
             StartCoroutine(NewWave());
-
-            // Avoid infinite calling of IEnumerator NewWave() and thus spawning infinitely
+            // Avoid infinite calling of IEnumerator NewWave() and thus spawning infinitely.
             alreadyCalled = true;
         }
 
@@ -95,11 +96,15 @@ public class ArenaController : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         try
         {
+            // Parse the array of strings to get the amount of enemies to spawn
+
             int spawningMainEnemies = int.Parse(waves[wave - 1].Substring(3, 3));
 
             int spawningDolans = int.Parse(waves[wave - 1].Substring(10, 3));
 
             int spawningDatBois = int.Parse(waves[wave - 1].Substring(18, 3));
+
+            // Spawn them.
 
             for (int i = 1; i <= spawningMainEnemies; i++)
 
@@ -130,18 +135,15 @@ public class ArenaController : MonoBehaviour
             }
         }
 
-        catch(System.IndexOutOfRangeException e)
+        // Output in log if there is no more wave (i.e. our array has ended).
+
+        catch(System.IndexOutOfRangeException)
         {
             Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 
-        
-
-        
-
+        
         wave++;
-
-        alreadyCalled = false;
-
+        alreadyCalled = false;
     }
 }

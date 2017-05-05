@@ -86,7 +86,7 @@ public class Dolan : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         Destroy(knife1.gameObject);
 
-        // Update our vector
+        // Update our vector if the knife hasn't hit yet.
         if(knife2)
         {
             Vector2 playerVector2 = new Vector2(player.transform.position.x - knife2.transform.position.x, player.transform.position.y - knife2.transform.position.y);
@@ -125,7 +125,7 @@ public class Dolan : MonoBehaviour {
             health -= 1;
             if(health <= 0)
             {
-                // Coroutine because Wait Time is necessary
+                // Coroutine because Wait Time is necessary.
                 StartCoroutine(die());
             }
             Destroy(collision.gameObject);
@@ -134,7 +134,7 @@ public class Dolan : MonoBehaviour {
 
     IEnumerator die()
     {
-        // reduce f by 0.1 until f = 0
+        // Reduce f by 0.1 until f = 0
         for(float f = 1; f >= 0; f -= 0.1f)
         {
             // Colour of Dolan's sprite
@@ -156,6 +156,8 @@ public class Dolan : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
+
+    // Function to rotate a vector by a given angle.
     public Vector2 RotateVector(Vector2 v, float angle)
     {
         float radian = angle * Mathf.Deg2Rad;

@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
             float yValue = Input.GetAxis("Vertical") * speed;
             Vector2 movement = new Vector2(xValue, yValue);
 
-            // Limit diagonal movement to the same speed as movement along an axis
+            // Limit diagonal movement to the same speed as movement along an axis.
             movement = Vector2.ClampMagnitude(movement, speed);
 
             movement *= Time.deltaTime;
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
             
             if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
-                // Switches from idle to walk animation
+                // Switches from idle to walk animation.
                 anim.SetBool("isWalking", true);
                 transform.Translate(movement);
             }
@@ -47,9 +47,7 @@ public class Player : MonoBehaviour
                 anim.SetBool("isWalking", false);
             }
 
-            // Debug.Log(health);
-
-            if (Input.GetMouseButtonDown(0)) //&& !projectileFlying)
+            if (Input.GetMouseButtonDown(0))
             {
                 StartCoroutine(shoot());
             }
