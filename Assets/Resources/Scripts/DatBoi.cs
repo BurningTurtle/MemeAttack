@@ -8,9 +8,6 @@ public class DatBoi : MonoBehaviour {
     public float speed = 3f;
     private int health = 10;
 
-    private Animator anim;
-    private SpriteRenderer spriteRend;
-
     // Keep track of which direction DatBoi is moving to. Important for animation.
     private float deltaX;
     private float lastPosition;
@@ -24,14 +21,13 @@ public class DatBoi : MonoBehaviour {
     [SerializeField] GameObject datBoiPrefab;
     GameObject boi1, boi2, boi3, boi4;
     bool canSpawnNext = true;
+
     private SpriteRenderer sr;
 
     private void Start()
     {
         player = GameObject.Find("Player");
-        anim = GetComponent<Animator>();
         lastPosition = transform.position.x;
-        anim.SetBool("isDead", false);
         canShootNext = true;
         sr = GetComponent<SpriteRenderer>();
     }
@@ -147,15 +143,12 @@ public class DatBoi : MonoBehaviour {
 
     IEnumerator die()
     {
-        // Activate Death Animation (Animator)
-        //anim.SetBool("isDead", true);
-
         for(float f = 1f; f >= 0; f -= 0.1f)
         {
-            // Colour the colour of DatBoi's sprite
+            // The colour of DatBoi's sprite
             Color colour = sr.material.color;
 
-            // Reduce DatBoi's colour's alpha by 0.1f for every f >= 0
+            // Reduce colour's alpha by 0.1f for every f >= 0
             colour.a = f;
 
             // Apply colour with new alpha value to DatBoi's SpriteRenderer Component
