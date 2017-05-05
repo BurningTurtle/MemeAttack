@@ -6,7 +6,7 @@ public class DatBoi : MonoBehaviour {
     private GameObject player;
     private bool alive = true;
     public float speed = 3f;
-    private int health = 10;
+    public int health = 10;
 
     // Keep track of which direction DatBoi is moving to. Important for animation.
     private float deltaX;

@@ -14,12 +14,12 @@ public class ArenaController : MonoBehaviour
     private GameObject[] dolansInScene;
     private GameObject[] mainEnemiesInScene;
     private GameObject[] datBoisInScene;
-    private int wave = 1;
+    public int wave = 1;
     private string[] waves;
 
     // For not endlessly calling IEnumerator NewWave()
     private bool alreadyCalled = false;
-
+    public GameObject UIcontroller;
     // Enemies' Prefabs  
     [SerializeField]
     private GameObject mainEnemyPrefab;
@@ -33,8 +33,7 @@ public class ArenaController : MonoBehaviour
     {
         waves = new string[]
         { "001. 001main000dolan000datboi", "002. 003main000dolan000datboi", "003. 010main000dolan000datboi", "004. 000main001dolan000datboi", "005. 003main001dolan000datboi",
-          "006. 010main001dolan000datboi", "007. 010main001dolan000datboi", "008. 000main000dolan001datboi", "009. 005main001dolan001datboi", "010. 010main002dolan003datboi"};
-
+          "006. 010main001dolan000datboi", "007. 010main001dolan000datboi", "008. 000main000dolan001datboi", "009. 005main001dolan001datboi", "010. 010main002dolan003datboi"};
         // Starting point for creating the arena.
         Vector2 startPos = new Vector2(-0.5f, -0.5f);
 
@@ -89,21 +88,22 @@ public class ArenaController : MonoBehaviour
             // Avoid infinite calling of IEnumerator NewWave() and thus spawning infinitely.
             alreadyCalled = true;
         }
-
+
 	}
 
     IEnumerator NewWave()
-    {
-        yield return new WaitForSeconds(2.5f);
+    {        wave++;        UIcontroller.GetComponent<UIController>().startNewWaveAnimation();
+
+        yield return new WaitForSeconds(1.25f);
         try
         {
             // Parse the array of strings to get the amount of enemies to spawn
 
-            int spawningMainEnemies = int.Parse(waves[wave - 1].Substring(5, 3));
+            int spawningMainEnemies = int.Parse(waves[wave - 2].Substring(5, 3));
 
-            int spawningDolans = int.Parse(waves[wave - 1].Substring(12, 3));
+            int spawningDolans = int.Parse(waves[wave - 2].Substring(12, 3));
 
-            int spawningDatBois = int.Parse(waves[wave - 1].Substring(20, 3));
+            int spawningDatBois = int.Parse(waves[wave - 2].Substring(20, 3));
 
             // Spawn them.
 
@@ -144,7 +144,7 @@ public class ArenaController : MonoBehaviour
         }
 
         
-        wave++;
+        
         alreadyCalled = false;
     }
 }
