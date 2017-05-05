@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour {
 
-    public Text hp;
+    public Image heartsIngame;
+    public Sprite[] hearts;
     private GameObject player;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         player = GameObject.Find("Player");
-
     }
-	
-	// Update is called once per frame
-	void Update () {
-        hp.text = player.GetComponent<Player>().health.ToString();
+
+    // Update is called once per frame
+    void Update() {
+        int heartPoints = player.GetComponent<Player>().health / 5;
+        Debug.Log(heartPoints);
+        heartsIngame.sprite = hearts[heartPoints];
     }
 }

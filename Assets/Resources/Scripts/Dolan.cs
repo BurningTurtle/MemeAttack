@@ -7,7 +7,7 @@ public class Dolan : MonoBehaviour {
     private GameObject player;
     private bool alive = true;
     private float minimalSpeed = 3f;
-    private int health = 10;
+    public int health = 10;
     GameObject knife1, knife2, knife3, knife4;
 
     [SerializeField] private GameObject knifePrefab;

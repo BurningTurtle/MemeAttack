@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -9,7 +10,6 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed = 3f;
     public int health;
 
-    private bool alive = true;
     private bool readyForDamage = true;
 
 
@@ -24,34 +24,35 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (alive)
+        float xValue = Input.GetAxis("Horizontal") * speed;
+        float yValue = Input.GetAxis("Vertical") * speed;
+        Vector2 movement = new Vector2(xValue, yValue);
+
+        // Limit diagonal movement to the same speed as movement along an axis.
+        movement = Vector2.ClampMagnitude(movement, speed);
+
+        movement *= Time.deltaTime;
+
+
+        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
-            float xValue = Input.GetAxis("Horizontal") * speed;
-            float yValue = Input.GetAxis("Vertical") * speed;
-            Vector2 movement = new Vector2(xValue, yValue);
+            // Switches from idle to walk animation.
+            anim.SetBool("isWalking", true);
+            transform.Translate(movement);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
 
-            // Limit diagonal movement to the same speed as movement along an axis.
-            movement = Vector2.ClampMagnitude(movement, speed);
+        if (Input.GetMouseButtonDown(0))
+        {
+            StartCoroutine(shoot());
+        }
 
-            movement *= Time.deltaTime;
-
-            
-            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
-            {
-                // Switches from idle to walk animation.
-                anim.SetBool("isWalking", true);
-                transform.Translate(movement);
-            }
-            else
-            {
-                anim.SetBool("isWalking", false);
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                StartCoroutine(shoot());
-            }
-
+        if (health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
        
@@ -65,13 +66,13 @@ public class Player : MonoBehaviour
             {
                 // Apply colliding damage according to enemy.
                 case "MainEnemy":
-                    health -= 1;
+                    health -= 5;
                     break;
                 case "Dolan":
-                    health -= 3;
+                    health -= 5;
                     break;
                 case "DatBoi":
-                    health -= 3;
+                    health -= 5;
                     break;
             }
             StartCoroutine(getReadyForDamage());
