@@ -98,11 +98,11 @@ public class DatBoi : MonoBehaviour {
         boi3 = Instantiate(datBoiPrefab) as GameObject;
         boi4 = Instantiate(datBoiPrefab) as GameObject;
 
-        // Later they're spawned at the Enemy's entrance. These coordinates for now.
-        boi1.transform.position = new Vector2(5, 10);
-        boi2.transform.position = new Vector2(5, 8);
-        boi3.transform.position = new Vector2(5, 6);
-        boi4.transform.position = new Vector2(5, 4);
+        // Later they're spawned at the Enemy's entrance.
+        boi1.transform.position = new Vector2(transform.position.x + 1, transform.position.y + 1);
+        boi2.transform.position = new Vector2(transform.position.x - 1, transform.position.y + 1);
+        boi3.transform.position = new Vector2(transform.position.x + 1, transform.position.y - 1);
+        boi4.transform.position = new Vector2(transform.position.x - 1, transform.position.y - 1);
     }
 
     IEnumerator shoot(Vector2 playerVector)
