@@ -90,32 +90,54 @@ public class ArenaController : MonoBehaviour
 
 	}
 
-    void spawnMainEnemy()
-    {
-        mainEnemy = Instantiate(mainEnemy) as MainEnemy;
-    }
-
     IEnumerator NewWave()
     {
-        yield return new WaitForSeconds(5f);
-        int spawningMainEnemies = int.Parse(waves[wave-1].Substring(3, 3));
-        int spawningDolans = int.Parse(waves[wave-1].Substring(10, 3));
-        int spawningDatBois = int.Parse(waves[wave-1].Substring(18, 3));
+        yield return new WaitForSeconds(2.5f);
+        try
+        {
+            int spawningMainEnemies = int.Parse(waves[wave - 1].Substring(3, 3));
+
+            int spawningDolans = int.Parse(waves[wave - 1].Substring(10, 3));
+
+            int spawningDatBois = int.Parse(waves[wave - 1].Substring(18, 3));
+
+            for (int i = 1; i <= spawningMainEnemies; i++)
+
+            {
+
+                GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(11, 24), Quaternion.identity) as GameObject;
+
+            }
+
+
+
+            for (int i = 1; i <= spawningDolans; i++)
+
+            {
+
+                GameObject mainEnemy = Instantiate(dolanPrefab, new Vector2(12, 24), Quaternion.identity) as GameObject;
+
+            }
+
+
+
+            for (int i = 1; i <= spawningDatBois; i++)
+
+            {
+
+                GameObject mainEnemy = Instantiate(datBoiPrefab, new Vector2(13, 24), Quaternion.identity) as GameObject;
+
+            }
+        }
+
+        catch(System.IndexOutOfRangeException e)
+        {
+            Debug.Log("Keine weiteren Wellen mehr vorhanden");
+        }
+
+        
 
-        for (int i = 1; i <= spawningMainEnemies; i++)
-        {
-            GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(11, 24), Quaternion.identity) as GameObject;
-        }
-
-        for (int i = 1; i <= spawningDolans; i++)
-        {
-            GameObject mainEnemy = Instantiate(dolanPrefab, new Vector2(12, 24), Quaternion.identity) as GameObject;
-        }
-
-        for (int i = 1; i <= spawningDatBois; i++)
-        {
-            GameObject mainEnemy = Instantiate(datBoiPrefab, new Vector2(13, 24), Quaternion.identity) as GameObject;
-        }
+        
 
         wave++;
 

@@ -87,19 +87,27 @@ public class Dolan : MonoBehaviour {
         Destroy(knife1.gameObject);
 
         // Update our vector
-        Vector2 playerVector2 = new Vector2(player.transform.position.x - knife2.transform.position.x, player.transform.position.y - knife2.transform.position.y);
-        Vector2 playerVector3 = new Vector2(player.transform.position.x - knife3.transform.position.x, player.transform.position.y - knife3.transform.position.y);
-        Vector2 playerVector4 = new Vector2(player.transform.position.x - knife4.transform.position.x, player.transform.position.y - knife4.transform.position.y); // Bug in here (just one knife)
+        if(knife2)
+        {
+            Vector2 playerVector2 = new Vector2(player.transform.position.x - knife2.transform.position.x, player.transform.position.y - knife2.transform.position.y);
+            knife2.GetComponent<Rigidbody2D>().AddForce(playerVector2 / 100);
+            knife2.GetComponent<Knife>().back = true;
+        }
 
-        // ATTACK
-        knife2.GetComponent<Rigidbody2D>().AddForce(playerVector2 / 100);
-        knife3.GetComponent<Rigidbody2D>().AddForce(playerVector3 / 100);
-        knife4.GetComponent<Rigidbody2D>().AddForce(playerVector4 / 100);
-
-        knife2.GetComponent<Knife>().back = true;
-        knife3.GetComponent<Knife>().back = true;
-        knife4.GetComponent<Knife>().back = true;
-
+        if(knife3)
+        {
+            Vector2 playerVector3 = new Vector2(player.transform.position.x - knife3.transform.position.x, player.transform.position.y - knife3.transform.position.y);
+            knife3.GetComponent<Rigidbody2D>().AddForce(playerVector3 / 100);
+            knife3.GetComponent<Knife>().back = true;
+            knife4.GetComponent<Knife>().back = true;
+        }
+        
+        if(knife4)
+        {
+            Vector2 playerVector4 = new Vector2(player.transform.position.x - knife4.transform.position.x, player.transform.position.y - knife4.transform.position.y);
+            knife4.GetComponent<Rigidbody2D>().AddForce(playerVector4 / 100);
+        }
+        
         yield return new WaitForSeconds(2f);
 
         Destroy(knife2.gameObject);
