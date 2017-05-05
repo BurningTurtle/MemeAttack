@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class OShitWaddup : MonoBehaviour {
 
@@ -7,7 +9,7 @@ public class OShitWaddup : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
+        StartCoroutine(die());
     }
 
     // Update is called once per frame
@@ -24,5 +26,11 @@ public class OShitWaddup : MonoBehaviour {
             other.GetComponent<Player>().health -= damage;
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator die()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 }

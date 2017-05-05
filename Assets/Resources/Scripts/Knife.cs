@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Knife : MonoBehaviour {
 
@@ -8,7 +10,7 @@ public class Knife : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
+        StartCoroutine(die());
     }
 
     // Update is called once per frame
@@ -29,5 +31,11 @@ public class Knife : MonoBehaviour {
             collision.GetComponent<Player>().health -= damage;
             Destroy(this.gameObject);
         }
+    }
+
+    IEnumerator die()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 }

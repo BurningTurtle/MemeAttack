@@ -32,7 +32,8 @@ public class ArenaController : MonoBehaviour
     void Start()
     {
         waves = new string[]
-        { "1. 001main000dolan000datboi", "2. 003main000dolan000datboi", "3. 010main000dolan000datboi", "4. 000main001dolan000datboi", "5. 003main001dolan000datboi"};
+        { "001. 001main000dolan000datboi", "002. 003main000dolan000datboi", "003. 010main000dolan000datboi", "004. 000main001dolan000datboi", "005. 003main001dolan000datboi",
+          "006. 010main001dolan000datboi", "007. 010main001dolan000datboi", "008. 000main000dolan001datboi", "009. 005main001dolan001datboi", "010. 010main002dolan003datboi"};
 
         // Starting point for creating the arena.
         Vector2 startPos = new Vector2(-0.5f, -0.5f);
@@ -98,11 +99,11 @@ public class ArenaController : MonoBehaviour
         {
             // Parse the array of strings to get the amount of enemies to spawn
 
-            int spawningMainEnemies = int.Parse(waves[wave - 1].Substring(3, 3));
+            int spawningMainEnemies = int.Parse(waves[wave - 1].Substring(5, 3));
 
-            int spawningDolans = int.Parse(waves[wave - 1].Substring(10, 3));
+            int spawningDolans = int.Parse(waves[wave - 1].Substring(12, 3));
 
-            int spawningDatBois = int.Parse(waves[wave - 1].Substring(18, 3));
+            int spawningDatBois = int.Parse(waves[wave - 1].Substring(20, 3));
 
             // Spawn them.
 
