@@ -20,7 +20,10 @@ public class UIController : MonoBehaviour {
     void Update() {
         int heartPoints = player.GetComponent<Player>().health / 5;
         Debug.Log(heartPoints);
-        heartsIngame.sprite = hearts[heartPoints];
+        if(player.GetComponent<Player>().health >= 0)
+        {
+            heartsIngame.sprite = hearts[heartPoints];
+        }
         // -1 because ArenaController increases wave right after spawn.
         int wave = arenaController.GetComponent<ArenaController>().wave - 1;
         waveDisplay.text = "WAVE\n" + wave;
