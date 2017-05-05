@@ -63,7 +63,7 @@ public class Dolan : MonoBehaviour {
         knife4 = Instantiate(knifePrefab) as GameObject;
         knife4.transform.position = this.transform.position;
 
-        // Launch and rotate the knife towards the player
+        // Launch and rotate the knifes towards the player
         knife1.GetComponent<Rigidbody2D>().AddForce(playerVector / 75);
         float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
         knife1.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
@@ -82,14 +82,14 @@ public class Dolan : MonoBehaviour {
         knife4.GetComponent<Rigidbody2D>().AddForce(playerVectorRotated / 75);
         knife4.transform.rotation = Quaternion.AngleAxis(angle + 270, Vector3.forward);
 
-        // Wait and Destroy the knife
+        // Wait and destroy the knife
         yield return new WaitForSeconds(1f);
         Destroy(knife1.gameObject);
 
         // Update our vector
         Vector2 playerVector2 = new Vector2(player.transform.position.x - knife2.transform.position.x, player.transform.position.y - knife2.transform.position.y);
         Vector2 playerVector3 = new Vector2(player.transform.position.x - knife3.transform.position.x, player.transform.position.y - knife3.transform.position.y);
-        Vector2 playerVector4 = new Vector2(player.transform.position.x - knife4.transform.position.x, player.transform.position.y - knife4.transform.position.y);
+        Vector2 playerVector4 = new Vector2(player.transform.position.x - knife4.transform.position.x, player.transform.position.y - knife4.transform.position.y); // Bug in here (just one knife)
 
         // ATTACK
         knife2.GetComponent<Rigidbody2D>().AddForce(playerVector2 / 100);
