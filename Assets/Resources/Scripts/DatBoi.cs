@@ -114,7 +114,7 @@ public class DatBoi : MonoBehaviour {
         oshitwaddup.transform.position = transform.position;
 
         // Move and rotate oshitwaddup to Player.
-        oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector / 50);
+        oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector / 60);
         float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
         oshitwaddup.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
