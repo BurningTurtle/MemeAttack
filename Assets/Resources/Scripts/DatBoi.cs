@@ -74,6 +74,7 @@ public class DatBoi : MonoBehaviour {
                 StartCoroutine(shoot(playerVector));
             }
 
+            // Spwan new Dat Bois if there is just one in scene (his special ability).
             if (bois.Length < 2 && canSpawnNext == true)
             {
                 StartCoroutine(SpawnDemBois());
@@ -88,10 +89,10 @@ public class DatBoi : MonoBehaviour {
         // Give Player time to kill single DatBoi. Prevents Endless Spawning.
         yield return new WaitForSeconds(5);
 
-        // Cool animation here
+        // Cool animation here.
         Debug.Log("Here Come Dem Bois");
 
-        // Instantiate them
+        // Instantiate them.
         boi1 = Instantiate(datBoiPrefab) as GameObject;
         boi2 = Instantiate(datBoiPrefab) as GameObject;
         boi3 = Instantiate(datBoiPrefab) as GameObject;
@@ -108,16 +109,16 @@ public class DatBoi : MonoBehaviour {
     {
         canShootNext = false;
 
-        // Instantiate oshitwaddup on Datboi
+        // Instantiate oshitwaddup on Datboi.
         oshitwaddup = Instantiate(oshitwaddupPrefab) as GameObject;
         oshitwaddup.transform.position = transform.position;
 
-        // Move and rotate oshitwaddup to Player
+        // Move and rotate oshitwaddup to Player.
         oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector / 50);
         float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
         oshitwaddup.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        // Destroy after 2s if it didn't hit anything
+        // Destroy after 2s if it didn't hit anything.
         yield return new WaitForSeconds(2f);
         Destroy(oshitwaddup.gameObject);
 
@@ -133,7 +134,7 @@ public class DatBoi : MonoBehaviour {
 
             if (health <= 0)
             {
-                // Coroutine because Wait Time is necessary
+                // Coroutine because Wait Time is necessary.
                 StartCoroutine(die());
             }
 
@@ -145,20 +146,20 @@ public class DatBoi : MonoBehaviour {
     {
         for(float f = 1f; f >= 0; f -= 0.1f)
         {
-            // The colour of DatBoi's sprite
+            // The colour of DatBoi's sprite.
             Color colour = sr.material.color;
 
-            // Reduce colour's alpha by 0.1f for every f >= 0
+            // Reduce colour's alpha by 0.1f for every f >= 0.
             colour.a = f;
 
-            // Apply colour with new alpha value to DatBoi's SpriteRenderer Component
+            // Apply colour with new alpha value to DatBoi's SpriteRenderer Component.
             sr.material.color = colour;
 
-            // Wait until next frame
+            // Wait until next frame.
             yield return null;
         }
 
-        // Kill DatBoi
+        // Kill DatBoi.
         alive = false;
         Destroy(this.gameObject);
     } 

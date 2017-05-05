@@ -1,134 +1,150 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ArenaController : MonoBehaviour {
-
-    public int gridRows;
-    public int gridCols;
-    public int offset = 1;
-    public Grass grass1, grass2, grass3, grass4;
-
-    // For ending wave (Keep track of how many enemies there are in the scene)
-    private GameObject[] dolansInScene;
-    private GameObject[] mainEnemiesInScene;
-    private GameObject[] datBoisInScene;
-    private int wave = 1;
-
-    // For not endlessly calling IEnumerator NewWave()
-    private bool alreadyCalled = false;
-
-    // Enemies' Prefabs  
-    [SerializeField] private GameObject mainEnemyPrefab;
-    [SerializeField] private GameObject dolanPrefab;
-    [SerializeField] private GameObject datBoiPrefab;
-
-	// Use this for initialization.
-	void Start ()
-    {
-        // Starting point for creating the arena.
-        Vector2 startPos = new Vector2(-0.5f, -0.5f);
-
-        // Iterate through each row...
-        for (float i = 1; i <= gridRows; i++)
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ArenaController : MonoBehaviour
+{
+
+    public int gridRows;
+    public int gridCols;
+    public int offset = 1;
+    public Grass grass1, grass2, grass3, grass4;
+
+    // For ending wave (Keep track of how many enemies there are in the scene)
+    private GameObject[] dolansInScene;
+    private GameObject[] mainEnemiesInScene;
+    private GameObject[] datBoisInScene;
+    private int wave = 1;
+    private string[] waves;
+
+    // For not endlessly calling IEnumerator NewWave()
+    private bool alreadyCalled = false;
+
+    // Enemies' Prefabs  
+    [SerializeField]
+    private GameObject mainEnemyPrefab;
+    [SerializeField]
+    private GameObject dolanPrefab;
+    [SerializeField]
+    private GameObject datBoiPrefab;
+
+    // Use this for initialization.
+    void Start()
+    {
+        waves = new string[]
+        { "001. 001main000dolan000datboi", "002. 003main000dolan000datboi", "003. 010main000dolan000datboi", "004. 000main001dolan000datboi", "005. 003main001dolan000datboi",
+          "006. 010main001dolan000datboi", "007. 010main001dolan000datboi", "008. 000main000dolan001datboi", "009. 005main001dolan001datboi", "010. 010main002dolan003datboi"};
+
+        // Starting point for creating the arena.
+        Vector2 startPos = new Vector2(-0.5f, -0.5f);
+
+        // Iterate through each row...
+        for (float i = 1; i <= gridRows; i++)
+        {
+            // ...while adding columns.
+            for (float j = 1; j <= gridCols; j++)
+            {
+                Grass grass = null;
+
+                // A random grass tile gets chosen.
+                int id = Random.Range(1, 4);
+                switch (id)
+                {
+                    case 1:
+                        grass = Instantiate(grass1) as Grass;
+                        break;
+                    case 2:
+                        grass = Instantiate(grass2) as Grass;
+                        break;
+                    case 3:
+                        grass = Instantiate(grass3) as Grass;
+                        break;
+                    case 4:
+                        grass = Instantiate(grass4) as Grass;
+                        break;
+                }
+
+                // Set the X and Y coordinate of the new tile to the start position + offset (length & width of one tile) * the number of iterations.
+                float posX = (offset * i) + startPos.x;
+                float posY = (offset * j) + startPos.y;
+                grass.transform.position = new Vector3(posX, posY, 100);
+            }
+        }
+	}
+	
+	// Update is called once per frame
+	void Update () {
+
+        // Keep track of enemies in scene
+        mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
+        datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
+        dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
+
+        // If there is no enemy in the scene (anymore)...
+        if((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length) < 1 && !alreadyCalled)
         {
-            // ...while adding columns.
-            for (float j = 1; j <= gridCols; j++)
+            // ... spawn the new wave.
+
+            StartCoroutine(NewWave());
+            // Avoid infinite calling of IEnumerator NewWave() and thus spawning infinitely.
+            alreadyCalled = true;
+        }
+
+	}
+
+    IEnumerator NewWave()
+    {
+        yield return new WaitForSeconds(2.5f);
+        try
+        {
+            // Parse the array of strings to get the amount of enemies to spawn
+
+            int spawningMainEnemies = int.Parse(waves[wave - 1].Substring(5, 3));
+
+            int spawningDolans = int.Parse(waves[wave - 1].Substring(12, 3));
+
+            int spawningDatBois = int.Parse(waves[wave - 1].Substring(20, 3));
+
+            // Spawn them.
+
+            for (int i = 1; i <= spawningMainEnemies; i++)
+
             {
-                Grass grass = null;
 
-                // A random grass tile gets chosen.
-                int id = Random.Range(1, 4);
-                switch(id)
-                {
-                    case 1:
-                        grass = Instantiate(grass1) as Grass;
-                        break;
-                    case 2:
-                        grass = Instantiate(grass2) as Grass;
-                        break;
-                    case 3:
-                        grass = Instantiate(grass3) as Grass;
-                        break;
-                    case 4:
-                        grass = Instantiate(grass4) as Grass;
-                        break;
-                }
+                GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(11, 24), Quaternion.identity) as GameObject;
 
-                // Set the X and Y coordinate of the new tile to the start position + offset (length & width of one tile) * the number of iterations.
-                float posX = (offset * i) + startPos.x;
-                float posY = (offset * j) + startPos.y;
-                grass.transform.position = new Vector3(posX, posY, 100);
+            }
+
+
+
+            for (int i = 1; i <= spawningDolans; i++)
+
+            {
+
+                GameObject mainEnemy = Instantiate(dolanPrefab, new Vector2(12, 24), Quaternion.identity) as GameObject;
+
+            }
+
+
+
+            for (int i = 1; i <= spawningDatBois; i++)
+
+            {
+
+                GameObject mainEnemy = Instantiate(datBoiPrefab, new Vector2(13, 24), Quaternion.identity) as GameObject;
+
             }
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
 
-        // Keep track of enemies in scene
-        mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
-        datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
-        dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
+        // Output in log if there is no more wave (i.e. our array has ended).
 
-        // If there is no enemy in the scene (anymore)
-        if((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length) < 1 && !alreadyCalled)
+        catch(System.IndexOutOfRangeException)
         {
-            StartCoroutine(NewWave());
-
-            // Avoid infinite calling of IEnumerator NewWave() and thus spawning infinitely
-            alreadyCalled = true;
+            Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 
-	}
-
-     IEnumerator NewWave()
-    {
-        switch (wave)
-        {
-            case 1:
-
-                // Cool animation here
-                Debug.Log("Wave 1");
-
-                // Wait for animation to disappear
-                yield return new WaitForSeconds(5f);
-
-                // Spawn 5 Main Enemies at (12,24)
-                for(int i = 0; i < 6; i++)
-                {
-                    GameObject mainEnemy = Instantiate(mainEnemyPrefab) as GameObject;
-                    mainEnemy.transform.position = new Vector2(12, 24);
-                }
-
-                // So that the next wave "is" case 2
-                wave++;
-
-                // Allow if statement in Update() to call this function again
-                alreadyCalled = false;
-
-                break;
-
-            case 2:
-
-                // Cool animation here
-                Debug.Log("Wave2");
-
-                yield return new WaitForSeconds(5f);
-
-                for(int i = 0; i <5; i++)
-                {
-                    GameObject mainEnemy = Instantiate(mainEnemyPrefab) as GameObject;
-                    mainEnemy.transform.position = new Vector2(12, 24);
-                }
-
-                GameObject dolan = Instantiate(dolanPrefab) as GameObject;
-                dolan.transform.position = new Vector2(12, 24);
-
-                wave++;
-                alreadyCalled = false;
-                break;
-
-        }
-    }
+        
+        wave++;
+        alreadyCalled = false;
+    }
 }

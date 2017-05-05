@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class MainEnemyProjectile : MonoBehaviour {
 
+    public int damage;
+
 	// Use this for initialization
-	void Start () {
-		
-	}
+	void Start ()
+    {
+        StartCoroutine(die());
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -19,8 +22,14 @@ public class MainEnemyProjectile : MonoBehaviour {
         // Subtract one healthpoint from the player if he gets hit by the projectile.
         if (other.tag == "Player")
         {
-            other.GetComponent<Player>().health -= 1;
+            other.GetComponent<Player>().health -= damage;
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator die()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 }
