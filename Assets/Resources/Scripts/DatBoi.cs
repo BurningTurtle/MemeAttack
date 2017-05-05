@@ -17,8 +17,8 @@ public class DatBoi : MonoBehaviour {
     public bool canShootNext;
 
     // Stuff for Spawning bois
-    GameObject[] bois;
     [SerializeField] GameObject datBoiPrefab;
+    GameObject[] bois;
     GameObject boi1, boi2, boi3, boi4;
     bool canSpawnNext = true;
 
