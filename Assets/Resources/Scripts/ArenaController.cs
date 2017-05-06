@@ -59,6 +59,13 @@ public class ArenaController : MonoBehaviour
     private GameObject datBoiPrefab;
 
 
+    // Item's prefabs
+
+    [SerializeField]
+
+    private GameObject seitenbacherPrefab, nikeVansPrefab;
+
+
 
     // Use this for initialization.
 
@@ -241,7 +248,19 @@ public class ArenaController : MonoBehaviour
             Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 
-        
+        // Spawn items
+
+        if(Random.value < .3)
+        {
+            if(Random.value < .5)
+            {
+                GameObject seitenbacher = Instantiate(seitenbacherPrefab, new Vector2(13, 15), Quaternion.identity) as GameObject;
+            }
+            else
+            {
+                GameObject nikeVans = Instantiate(nikeVansPrefab, new Vector2(13, 15), Quaternion.identity) as GameObject;
+            }
+        }
         
 
         alreadyCalled = false;
