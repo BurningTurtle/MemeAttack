@@ -11,6 +11,15 @@ public class UIController : MonoBehaviour {
     public Text waveDisplay;
     public GameObject arenaController;
 
+    [SerializeField] private Image activeItem;
+    [SerializeField] private Image passiveItem1;
+    [SerializeField] private Image passiveItem2;
+    [SerializeField] private Image passiveItem3;
+
+    [SerializeField] private Sprite seitenbacherItem;
+
+    [SerializeField] private Sprite passiveItem;
+
     // Use this for initialization
     void Start () {
         player = GameObject.Find("Player");
