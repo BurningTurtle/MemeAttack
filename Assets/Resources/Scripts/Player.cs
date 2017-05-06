@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     // Show this variable in inspector
     [SerializeField] private float speed = 3f;
-    public float damage;
+    public int damage;
     public int health;
 
     private bool readyForDamage = true;
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
-        damage = 1f;
+        damage = 1;
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -142,10 +142,10 @@ public class Player : MonoBehaviour
 
     IEnumerator temporaryDmgUp()
     {
-        damage += 1f;
+        damage += 1;
 
         yield return new WaitForSeconds(10f);
 
-        damage -= 1f;
+        damage -= 1;
     }
 }

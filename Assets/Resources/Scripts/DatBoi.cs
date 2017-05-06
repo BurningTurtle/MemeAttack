@@ -6,7 +6,7 @@ public class DatBoi : MonoBehaviour {
     private GameObject player;
     private bool alive = true;
     public float speed = 3f;
-    public float health = 10;
+    public int health = 10;
 
     // Keep track of which direction DatBoi is moving to. Important for animation.
     private float deltaX;
@@ -114,7 +114,7 @@ public class DatBoi : MonoBehaviour {
         oshitwaddup.transform.position = transform.position;
 
         // Move and rotate oshitwaddup to Player.
-        oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector / 50);
+        oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector / 60);
         float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
         oshitwaddup.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
@@ -130,7 +130,7 @@ public class DatBoi : MonoBehaviour {
         // Substract 1 health if hit by PlayerProjectile GameObject.
         if (collision.gameObject.tag == "PlayerProjectile")
         {
-            health -= 1 * FindObjectOfType<Player>().damage;
+            health = health - FindObjectOfType<Player>().damage; ;
 
             if (health <= 0)
             {

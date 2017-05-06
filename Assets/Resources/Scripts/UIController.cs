@@ -50,13 +50,13 @@ public class UIController : MonoBehaviour {
 
     IEnumerator seitenbacherCoroutine()
     {
-        if(passive1.sprite.name == "ItemSlotPassive")
+        if (passive1.sprite.name == "ItemSlotPassive")
         {
             passive1.sprite = seitenbacherSprite;
             yield return new WaitForSeconds(10f);
             passive1.sprite = emptyPassive;
         }
-        else if(passive2.sprite.name == "ItemSlotPassive")
+        else if (passive2.sprite.name == "ItemSlotPassive")
         {
             passive2.sprite = seitenbacherSprite;
             yield return new WaitForSeconds(10f);

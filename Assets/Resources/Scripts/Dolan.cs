@@ -7,7 +7,7 @@ public class Dolan : MonoBehaviour {
     private GameObject player;
     private bool alive = true;
     private float minimalSpeed = 3f;
-    public float health = 10f;
+    public int health = 10;
     GameObject knife1, knife2, knife3, knife4;
 
     [SerializeField] private GameObject knifePrefab;
@@ -122,8 +122,8 @@ public class Dolan : MonoBehaviour {
         // Subtract one healthpoint if Dolan gets hit by the PlayerProjectile.
         if (collision.tag == "PlayerProjectile")
         {
-            health = health - 1 * FindObjectOfType<Player>().damage;
-            if(health <= 0)
+            health = health - FindObjectOfType<Player>().damage;
+            if (health <= 0)
             {
                 // Coroutine because Wait Time is necessary.
                 StartCoroutine(die());
