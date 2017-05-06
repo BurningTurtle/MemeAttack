@@ -131,7 +131,7 @@ public class Player : MonoBehaviour
 
 
     // Is triggered by Seitenbacher class.
-    public void Seitenbacher()
+    public void seitenbacher()
     {
         // Play "SEITENBACHER BERGSTEIGER MÜSLI! BERGSTEIGER MÜSLI VON SEITENBACHER!". 
         audioSource.PlayOneShot(seitenbacherSound, 1);
@@ -142,10 +142,10 @@ public class Player : MonoBehaviour
 
     IEnumerator temporaryDmgUp()
     {
-        damage += 0.5f;
+        damage += 1f;
 
         yield return new WaitForSeconds(10f);
 
-        damage -= 0.5f;
+        damage -= 1f;
     }
 }

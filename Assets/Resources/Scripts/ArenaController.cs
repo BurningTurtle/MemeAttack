@@ -69,7 +69,8 @@ public class ArenaController : MonoBehaviour
         waves = new string[]
 
         { "001. 001main000dolan000datboi", "002. 003main000dolan000datboi", "003. 010main000dolan000datboi", "004. 000main001dolan000datboi", "005. 003main001dolan000datboi",
-          "006. 010main001dolan000datboi", "007. 010main001dolan000datboi", "008. 000main000dolan001datboi", "009. 005main001dolan001datboi", "010. 010main002dolan003datboi"};
+          "006. 010main001dolan000datboi", "007. 010main001dolan000datboi", "008. 000main000dolan001datboi", "009. 005main001dolan001datboi", "010. 010main002dolan003datboi",
+          "011. 010main003dolan004datboi", "012. 015main003dolan001datboi", "013. 015main004dolan002datboi", "014. 020main005dolan003datboi", "015. 025main005dolan005datboi"};
 
 
 
@@ -218,7 +219,7 @@ public class ArenaController : MonoBehaviour
 
             {
 
-                GameObject mainEnemy = Instantiate(dolanPrefab, new Vector2(12, 24), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(dolanPrefab, new Vector2(12, 24 + i), Quaternion.identity) as GameObject;
 
             }
 
@@ -228,7 +229,7 @@ public class ArenaController : MonoBehaviour
 
             {
 
-                GameObject mainEnemy = Instantiate(datBoiPrefab, new Vector2(13, 24), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(datBoiPrefab, new Vector2(13, 24 + i), Quaternion.identity) as GameObject;
 
             }
         }
