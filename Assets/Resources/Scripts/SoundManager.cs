@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour {
     // Sounds
     [SerializeField] private AudioClip seitenbacherSound;
     [SerializeField] private AudioClip nikeVansSound;
+    [SerializeField] private AudioClip softIceSound;
 
     private void Start()
     {
@@ -23,5 +24,10 @@ public class SoundManager : MonoBehaviour {
     public void playNikeVans()
     {
         audioSource.PlayOneShot(nikeVansSound, 1);
+    }
+
+    public void playSoftIce()
+    {
+        audioSource.PlayOneShot(softIceSound, 1);
     }
 }
