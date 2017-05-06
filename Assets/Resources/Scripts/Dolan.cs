@@ -9,6 +9,7 @@ public class Dolan : MonoBehaviour {
     private float minimalSpeed = 3f;
     public int health = 10;
     GameObject knife1, knife2, knife3, knife4;
+    public GameObject dropPrefab;
 
     [SerializeField] private GameObject knifePrefab;
     private bool canShootNext;
@@ -125,6 +126,11 @@ public class Dolan : MonoBehaviour {
             health = health - FindObjectOfType<Player>().damage;
             if (health <= 0)
             {
+                if (Random.value < .2)
+                {
+                    GameObject drop = Instantiate(dropPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity) as GameObject;
+                }
+                
                 // Coroutine because Wait Time is necessary.
                 StartCoroutine(die());
             }

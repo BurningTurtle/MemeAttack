@@ -87,7 +87,7 @@ public class DatBoi : MonoBehaviour {
     IEnumerator SpawnDemBois()
     {
         // Give Player time to kill single DatBoi. Prevents Endless Spawning.
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1.5f);
 
         // Cool animation here.
         Debug.Log("Here Come Dem Bois");

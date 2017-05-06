@@ -33,6 +33,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if(health > 100)
+        {
+            health = 100;
+        }
+
         float xValue = Input.GetAxis("Horizontal") * speed;
         float yValue = Input.GetAxis("Vertical") * speed;
         Vector2 movement = new Vector2(xValue, yValue);
