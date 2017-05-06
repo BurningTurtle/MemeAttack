@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
 
     // Show this variable in inspector
-    [SerializeField] private float speed = 3f;
+    public float speed = 3f;
     public int damage;
     public int health;
 
