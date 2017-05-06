@@ -130,7 +130,7 @@ public class DatBoi : MonoBehaviour {
         // Substract 1 health if hit by PlayerProjectile GameObject.
         if (collision.gameObject.tag == "PlayerProjectile")
         {
-            health -= 1;
+            health = health - FindObjectOfType<Player>().damage; ;
 
             if (health <= 0)
             {

@@ -7,6 +7,9 @@ public class UIController : MonoBehaviour {
 
     public Image heartsIngame;
     public Sprite[] hearts;
+    public Image active1, passive1, passive2, passive3;
+    public Sprite seitenbacherSprite;
+    public Sprite emptyPassive;
     private GameObject player;
     public Text waveDisplay;
     public GameObject arenaController;
@@ -43,5 +46,32 @@ public class UIController : MonoBehaviour {
     public void startNewWaveAnimation()
     {
         StartCoroutine(newWaveAnimation());
+    }
+
+    IEnumerator seitenbacherCoroutine()
+    {
+        if (passive1.sprite.name == "ItemSlotPassive")
+        {
+            passive1.sprite = seitenbacherSprite;
+            yield return new WaitForSeconds(10f);
+            passive1.sprite = emptyPassive;
+        }
+        else if (passive2.sprite.name == "ItemSlotPassive")
+        {
+            passive2.sprite = seitenbacherSprite;
+            yield return new WaitForSeconds(10f);
+            passive2.sprite = emptyPassive;
+        }
+        else if (passive3.sprite.name == "ItemSlotPassive")
+        {
+            passive3.sprite = seitenbacherSprite;
+            yield return new WaitForSeconds(10f);
+            passive3.sprite = emptyPassive;
+        }
+    }
+
+    public void seitenbacher()
+    {
+        StartCoroutine(seitenbacherCoroutine());
     }
 }

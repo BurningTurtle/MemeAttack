@@ -122,8 +122,8 @@ public class Dolan : MonoBehaviour {
         // Subtract one healthpoint if Dolan gets hit by the PlayerProjectile.
         if (collision.tag == "PlayerProjectile")
         {
-            health -= 1;
-            if(health <= 0)
+            health = health - FindObjectOfType<Player>().damage;
+            if (health <= 0)
             {
                 // Coroutine because Wait Time is necessary.
                 StartCoroutine(die());

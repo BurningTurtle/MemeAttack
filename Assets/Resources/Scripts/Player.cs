@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     // Show this variable in inspector
     [SerializeField] private float speed = 3f;
+    public int damage;
     public int health;
 
     private bool readyForDamage = true;
@@ -16,10 +17,18 @@ public class Player : MonoBehaviour
     private Animator anim;
     [SerializeField] private GameObject projectilePrefab;
 
+    // For Sounds
+    private AudioSource audioSource;
+
+    // For Seitenbacher
+    [SerializeField] private AudioClip seitenbacherSound;
+
 
     private void Start()
     {
         anim = GetComponent<Animator>();
+        damage = 1;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -118,5 +127,25 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Destroy(projectile.gameObject);
 
+    }
+
+
+    // Is triggered by Seitenbacher class.
+    public void seitenbacher()
+    {
+        // Play "SEITENBACHER BERGSTEIGER MÜSLI! BERGSTEIGER MÜSLI VON SEITENBACHER!". 
+        audioSource.PlayOneShot(seitenbacherSound, 1);
+
+        // Give Player a temporary DMG-UP for 10 seconds.
+        StartCoroutine(temporaryDmgUp());
+    }
+
+    IEnumerator temporaryDmgUp()
+    {
+        damage += 1;
+
+        yield return new WaitForSeconds(10f);
+
+        damage -= 1;
     }
 }
