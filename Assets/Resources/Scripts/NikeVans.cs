@@ -48,5 +48,6 @@ public class NikeVans : MonoBehaviour {
         player.GetComponent<Player>().speed += 2f;
         yield return new WaitForSeconds(10f);
         player.GetComponent<Player>().speed -= 2f;
+        Destroy(gameObject);
     }
 }
