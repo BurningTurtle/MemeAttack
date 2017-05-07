@@ -21,7 +21,7 @@ public class NikeVans : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == player)
+        if (collision.gameObject == player && uic.GetComponent<UIController>().passiveItems < 3)
         {
             // Make Nike Vans invisible
             Color colour = sr.material.color;

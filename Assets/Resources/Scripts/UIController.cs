@@ -11,10 +11,12 @@ public class UIController : MonoBehaviour
     public Image active1, passive1, passive2, passive3;
     public Sprite seitenbacherSprite;
     public Sprite nikeVansSprite;
+    public Sprite softIceSprite;
     public Sprite emptyPassive;
     private GameObject player;
     public Text waveDisplay;
     public GameObject arenaController;
+    public int passiveItems = 0;
 
     // Use this for initialization
     void Start()
@@ -54,6 +56,7 @@ public class UIController : MonoBehaviour
 
     IEnumerator seitenbacherCoroutine()
     {
+        passiveItems++;
         if (passive1.sprite.name == "ItemSlotPassive")
         {
             passive1.sprite = seitenbacherSprite;
@@ -72,10 +75,12 @@ public class UIController : MonoBehaviour
             yield return new WaitForSeconds(10f);
             passive3.sprite = emptyPassive;
         }
+        passiveItems--;
     }
 
     IEnumerator nikeVansCoroutine()
     {
+        passiveItems++;
         if (passive1.sprite.name == "ItemSlotPassive")
         {
             passive1.sprite = nikeVansSprite;
@@ -94,6 +99,31 @@ public class UIController : MonoBehaviour
             yield return new WaitForSeconds(10f);
             passive3.sprite = emptyPassive;
         }
+        passiveItems--;
+    }
+
+    IEnumerator softIceCoroutine()
+    {
+        passiveItems++;
+        if (passive1.sprite.name == "ItemSlotPassive")
+        {
+            passive1.sprite = softIceSprite;
+            yield return new WaitForSeconds(10f);
+            passive1.sprite = emptyPassive;
+        }
+        else if (passive2.sprite.name == "ItemSlotPassive")
+        {
+            passive2.sprite = softIceSprite;
+            yield return new WaitForSeconds(10f);
+            passive2.sprite = emptyPassive;
+        }
+        else if (passive3.sprite.name == "ItemSlotPassive")
+        {
+            passive3.sprite = softIceSprite;
+            yield return new WaitForSeconds(10f);
+            passive3.sprite = emptyPassive;
+        }
+        passiveItems--;
     }
 
     public void seitenbacher()
@@ -104,5 +134,10 @@ public class UIController : MonoBehaviour
     public void nikeVans()
     {
         StartCoroutine(nikeVansCoroutine());
+    }
+
+    public void softIce()
+    {
+        StartCoroutine(softIceCoroutine());
     }
 }
