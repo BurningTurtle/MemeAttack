@@ -58,6 +58,10 @@ public class ArenaController : MonoBehaviour
 
     private GameObject datBoiPrefab;
 
+    [SerializeField]
+
+    private GameObject doritosPrefab;
+
 
     // Item's prefabs
 
@@ -255,17 +259,23 @@ public class ArenaController : MonoBehaviour
             float ranX = Random.Range(6, 18);
             float ranY = Random.Range(10, 17);
             float ran = Random.value;
-            if(ran < .20)
+
+            // 10% for Softice, 30% for either Nike Vans, Seitenbacher Bergsteiger Müsli or Doritos.
+            if(ran < .10)
             {
                 GameObject softIce = Instantiate(softIcePrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
-            else if (ran < .60)
+            else if (ran < .40)
             {
                 GameObject nikeVans = Instantiate(nikeVansPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
-            else
+            else if (ran < 70)
             {
                 GameObject seitenbacher = Instantiate(seitenbacherPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
+            }
+            else
+            {
+                GameObject doritos = Instantiate(doritosPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
         }
         
