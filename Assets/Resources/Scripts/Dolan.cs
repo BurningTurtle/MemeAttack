@@ -100,7 +100,7 @@ public class Dolan : MonoBehaviour {
             Vector2 playerVector3 = new Vector2(player.transform.position.x - knife3.transform.position.x, player.transform.position.y - knife3.transform.position.y);
             knife3.GetComponent<Rigidbody2D>().AddForce(playerVector3 / 100);
             knife3.GetComponent<Knife>().back = true;
-            knife4.GetComponent<Knife>().back = true;
+            knife3.GetComponent<Knife>().back = true;
         }
         
         if(knife4)

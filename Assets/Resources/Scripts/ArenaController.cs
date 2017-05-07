@@ -63,7 +63,7 @@ public class ArenaController : MonoBehaviour
 
     [SerializeField]
 
-    private GameObject seitenbacherPrefab, nikeVansPrefab;
+    private GameObject seitenbacherPrefab, nikeVansPrefab, softIcePrefab;
 
 
 
@@ -252,13 +252,20 @@ public class ArenaController : MonoBehaviour
 
         if(Random.value < .3)
         {
-            if(Random.value < .5)
+            float ranX = Random.Range(6, 18);
+            float ranY = Random.Range(10, 17);
+            float ran = Random.value;
+            if(ran < .20)
             {
-                GameObject seitenbacher = Instantiate(seitenbacherPrefab, new Vector2(13, 15), Quaternion.identity) as GameObject;
+                GameObject softIce = Instantiate(softIcePrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
+            }
+            else if (ran < .60)
+            {
+                GameObject nikeVans = Instantiate(nikeVansPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
             else
             {
-                GameObject nikeVans = Instantiate(nikeVansPrefab, new Vector2(13, 15), Quaternion.identity) as GameObject;
+                GameObject seitenbacher = Instantiate(seitenbacherPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
         }
         
