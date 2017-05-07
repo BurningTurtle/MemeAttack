@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour
     public Sprite seitenbacherSprite;
     public Sprite nikeVansSprite;
     public Sprite softIceSprite;
+    public Sprite doritosSprite;
     public Sprite emptyPassive;
     private GameObject player;
     public Text waveDisplay;
@@ -126,6 +127,30 @@ public class UIController : MonoBehaviour
         passiveItems--;
     }
 
+    IEnumerator doritosCoroutine()
+    {
+        passiveItems++;
+        if (passive1.sprite.name == "ItemSlotPassive")
+        {
+            passive1.sprite = doritosSprite;
+            yield return new WaitForSeconds(5f);
+            passive1.sprite = emptyPassive;
+        }
+        else if (passive2.sprite.name == "ItemSlotPassive")
+        {
+            passive2.sprite = doritosSprite;
+            yield return new WaitForSeconds(5f);
+            passive2.sprite = emptyPassive;
+        }
+        else if (passive3.sprite.name == "ItemSlotPassive")
+        {
+            passive3.sprite = doritosSprite;
+            yield return new WaitForSeconds(5f);
+            passive3.sprite = emptyPassive;
+        }
+        passiveItems--;
+    }
+
     public void seitenbacher()
     {
         StartCoroutine(seitenbacherCoroutine());
@@ -139,5 +164,10 @@ public class UIController : MonoBehaviour
     public void softIce()
     {
         StartCoroutine(softIceCoroutine());
+    }
+
+    public void doritos()
+    {
+        StartCoroutine(doritosCoroutine());
     }
 }
