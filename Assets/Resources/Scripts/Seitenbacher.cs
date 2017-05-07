@@ -21,7 +21,7 @@ public class Seitenbacher : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Only do this if Seitenbacher was hit by player. Otherwise, a Projectile for example could trigger this.
-        if (collision.gameObject == player)
+        if (collision.gameObject == player && uic.GetComponent<UIController>().passiveItems < 3)
         {
             // Make Nike Vans invisible
             Color colour = sr.material.color;
@@ -32,7 +32,7 @@ public class Seitenbacher : MonoBehaviour {
             {
                 soundMan.playSeitenbacher();
 
-                // Temporarily increase player's damage by 0.5.
+                // Temporarily increase player's damage by 1.
                 StartCoroutine(temporaryDmgUp());
 
                 // 
