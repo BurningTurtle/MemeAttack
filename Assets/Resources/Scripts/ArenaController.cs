@@ -24,11 +24,11 @@ public class ArenaController : MonoBehaviour
 
     // For ending wave (Keep track of how many enemies there are in the scene)
 
-    private GameObject[] dolansInScene;
+    public GameObject[] dolansInScene;
 
-    private GameObject[] mainEnemiesInScene;
+    public GameObject[] mainEnemiesInScene;
 
-    private GameObject[] datBoisInScene;
+    public GameObject[] datBoisInScene;
 
     public int wave = 1;
 
@@ -58,17 +58,12 @@ public class ArenaController : MonoBehaviour
 
     private GameObject datBoiPrefab;
 
-    [SerializeField]
-
-    private GameObject doritosPrefab;
-
 
     // Item's prefabs
 
     [SerializeField]
 
-    private GameObject seitenbacherPrefab, nikeVansPrefab, softIcePrefab;
-
+    private GameObject seitenbacherPrefab, nikeVansPrefab, softIcePrefab, timeToStopPrefab, doritosPrefab, mountainDewPrefab;
 
 
     // Use this for initialization.
@@ -199,7 +194,6 @@ public class ArenaController : MonoBehaviour
 
     {
         wave++;
-
         UIcontroller.GetComponent<UIController>().startNewWaveAnimation();
 
         yield return new WaitForSeconds(1.25f);
@@ -260,22 +254,31 @@ public class ArenaController : MonoBehaviour
             float ranY = Random.Range(10, 17);
             float ran = Random.value;
 
-            // 10% for Softice, 30% for either Nike Vans, Seitenbacher Bergsteiger Müsli or Doritos.
-            if(ran < .10)
+            // 5% Soft Ice, 25% Nike Vans, 30% Seitenbacher, 25% Doritos, 15% Mountain Dew
+            if(ran < .05)
             {
                 GameObject softIce = Instantiate(softIcePrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
-            else if (ran < .40)
+            else if (ran < .10)
             {
-                GameObject nikeVans = Instantiate(nikeVansPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
+                GameObject timeToStop = Instantiate(timeToStopPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
+
             }
-            else if (ran < 70)
+            else if (ran < .50)
             {
                 GameObject seitenbacher = Instantiate(seitenbacherPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
-            else
+            else if (ran < .75)
             {
                 GameObject doritos = Instantiate(doritosPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
+            }
+            else if( ran < .90)
+            {
+                GameObject mountainDew = Instantiate(mountainDewPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
+            }
+            else
+            {
+                GameObject nikeVans = Instantiate(nikeVansPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
         }
         

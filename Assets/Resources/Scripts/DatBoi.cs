@@ -23,6 +23,10 @@ public class DatBoi : MonoBehaviour {
     bool canSpawnNext = true;
 
     private SpriteRenderer sr;
+    private Animator anim;
+
+    // For It's time to stop
+    public bool stop = false;
 
     private void Start()
     {
@@ -30,13 +34,14 @@ public class DatBoi : MonoBehaviour {
         lastPosition = transform.position.x;
         canShootNext = true;
         sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
         bois = GameObject.FindGameObjectsWithTag("DatBoi");
 
-        if (alive)
+        if (alive && !stop)
         {
             Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
             GetComponent<Rigidbody2D>().velocity = playerVector * speed * Time.deltaTime;
@@ -81,7 +86,13 @@ public class DatBoi : MonoBehaviour {
                 canSpawnNext = false;
             }
         }
-        
+
+        if (stop)
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            anim.SetBool("moving", false);
+        }
+
     }
 
     IEnumerator SpawnDemBois()

@@ -11,21 +11,26 @@ public class Dolan : MonoBehaviour {
     GameObject knife1, knife2, knife3, knife4;
     public GameObject dropPrefab;
 
+    // For It's time to stop
+    public bool stop;
+
     [SerializeField] private GameObject knifePrefab;
     private bool canShootNext;
 
     private SpriteRenderer sr;
+    private Animator anim;
 
     private void Start()
     {
         player = GameObject.Find("Player");
         canShootNext = true;
         sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
     {
-        if (alive)
+        if (alive && !stop)
         {
             Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
             GetComponent<Rigidbody2D>().velocity = playerVector * minimalSpeed * Time.deltaTime;
@@ -44,6 +49,12 @@ public class Dolan : MonoBehaviour {
             {
                 StartCoroutine(shoot(playerVector));
             }
+        }
+
+        if (stop)
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            anim.SetBool("moving", false);
         }
     }
 
