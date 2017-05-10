@@ -13,11 +13,15 @@ public class UIController : MonoBehaviour
     public Sprite nikeVansSprite;
     public Sprite softIceSprite;
     public Sprite doritosSprite;
+    public Sprite mountainDewSprite;
+    public Sprite timeToStopSprite;
     public Sprite emptyPassive;
+    public Sprite emptyActive;
     private GameObject player;
     public Text waveDisplay;
     public GameObject arenaController;
     public int passiveItems = 0;
+    public int activeItems = 0;
 
     // Use this for initialization
     void Start()
@@ -151,6 +155,37 @@ public class UIController : MonoBehaviour
         passiveItems--;
     }
 
+    IEnumerator mountainDewCoroutine()
+    {
+        passiveItems++;
+        if (passive1.sprite.name == "ItemSlotPassive")
+        {
+            passive1.sprite = mountainDewSprite;
+            yield return new WaitForSeconds(5f);
+            passive1.sprite = emptyPassive;
+        }
+        else if (passive2.sprite.name == "ItemSlotPassive")
+        {
+            passive2.sprite = mountainDewSprite;
+            yield return new WaitForSeconds(5f);
+            passive2.sprite = emptyPassive;
+        }
+        else if (passive3.sprite.name == "ItemSlotPassive")
+        {
+            passive3.sprite = mountainDewSprite;
+            yield return new WaitForSeconds(5f);
+            passive3.sprite = emptyPassive;
+        }
+        passiveItems--;
+    }
+
+    IEnumerator timeToStopCoroutine()
+    {
+        yield return new WaitForSeconds(7f);
+        active1.sprite = emptyActive;
+        activeItems--;
+    }
+
     public void seitenbacher()
     {
         StartCoroutine(seitenbacherCoroutine());
@@ -169,5 +204,24 @@ public class UIController : MonoBehaviour
     public void doritos()
     {
         StartCoroutine(doritosCoroutine());
+    }
+
+    public void mountainDew()
+    {
+        StartCoroutine(mountainDewCoroutine());
+    }
+
+    public void timeToStop()
+    {
+        StartCoroutine(timeToStopCoroutine());
+    }
+
+    public void timeToStopNotUsed()
+    {
+        if(active1.sprite.name == "ItemSlotActive")
+        {
+            active1.sprite = timeToStopSprite;
+            activeItems++;
+        }
     }
 }

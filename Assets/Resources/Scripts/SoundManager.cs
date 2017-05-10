@@ -12,6 +12,8 @@ public class SoundManager : MonoBehaviour {
     [SerializeField] private AudioClip softIceSound;
     [SerializeField] private AudioClip dolanDropSound;
     [SerializeField] private AudioClip doritosSound;
+    [SerializeField] private AudioClip mountainDewSound;
+    [SerializeField] private AudioClip timeToStopSound;
 
     private void Start()
     {
@@ -41,5 +43,15 @@ public class SoundManager : MonoBehaviour {
     public void playDoritos()
     {
         audioSource.PlayOneShot(doritosSound, 1);
+    }
+
+    public void playMountainDew()
+    {
+        audioSource.PlayOneShot(mountainDewSound, 1);
+    }
+
+    public void playTimeToStop()
+    {
+        audioSource.PlayOneShot(timeToStopSound, 1);
     }
 }
