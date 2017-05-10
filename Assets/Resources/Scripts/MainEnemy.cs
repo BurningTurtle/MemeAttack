@@ -13,18 +13,24 @@ public class MainEnemy : MonoBehaviour {
     GameObject player;
     public bool canShootNext;
 
+    // For It's time to stop
+    public bool stop;
+
+    private Animator anim;
+
     // Use this for initialization
     void Start ()
     {
         alive = true;
         player = GameObject.Find("Player");
         canShootNext = true;
+        anim = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
 	void FixedUpdate ()
     {
-        if(alive)
+        if(alive && !stop)
         {
             // Get Vector to the player.
             Vector2 targetVelocity = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
@@ -37,10 +43,16 @@ public class MainEnemy : MonoBehaviour {
 
             // Get "distance" between enemy and player.
             float combinedDistance = Mathf.Abs(targetVelocity.x + targetVelocity.y);
-            if(combinedDistance < 5 && projectile == null && canShootNext)
+            if(combinedDistance < 5 && projectile == null && canShootNext && !stop)
             {               
                     StartCoroutine(shoot(targetVelocity));      
             }
+
+        }
+        if (stop)
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
+            anim.SetBool("moving", false);
         }
 	}
 
