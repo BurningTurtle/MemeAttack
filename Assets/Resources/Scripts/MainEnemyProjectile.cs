@@ -5,11 +5,22 @@ using UnityEngine;
 public class MainEnemyProjectile : MonoBehaviour {
 
     public int damage;
+    public GameObject mainEnemy;
+    public bool stopped;
 
 	// Use this for initialization
 	void Start ()
     {
         StartCoroutine(die());
+        mainEnemy = GameObject.Find("MainEnemy(Clone)");
+    }
+
+    private void Update()
+    {
+        if(!stopped)
+        {
+            StartCoroutine(stop());
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -22,9 +33,21 @@ public class MainEnemyProjectile : MonoBehaviour {
         }
     }
 
+    IEnumerator stop()
+    {
+        if (mainEnemy != null && mainEnemy.GetComponent<MainEnemy>().stop == true)
+        {
+            stopped = true;
+            Vector2 forceBeforeStop = GetComponent<Rigidbody2D>().velocity;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            yield return new WaitForSeconds(3f);
+            GetComponent<Rigidbody2D>().velocity = forceBeforeStop;
+        }
+    }
+
     IEnumerator die()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(8f);
         Destroy(gameObject);
     }
 }

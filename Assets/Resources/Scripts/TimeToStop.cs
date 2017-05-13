@@ -63,7 +63,7 @@ public class TimeToStop : MonoBehaviour {
             FindObjectOfType<ArenaController>().GetComponent<ArenaController>().datBoisInScene[i].GetComponent<DatBoi>().stop = true;
         }
 
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(3f);
 
         for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dolansInScene.Length; i++)
         {

@@ -93,33 +93,47 @@ public class Dolan : MonoBehaviour {
         playerVectorRotated = RotateVector(playerVectorRotated, 90f);
         knife4.GetComponent<Rigidbody2D>().AddForce(playerVectorRotated / 75);
         knife4.transform.rotation = Quaternion.AngleAxis(angle + 270, Vector3.forward);
+        Debug.Log("force from Dolan init");
+
+        yield return new WaitForSeconds(1f);
 
         // Wait and destroy the knife
-        yield return new WaitForSeconds(1f);
-        Destroy(knife1.gameObject);
 
-        // Update our vector if the knife hasn't hit yet.
-        if(knife2)
+        if (!stop)
+        {
+            Destroy(knife1.gameObject);
+        }
+        else
+        {
+            yield return new WaitForSeconds(2f);
+        }
+
+        if (knife2)
         {
             Vector2 playerVector2 = new Vector2(player.transform.position.x - knife2.transform.position.x, player.transform.position.y - knife2.transform.position.y);
             knife2.GetComponent<Rigidbody2D>().AddForce(playerVector2 / 100);
             knife2.GetComponent<Knife>().back = true;
         }
 
-        if(knife3)
+        if (knife3)
         {
             Vector2 playerVector3 = new Vector2(player.transform.position.x - knife3.transform.position.x, player.transform.position.y - knife3.transform.position.y);
             knife3.GetComponent<Rigidbody2D>().AddForce(playerVector3 / 100);
             knife3.GetComponent<Knife>().back = true;
-            knife3.GetComponent<Knife>().back = true;
         }
-        
-        if(knife4)
+
+        if (knife4)
         {
             Vector2 playerVector4 = new Vector2(player.transform.position.x - knife4.transform.position.x, player.transform.position.y - knife4.transform.position.y);
             knife4.GetComponent<Rigidbody2D>().AddForce(playerVector4 / 100);
+            knife4.GetComponent<Knife>().back = true;
         }
+
+        Debug.Log("force from Dolan script, after wait");
+       
+        // Update our vector if the knife hasn't hit yet.
         
+
         yield return new WaitForSeconds(2f);
 
         Destroy(knife2.gameObject);
