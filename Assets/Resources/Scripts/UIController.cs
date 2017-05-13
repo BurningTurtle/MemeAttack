@@ -23,6 +23,8 @@ public class UIController : MonoBehaviour
     public int passiveItems = 0;
     public int activeItems = 0;
 
+    public GameObject timeToStopAnim;
+
     // Use this for initialization
     void Start()
     {
@@ -214,6 +216,7 @@ public class UIController : MonoBehaviour
     public void timeToStop()
     {
         StartCoroutine(timeToStopCoroutine());
+        timeToStopAnim.SetActive(true);
     }
 
     public void timeToStopNotUsed()
