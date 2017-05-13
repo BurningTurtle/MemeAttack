@@ -14,6 +14,7 @@ public class SoundManager : MonoBehaviour {
     [SerializeField] private AudioClip doritosSound;
     [SerializeField] private AudioClip mountainDewSound;
     [SerializeField] private AudioClip timeToStopSound;
+    [SerializeField] private AudioClip placeHolderSound;
 
     private void Start()
     {
@@ -52,7 +53,12 @@ public class SoundManager : MonoBehaviour {
         audioSource.PlayOneShot(mountainDewSound, 1);
     }
 
-    public void playTimeToStop()
+    public void playPlaceholder()
+    {
+        audioSource.PlayOneShot(placeHolderSound, 1);
+    }
+
+    public void playItsTimeToStop()
     {
         audioSource.PlayOneShot(timeToStopSound, 1);
     }

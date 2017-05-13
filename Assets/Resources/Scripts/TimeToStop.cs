@@ -27,6 +27,7 @@ public class TimeToStop : MonoBehaviour {
             used = true;
             StartCoroutine(itsTimeToStop());
             uic.timeToStop();
+            soundMan.playItsTimeToStop();
         }
     }
 
@@ -40,7 +41,7 @@ public class TimeToStop : MonoBehaviour {
 
             if (!pickedUp)
             {
-                soundMan.playTimeToStop();
+                soundMan.playPlaceholder();
                 uic.timeToStopNotUsed();
 
                 pickedUp = true;
