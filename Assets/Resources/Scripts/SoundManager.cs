@@ -9,7 +9,7 @@ public class SoundManager : MonoBehaviour {
     // Sounds
     [SerializeField] private AudioClip seitenbacherSound;
     [SerializeField] private AudioClip nikeVansSound;
-    [SerializeField] private AudioClip softIceSound;
+    [SerializeField] private AudioClip softIceSound1, softIceSound2, softIceSound3, softIceSound4, softIceSound5, softIceSound6, softIceSound7;
     [SerializeField] private AudioClip dolanDropSound;
     [SerializeField] private AudioClip doritosSound;
     [SerializeField] private AudioClip mountainDewSound;
@@ -32,7 +32,39 @@ public class SoundManager : MonoBehaviour {
 
     public void playSoftIce()
     {
-        audioSource.PlayOneShot(softIceSound, 1);
+        int i = Random.Range(1, 7);
+
+        switch (i)
+        {
+            case 0:
+                audioSource.PlayOneShot(softIceSound1, 1);
+                break;
+
+            case 1:
+                audioSource.PlayOneShot(softIceSound2, 1);
+                break;
+
+            case 2:
+                audioSource.PlayOneShot(softIceSound3, 1);
+                break;
+
+            case 3:
+                audioSource.PlayOneShot(softIceSound4, 1);
+                break;
+
+            case 4:
+                audioSource.PlayOneShot(softIceSound5, 1);
+                break;
+
+            case 5:
+                audioSource.PlayOneShot(softIceSound6, 1);
+                break;
+
+            case 6:
+                audioSource.PlayOneShot(softIceSound7, 1);
+                break;
+                
+        }
     }
 
     public void playDolanDrop()
