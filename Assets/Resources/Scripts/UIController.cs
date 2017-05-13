@@ -181,7 +181,7 @@ public class UIController : MonoBehaviour
 
     IEnumerator timeToStopCoroutine()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(3f);
         active1.sprite = emptyActive;
         activeItems--;
     }
