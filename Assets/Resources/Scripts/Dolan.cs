@@ -93,6 +93,7 @@ public class Dolan : MonoBehaviour {
         playerVectorRotated = RotateVector(playerVectorRotated, 90f);
         knife4.GetComponent<Rigidbody2D>().AddForce(playerVectorRotated / 75);
         knife4.transform.rotation = Quaternion.AngleAxis(angle + 270, Vector3.forward);
+        Debug.Log("force from Dolan init");
 
         yield return new WaitForSeconds(1f);
 
@@ -127,6 +128,8 @@ public class Dolan : MonoBehaviour {
             knife4.GetComponent<Rigidbody2D>().AddForce(playerVector4 / 100);
             knife4.GetComponent<Knife>().back = true;
         }
+
+        Debug.Log("force from Dolan script, after wait");
        
         // Update our vector if the knife hasn't hit yet.
         

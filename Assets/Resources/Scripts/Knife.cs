@@ -32,14 +32,18 @@ public class Knife : MonoBehaviour {
 
     IEnumerator stop()
     {
-        if (dolan.GetComponent<Dolan>().stop == true)
+        if (dolan != null && dolan.GetComponent<Dolan>().stop == true)
         {
             stopped = true;
             back = false;
             Vector2 forceBeforeStop = GetComponent<Rigidbody2D>().velocity;
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             yield return new WaitForSeconds(3f);
-            GetComponent<Rigidbody2D>().velocity = forceBeforeStop;
+            if (GetComponent<Rigidbody2D>().velocity.y == 0)
+            {
+                GetComponent<Rigidbody2D>().velocity = forceBeforeStop;
+            }
+            Debug.Log("back force from Knife script");
             back = true;
         }
     }

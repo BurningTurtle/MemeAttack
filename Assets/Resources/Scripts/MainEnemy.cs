@@ -43,7 +43,7 @@ public class MainEnemy : MonoBehaviour {
 
             // Get "distance" between enemy and player.
             float combinedDistance = Mathf.Abs(targetVelocity.x + targetVelocity.y);
-            if(combinedDistance < 5 && projectile == null && canShootNext && !stop)
+            if(combinedDistance < 5 && canShootNext && !stop)
             {               
                     StartCoroutine(shoot(targetVelocity));      
             }
@@ -64,10 +64,7 @@ public class MainEnemy : MonoBehaviour {
         projectile = Instantiate(projectilePrefab) as GameObject;
         projectile.transform.position = transform.position;
         projectile.GetComponent<Rigidbody2D>().AddForce(targetVelocity / 75);
-
-        // Destroy the projectile if it didn't hit anything after 2 seconds.
         yield return new WaitForSeconds(2f);
-        Destroy(projectile.gameObject);
         canShootNext = true;
     }
 

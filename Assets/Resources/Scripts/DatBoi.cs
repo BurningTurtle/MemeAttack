@@ -74,7 +74,7 @@ public class DatBoi : MonoBehaviour {
             float distance = Mathf.Abs(playerVector.x + playerVector.y);
 
             // If DatBoi's distance to the player is smaller than 7 [...] then shoot
-            if(distance < 7 && oshitwaddup == null && canShootNext)
+            if(distance < 7 && canShootNext)
             {
                 StartCoroutine(shoot(playerVector));
             }
@@ -129,9 +129,7 @@ public class DatBoi : MonoBehaviour {
         float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
         oshitwaddup.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
-        // Destroy after 2s if it didn't hit anything.
         yield return new WaitForSeconds(2f);
-        Destroy(oshitwaddup.gameObject);
 
         canShootNext = true;
     }
