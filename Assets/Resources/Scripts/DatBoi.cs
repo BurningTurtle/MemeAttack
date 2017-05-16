@@ -5,7 +5,9 @@ public class DatBoi : MonoBehaviour {
 
     private GameObject player;
     private bool alive = true;
-    public float speed = 3f;
+    public float speed;
+    public float shootPower;
+    public float range;
     public int health = 10;
 
     // Keep track of which direction DatBoi is moving to. Important for animation.
@@ -44,13 +46,8 @@ public class DatBoi : MonoBehaviour {
         if (alive && !stop)
         {
             Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+            playerVector.Normalize();
             GetComponent<Rigidbody2D>().velocity = playerVector * speed * Time.deltaTime;
-
-            // Accelerate DatBoi if he is too slow
-            while(GetComponent<Rigidbody2D>().velocity.magnitude < speed)
-            {
-                GetComponent<Rigidbody2D>().velocity *= 1.1f;
-            }
 
             // Get deltaX for current position.
             deltaX = lastPosition - transform.position.x;
@@ -71,10 +68,11 @@ public class DatBoi : MonoBehaviour {
             }
 
             // Distance between DatBoi and player
-            float distance = Mathf.Abs(playerVector.x + playerVector.y);
+            Vector2 trueDistance = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+            float combinedDistance = Mathf.Abs(trueDistance.x) + Mathf.Abs(trueDistance.y);
 
             // If DatBoi's distance to the player is smaller than 7 [...] then shoot
-            if(distance < 7 && canShootNext)
+            if (combinedDistance < 7 && canShootNext)
             {
                 StartCoroutine(shoot(playerVector));
             }
@@ -125,7 +123,7 @@ public class DatBoi : MonoBehaviour {
         oshitwaddup.transform.position = transform.position;
 
         // Move and rotate oshitwaddup to Player.
-        oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector / 60);
+        oshitwaddup.GetComponent<Rigidbody2D>().AddForce(playerVector * shootPower);
         float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
         oshitwaddup.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
@@ -148,6 +146,26 @@ public class DatBoi : MonoBehaviour {
             }
 
             Destroy(collision.gameObject);
+        }
+
+        if (collision.tag == "MasterSword")
+        {
+            if(player.GetComponent<Player>().isDarkLink && player.GetComponent<Player>().bass > 0.3f)
+            {
+                Debug.Log("crit");
+                GameObject.Find("UIController").GetComponent<UIController>().showCrit();
+                Destroy(gameObject);
+            }
+            else
+            {
+                health -= 3;
+            }
+
+            if (health <= 0)
+            {
+                // Coroutine because Wait Time is necessary.
+                StartCoroutine(die());
+            }
         }
     }
 

@@ -6,7 +6,9 @@ public class Dolan : MonoBehaviour {
 
     private GameObject player;
     private bool alive = true;
-    private float minimalSpeed = 3f;
+    public float speed;
+    public float shootPower, shootPowerBack;
+    public float range;
     public int health = 10;
     GameObject knife1, knife2, knife3, knife4;
     public GameObject dropPrefab;
@@ -33,19 +35,15 @@ public class Dolan : MonoBehaviour {
         if (alive && !stop)
         {
             Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
-            GetComponent<Rigidbody2D>().velocity = playerVector * minimalSpeed * Time.deltaTime;
-
-            // Accelerate Dolan if he's too slow.
-            while (GetComponent<Rigidbody2D>().velocity.magnitude < minimalSpeed)
-            {
-                GetComponent<Rigidbody2D>().velocity *= 1.1f;
-            }
+            playerVector.Normalize();
+            GetComponent<Rigidbody2D>().velocity = playerVector * speed * Time.deltaTime;
 
             // Distance between Dolan and Player
-            float distance = Mathf.Abs(playerVector.x + playerVector.y);
+            Vector2 trueDistance = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+            float combinedDistance = Mathf.Abs(trueDistance.x) + Mathf.Abs(trueDistance.y);
 
             // If Dolan's distance is smaller than 7 etc., shoot
-            if (distance < 7 && canShootNext)
+            if (combinedDistance < range && canShootNext)
             {
                 StartCoroutine(shoot(playerVector));
             }
@@ -76,22 +74,22 @@ public class Dolan : MonoBehaviour {
         knife4.transform.position = this.transform.position;
 
         // Launch and rotate the knifes towards the player
-        knife1.GetComponent<Rigidbody2D>().AddForce(playerVector / 75);
+        knife1.GetComponent<Rigidbody2D>().AddForce(playerVector * shootPower);
         float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
         knife1.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
         Vector2 playerVectorRotated = playerVector;
 
         playerVectorRotated = RotateVector(playerVector, 90f);
-        knife2.GetComponent<Rigidbody2D>().AddForce(playerVectorRotated / 75);
+        knife2.GetComponent<Rigidbody2D>().AddForce(playerVectorRotated * shootPower);
         knife2.transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
 
         playerVectorRotated = RotateVector(playerVectorRotated, 90f);
-        knife3.GetComponent<Rigidbody2D>().AddForce(playerVectorRotated / 75);
+        knife3.GetComponent<Rigidbody2D>().AddForce(playerVectorRotated * shootPower);
         knife3.transform.rotation = Quaternion.AngleAxis(angle + 180, Vector3.forward);
 
         playerVectorRotated = RotateVector(playerVectorRotated, 90f);
-        knife4.GetComponent<Rigidbody2D>().AddForce(playerVectorRotated / 75);
+        knife4.GetComponent<Rigidbody2D>().AddForce(playerVectorRotated * shootPower);
         knife4.transform.rotation = Quaternion.AngleAxis(angle + 270, Vector3.forward);
         Debug.Log("force from Dolan init");
 
@@ -111,21 +109,27 @@ public class Dolan : MonoBehaviour {
         if (knife2)
         {
             Vector2 playerVector2 = new Vector2(player.transform.position.x - knife2.transform.position.x, player.transform.position.y - knife2.transform.position.y);
-            knife2.GetComponent<Rigidbody2D>().AddForce(playerVector2 / 100);
+            playerVector2.Normalize();
+            knife2.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            knife2.GetComponent<Rigidbody2D>().AddForce(playerVector2 * shootPowerBack);
             knife2.GetComponent<Knife>().back = true;
         }
 
         if (knife3)
         {
             Vector2 playerVector3 = new Vector2(player.transform.position.x - knife3.transform.position.x, player.transform.position.y - knife3.transform.position.y);
-            knife3.GetComponent<Rigidbody2D>().AddForce(playerVector3 / 100);
+            playerVector3.Normalize();
+            knife3.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            knife3.GetComponent<Rigidbody2D>().AddForce(playerVector3 * shootPowerBack);
             knife3.GetComponent<Knife>().back = true;
         }
 
         if (knife4)
         {
             Vector2 playerVector4 = new Vector2(player.transform.position.x - knife4.transform.position.x, player.transform.position.y - knife4.transform.position.y);
-            knife4.GetComponent<Rigidbody2D>().AddForce(playerVector4 / 100);
+            playerVector4.Normalize();
+            knife4.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+            knife4.GetComponent<Rigidbody2D>().AddForce(playerVector4 * shootPowerBack);
             knife4.GetComponent<Knife>().back = true;
         }
 
@@ -160,6 +164,27 @@ public class Dolan : MonoBehaviour {
                 StartCoroutine(die());
             }
             Destroy(collision.gameObject);
+        }
+
+        if (collision.tag == "MasterSword")
+        {
+            if (player.GetComponent<Player>().isDarkLink && player.GetComponent<Player>().bass > 0.3f)
+            {
+                Debug.Log("crit");
+                GameObject.Find("UIController").GetComponent<UIController>().showCrit();
+                Destroy(gameObject);
+            }
+            else
+            {
+                health -= 3;
+            }
+            
+
+            if (health <= 0)
+            {
+                // Coroutine because Wait Time is necessary.
+                StartCoroutine(die());
+            }
         }
     }
 

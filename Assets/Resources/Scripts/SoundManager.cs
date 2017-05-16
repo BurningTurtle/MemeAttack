@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour {
 
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource soundSource;
+    [SerializeField] private AudioSource musicSource1;
+    [SerializeField] private AudioSource musicSource2;
 
     // Sounds
     [SerializeField] private AudioClip seitenbacherSound;
@@ -16,50 +18,83 @@ public class SoundManager : MonoBehaviour {
     [SerializeField] private AudioClip timeToStopSound;
     [SerializeField] private AudioClip placeHolderSound;
 
+    // Music
+    [SerializeField] private AudioClip zeldaMusic;
+
+
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        
+    }
+
+    public void playZelda()
+    {
+        StartCoroutine(fadeOut1());
+        musicSource2.PlayOneShot(zeldaMusic, 1);
+        StartCoroutine(fadeIn2());
+    }
+
+    private IEnumerator fadeOut1()
+    {
+        float startVolume = musicSource1.volume;
+
+        while (musicSource1.volume > 0)
+        {
+            musicSource1.volume -= startVolume * Time.deltaTime / 1.5f; // 2.5s
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator fadeIn2()
+    {
+        while (musicSource2.volume < 1)
+        {
+            musicSource2.volume += 1 * Time.deltaTime / 2.5f; // 2.5s
+
+            yield return null;
+        }
     }
 
     public void playSeitenbacher()
     {
-        audioSource.PlayOneShot(seitenbacherSound, 1);
+        soundSource.PlayOneShot(seitenbacherSound, 1);
     }
 
     public void playNikeVans()
     {
-        audioSource.PlayOneShot(nikeVansSound, 1);
+        soundSource.PlayOneShot(nikeVansSound, 1);
     }
 
     public void playSoftIce()
     {
         int i = Random.Range(0, 6);
 
-        audioSource.PlayOneShot(softIceSounds[i], 1);
+        soundSource.PlayOneShot(softIceSounds[i], 1);
     }
 
     public void playDolanDrop()
     {
-        audioSource.PlayOneShot(dolanDropSound, 1);
+        soundSource.PlayOneShot(dolanDropSound, 1);
     }
 
     public void playDoritos()
     {
-        audioSource.PlayOneShot(doritosSound, 1);
+        soundSource.PlayOneShot(doritosSound, 1);
     }
 
     public void playMountainDew()
     {
-        audioSource.PlayOneShot(mountainDewSound, 1);
+        soundSource.PlayOneShot(mountainDewSound, 1);
     }
 
     public void playPlaceholder()
     {
-        audioSource.PlayOneShot(placeHolderSound, 1);
+        soundSource.PlayOneShot(placeHolderSound, 1);
     }
 
     public void playItsTimeToStop()
     {
-        audioSource.PlayOneShot(timeToStopSound, 1);
+        soundSource.PlayOneShot(timeToStopSound, 1);
     }
 }
