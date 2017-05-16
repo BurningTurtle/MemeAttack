@@ -9,9 +9,11 @@ public class MainEnemy : MonoBehaviour {
     private GameObject projectile;
 
     private bool alive;
-    public float speed = 2f;
+    public float speed;
+    public float shootPower;
+    public float range;
     GameObject player;
-    public bool canShootNext;
+    private bool canShootNext;
 
     // For It's time to stop
     public bool stop;
@@ -34,18 +36,17 @@ public class MainEnemy : MonoBehaviour {
         {
             // Get Vector to the player.
             Vector2 targetVelocity = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+            targetVelocity.Normalize();
             GetComponent<Rigidbody2D>().velocity = targetVelocity * speed * Time.deltaTime;
 
-            while(GetComponent<Rigidbody2D>().velocity.magnitude < speed)
-            {
-                GetComponent<Rigidbody2D>().velocity *= 1.1f;
-            }
-
             // Get "distance" between enemy and player.
-            float combinedDistance = Mathf.Abs(targetVelocity.x + targetVelocity.y);
-            if(combinedDistance < 5 && canShootNext && !stop)
-            {               
-                    StartCoroutine(shoot(targetVelocity));      
+            Vector2 trueDistance = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+            float combinedDistance = Mathf.Abs(trueDistance.x) + Mathf.Abs(trueDistance.y);
+            //Debug.Log("combined distance" + combinedDistance);
+            if(combinedDistance < range && canShootNext && !stop)
+            {
+                Debug.Log("shoot!");
+                StartCoroutine(shoot(targetVelocity));      
             }
 
         }
@@ -63,7 +64,7 @@ public class MainEnemy : MonoBehaviour {
         // Instantiate projectile, move it into the enemy and add a force.
         projectile = Instantiate(projectilePrefab) as GameObject;
         projectile.transform.position = transform.position;
-        projectile.GetComponent<Rigidbody2D>().AddForce(targetVelocity / 75);
+        projectile.GetComponent<Rigidbody2D>().AddForce(targetVelocity * shootPower);
         yield return new WaitForSeconds(2f);
         canShootNext = true;
     }
@@ -76,5 +77,10 @@ public class MainEnemy : MonoBehaviour {
             Destroy(gameObject);
             Destroy(collision.gameObject);
         }
+        if (collision.tag == "MasterSword")
+        {
+            Destroy(gameObject);
+        }
     }
+
 }

@@ -22,12 +22,17 @@ public class UIController : MonoBehaviour
     public GameObject arenaController;
     public int passiveItems = 0;
     public int activeItems = 0;
+    public Text[] crits;
 
     public GameObject timeToStopAnim;
 
     // Use this for initialization
     void Start()
     {
+        for (int i = 0; i < 4; i++)
+        {
+            crits[i].CrossFadeAlpha(0f, 0f, false);
+        }
         player = GameObject.Find("Player");
     }
 
@@ -43,6 +48,19 @@ public class UIController : MonoBehaviour
         // -1 because ArenaController increases wave right after spawn.
         int wave = arenaController.GetComponent<ArenaController>().wave - 1;
         waveDisplay.text = "WAVE\n" + wave;
+    }
+
+    IEnumerator crit()
+    {
+        int ran = Random.Range(0, 3);
+        crits[ran].CrossFadeAlpha(1f, 0.3f, false);
+        yield return new WaitForSeconds(0.3f);
+        crits[ran].CrossFadeAlpha(0f, 0.3f, false);
+    }
+
+    public void showCrit()
+    {
+        StartCoroutine(crit());
     }
 
     IEnumerator newWaveAnimation()

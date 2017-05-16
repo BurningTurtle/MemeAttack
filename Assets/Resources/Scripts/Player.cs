@@ -13,19 +13,30 @@ public class Player : MonoBehaviour
 
     private bool readyForDamage = true;
 
-
+    private SpriteRenderer sr;
     private Animator anim;
     [SerializeField] private GameObject projectilePrefab;
+
+    [SerializeField] private Sprite link;
+    [SerializeField] private GameObject MasterSword;
+
+    public bool isLink, isDarkLink;
+    private bool hasSword;
+    private bool attack;
+    public float bass;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
-        damage = 1;
+        sr = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
-        if(health > 100)
+        float[] spectrum = AudioListener.GetSpectrumData(1024, 0, FFTWindow.Hamming);
+        bass = spectrum[2] + spectrum[0] + spectrum[1];
+
+        if (health > 100)
         {
             health = 100;
         }
@@ -53,7 +64,15 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(shoot());
+            if(!isDarkLink)
+            {
+                StartCoroutine(shoot());
+            }
+            else
+            {
+               
+            }
+            
         }
 
         if (health <= 0)
@@ -61,8 +80,22 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-       
+        if(!hasSword && isDarkLink)
+        {
+            MasterSword = Instantiate(MasterSword) as GameObject;
+            MasterSword.transform.Rotate(0, 0, -90);
+            MasterSword.transform.localScale += new Vector3(0.2f, 0.2f, 0);
+            
+            hasSword = true;
+        }
+        
+        if(isDarkLink)
+        {
+            MasterSword.transform.position = new Vector2(transform.position.x + .3f, transform.position.y - .2f);
+        }
+
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -123,6 +156,26 @@ public class Player : MonoBehaviour
         // Destory the projectile if it didn't hit anything after 2 seconds.
         yield return new WaitForSeconds(2f);
         Destroy(projectile.gameObject);
+    }
 
+
+
+    public void transformToLink()
+    {
+        anim.SetBool("isLink", true);
+        isLink = true;
+        StartCoroutine(waitForDarkLink());
+        transform.localScale += new Vector3(0.2f, 0.2f, 0);
+        Debug.Log("transformed");
+    }
+
+    IEnumerator waitForDarkLink()
+    {
+        yield return new WaitForSeconds(34.2f);
+        anim.SetBool("isLink", false);
+        anim.SetBool("isDarkLink", true);
+        yield return new WaitForSeconds(0.3f);
+        isDarkLink = true;
+        isLink = false;
     }
 }
