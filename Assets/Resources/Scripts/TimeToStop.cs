@@ -63,6 +63,10 @@ public class TimeToStop : MonoBehaviour {
         {
             FindObjectOfType<ArenaController>().GetComponent<ArenaController>().datBoisInScene[i].GetComponent<DatBoi>().stop = true;
         }
+        for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().nyanCatsInScene.Length; i++)
+        {
+            FindObjectOfType<ArenaController>().GetComponent<ArenaController>().nyanCatsInScene[i].GetComponent<NyanCat>().stop = true;
+        }
 
         yield return new WaitForSeconds(3f);
 
@@ -77,6 +81,10 @@ public class TimeToStop : MonoBehaviour {
         for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().datBoisInScene.Length; i++)
         {
             FindObjectOfType<ArenaController>().GetComponent<ArenaController>().datBoisInScene[i].GetComponent<DatBoi>().stop = false;
+        }
+        for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().nyanCatsInScene.Length; i++)
+        {
+            FindObjectOfType<ArenaController>().GetComponent<ArenaController>().nyanCatsInScene[i].GetComponent<NyanCat>().stop = false;
         }
     }
 }

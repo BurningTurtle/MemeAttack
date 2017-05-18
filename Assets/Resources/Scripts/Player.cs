@@ -115,7 +115,12 @@ public class Player : MonoBehaviour
                     break;
             }
             StartCoroutine(getReadyForDamage());
-        }  
+        }
+        if (collision.gameObject.tag == "NyanCat")
+        {
+            health -= 20;
+            Destroy(collision.gameObject);
+        }
     }
 
     

@@ -28,7 +28,7 @@ public class ArenaController : MonoBehaviour
 
     public GameObject[] mainEnemiesInScene;
 
-    public GameObject[] datBoisInScene;
+    public GameObject[] datBoisInScene, nyanCatsInScene;
 
     public int wave = 1;
 
@@ -58,6 +58,10 @@ public class ArenaController : MonoBehaviour
 
     private GameObject datBoiPrefab;
 
+    [SerializeField]
+
+    private GameObject nyanCatPrefab;
+
 
     // Item's prefabs
 
@@ -74,9 +78,9 @@ public class ArenaController : MonoBehaviour
 
         waves = new string[]
 
-        { "001. 001main000dolan000datboi", "002. 003main000dolan000datboi", "003. 010main000dolan000datboi", "004. 000main001dolan000datboi", "005. 003main001dolan000datboi",
-          "006. 010main001dolan000datboi", "007. 010main001dolan000datboi", "008. 000main000dolan001datboi", "009. 005main001dolan001datboi", "010. 010main002dolan003datboi",
-          "011. 010main003dolan004datboi", "012. 015main003dolan001datboi", "013. 015main004dolan002datboi", "014. 020main005dolan003datboi", "015. 025main005dolan005datboi"};
+        { "001. 001main000dolan000datboi000nyan", "002. 003main000dolan000datboi000nyan", "003. 010main000dolan000datboi000nyan", "004. 000main001dolan000datboi000nyan", "005. 003main001dolan000datboi001nyan",
+          "006. 010main001dolan000datboi000nyan", "007. 010main001dolan000datboi000nyan", "008. 000main000dolan001datboi000nyan", "009. 005main001dolan001datboi000nyan", "010. 010main002dolan003datboi000nyan",
+          "011. 010main003dolan004datboi000nyan", "012. 015main003dolan001datboi000nyan", "013. 015main004dolan002datboi000nyan", "014. 020main005dolan003datboi000nyan", "015. 025main005dolan005datboi000nyan"};
 
 
 
@@ -168,11 +172,13 @@ public class ArenaController : MonoBehaviour
 
         dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
 
+        nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
+
 
 
         // If there is no enemy in the scene (anymore)...
 
-        if((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length) < 1 && !alreadyCalled)
+        if ((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length) < 1 && !alreadyCalled)
 
         {
             // ... spawn the new wave.
@@ -208,6 +214,8 @@ public class ArenaController : MonoBehaviour
 
             int spawningDatBois = int.Parse(waves[wave - 2].Substring(20, 3));
 
+            int spawningNyanCats = int.Parse(waves[wave - 2].Substring(29, 3));
+
             // Spawn them.
 
             for (int i = 1; i <= spawningMainEnemies; i++)
@@ -235,6 +243,16 @@ public class ArenaController : MonoBehaviour
             {
 
                 GameObject mainEnemy = Instantiate(datBoiPrefab, new Vector2(13, 24 + i), Quaternion.identity) as GameObject;
+
+            }
+
+
+
+            for (int i = 1; i <= spawningNyanCats; i++)
+
+            {
+
+                GameObject mainEnemy = Instantiate(nyanCatPrefab, new Vector2(13, 24 + i), Quaternion.identity) as GameObject;
 
             }
         }
