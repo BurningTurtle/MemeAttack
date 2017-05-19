@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeToStop : MonoBehaviour {
+public class TimeToStop : MonoBehaviour
+{
 
     private GameObject player;
     private UIController uic;
@@ -12,13 +13,14 @@ public class TimeToStop : MonoBehaviour {
 
     private bool used = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         player = GameObject.Find("Player");
         uic = FindObjectOfType<UIController>();
         soundMan = FindObjectOfType<SoundManager>();
         sr = GetComponent<SpriteRenderer>();
-	}
+    }
 
     private void Update()
     {
@@ -51,21 +53,25 @@ public class TimeToStop : MonoBehaviour {
 
     IEnumerator itsTimeToStop()
     {
-        for(int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dolansInScene.Length; i++)
+        for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dolansInScene.Length; i++)
         {
             FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dolansInScene[i].GetComponent<Dolan>().stop = true;
         }
-        for(int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().mainEnemiesInScene.Length; i++)
+        for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().mainEnemiesInScene.Length; i++)
         {
             FindObjectOfType<ArenaController>().GetComponent<ArenaController>().mainEnemiesInScene[i].GetComponent<MainEnemy>().stop = true;
         }
-        for(int i = 0;  i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().datBoisInScene.Length; i++)
+        for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().datBoisInScene.Length; i++)
         {
             FindObjectOfType<ArenaController>().GetComponent<ArenaController>().datBoisInScene[i].GetComponent<DatBoi>().stop = true;
         }
         for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().nyanCatsInScene.Length; i++)
         {
             FindObjectOfType<ArenaController>().GetComponent<ArenaController>().nyanCatsInScene[i].GetComponent<NyanCat>().stop = true;
+        }
+        for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dogesInScene.Length; i++)
+        {
+            FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dogesInScene[i].GetComponent<Doge>().stop = true;
         }
 
         yield return new WaitForSeconds(3f);
@@ -85,6 +91,10 @@ public class TimeToStop : MonoBehaviour {
         for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().nyanCatsInScene.Length; i++)
         {
             FindObjectOfType<ArenaController>().GetComponent<ArenaController>().nyanCatsInScene[i].GetComponent<NyanCat>().stop = false;
+        }
+        for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dogesInScene.Length; i++)
+        {
+            FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dogesInScene[i].GetComponent<Doge>().stop = false;
         }
     }
 }

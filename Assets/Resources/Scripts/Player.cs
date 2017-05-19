@@ -64,15 +64,15 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if(!isDarkLink)
+            if (!isDarkLink)
             {
                 StartCoroutine(shoot());
             }
             else
             {
-               
+
             }
-            
+
         }
 
         if (health <= 0)
@@ -80,16 +80,16 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        if(!hasSword && isDarkLink)
+        if (!hasSword && isDarkLink)
         {
             MasterSword = Instantiate(MasterSword) as GameObject;
             MasterSword.transform.Rotate(0, 0, -90);
             MasterSword.transform.localScale += new Vector3(0.2f, 0.2f, 0);
-            
+
             hasSword = true;
         }
-        
-        if(isDarkLink)
+
+        if (isDarkLink)
         {
             MasterSword.transform.position = new Vector2(transform.position.x + .3f, transform.position.y - .2f);
         }
@@ -113,6 +113,9 @@ public class Player : MonoBehaviour
                 case "DatBoi":
                     health -= 5;
                     break;
+                case "Doge":
+                    health -= 5;
+                    break;
             }
             StartCoroutine(getReadyForDamage());
         }
@@ -123,7 +126,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    
+
 
     // Damage the player every second if the enemy sticks with him. (Avoiding way too much damage)
     IEnumerator getReadyForDamage()
