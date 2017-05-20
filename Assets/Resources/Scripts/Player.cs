@@ -25,10 +25,15 @@ public class Player : MonoBehaviour
     private bool attack;
     public float bass;
 
+    // Kleines Yen
+    public static int kleinesYen;
+    private SoundManager soundMan;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        soundMan = FindObjectOfType<SoundManager>();
     }
 
     private void Update()
@@ -185,5 +190,47 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         isDarkLink = true;
         isLink = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "1Yen":
+                kleinesYen += 1;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+            case "5Yen":
+                kleinesYen += 5;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+            case "10Yen":
+                kleinesYen += 10;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+            case "50Yen":
+                kleinesYen += 50;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+            case "100Yen":
+                kleinesYen += 100;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+            case "500Yen":
+                kleinesYen += 500;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+        }
+    }
+
+    public int returnKleinesYen()
+    {
+        return kleinesYen;
     }
 }
