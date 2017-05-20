@@ -28,7 +28,7 @@ public class ArenaController : MonoBehaviour
 
     public GameObject[] mainEnemiesInScene;
 
-    public GameObject[] datBoisInScene, nyanCatsInScene;
+    public GameObject[] datBoisInScene, nyanCatsInScene, dogesInScene;
 
     public int wave = 1;
 
@@ -61,6 +61,10 @@ public class ArenaController : MonoBehaviour
     [SerializeField]
 
     private GameObject nyanCatPrefab;
+
+    [SerializeField]
+
+    private GameObject dogePrefab;
 
 
     // Item's prefabs
@@ -154,13 +158,14 @@ public class ArenaController : MonoBehaviour
 
         }
 
-	}
+    }
 
-	
 
-	// Update is called once per frame
 
-	void Update () {
+    // Update is called once per frame
+
+    void Update()
+    {
 
 
 
@@ -174,11 +179,13 @@ public class ArenaController : MonoBehaviour
 
         nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
 
+        dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
+
 
 
         // If there is no enemy in the scene (anymore)...
 
-        if ((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length) < 1 && !alreadyCalled)
+        if ((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled)
 
         {
             // ... spawn the new wave.
@@ -191,8 +198,7 @@ public class ArenaController : MonoBehaviour
 
         }
 
-
-	}
+    }
 
 
 
@@ -259,21 +265,21 @@ public class ArenaController : MonoBehaviour
 
         // Output in log if there is no more wave (i.e. our array has ended).
 
-        catch(System.IndexOutOfRangeException)
+        catch (System.IndexOutOfRangeException)
         {
             Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 
         // Spawn items
 
-        if(Random.value < .3)
+        if (Random.value < .3)
         {
             float ranX = Random.Range(6, 18);
             float ranY = Random.Range(10, 17);
             float ran = Random.value;
 
             // 5% Soft Ice, 25% Nike Vans, 30% Seitenbacher, 25% Doritos, 15% Mountain Dew
-            if(ran < .05)
+            if (ran < .05)
             {
                 GameObject softIce = Instantiate(softIcePrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
@@ -290,7 +296,7 @@ public class ArenaController : MonoBehaviour
             {
                 GameObject doritos = Instantiate(doritosPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
-            else if( ran < .90)
+            else if (ran < .90)
             {
                 GameObject mountainDew = Instantiate(mountainDewPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
@@ -299,7 +305,7 @@ public class ArenaController : MonoBehaviour
                 GameObject nikeVans = Instantiate(nikeVansPrefab, new Vector2(ranX, ranY), Quaternion.identity) as GameObject;
             }
         }
-        
+
 
         alreadyCalled = false;
     }
