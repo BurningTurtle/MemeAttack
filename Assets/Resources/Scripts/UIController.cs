@@ -26,6 +26,8 @@ public class UIController : MonoBehaviour
 
     public GameObject timeToStopAnim;
 
+    public Text kleinesYenDisplay;
+
     // Use this for initialization
     void Start()
     {
@@ -48,6 +50,7 @@ public class UIController : MonoBehaviour
         // -1 because ArenaController increases wave right after spawn.
         int wave = arenaController.GetComponent<ArenaController>().wave - 1;
         waveDisplay.text = "WAVE\n" + wave;
+        kleinesYenDisplay.text = FindObjectOfType<Player>().GetComponent<Player>().returnKleinesYen().ToString();
     }
 
     IEnumerator crit()

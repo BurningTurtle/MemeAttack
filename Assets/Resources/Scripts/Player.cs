@@ -25,10 +25,15 @@ public class Player : MonoBehaviour
     private bool attack;
     public float bass;
 
+    // Kleines Yen
+    public static int kleinesYen;
+    private SoundManager soundMan;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        soundMan = FindObjectOfType<SoundManager>();
     }
 
     private void Update()
@@ -64,15 +69,15 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if(!isDarkLink)
+            if (!isDarkLink)
             {
                 StartCoroutine(shoot());
             }
             else
             {
-               
+
             }
-            
+
         }
 
         if (health <= 0)
@@ -80,16 +85,16 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        if(!hasSword && isDarkLink)
+        if (!hasSword && isDarkLink)
         {
             MasterSword = Instantiate(MasterSword) as GameObject;
             MasterSword.transform.Rotate(0, 0, -90);
             MasterSword.transform.localScale += new Vector3(0.2f, 0.2f, 0);
-            
+
             hasSword = true;
         }
-        
-        if(isDarkLink)
+
+        if (isDarkLink)
         {
             MasterSword.transform.position = new Vector2(transform.position.x + .3f, transform.position.y - .2f);
         }
@@ -113,6 +118,9 @@ public class Player : MonoBehaviour
                 case "DatBoi":
                     health -= 5;
                     break;
+                case "Doge":
+                    health -= 5;
+                    break;
             }
             StartCoroutine(getReadyForDamage());
         }
@@ -123,7 +131,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    
+
 
     // Damage the player every second if the enemy sticks with him. (Avoiding way too much damage)
     IEnumerator getReadyForDamage()
@@ -182,5 +190,47 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         isDarkLink = true;
         isLink = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "1Yen":
+                kleinesYen += 1;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+            case "5Yen":
+                kleinesYen += 5;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+            case "10Yen":
+                kleinesYen += 10;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+            case "50Yen":
+                kleinesYen += 50;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+            case "100Yen":
+                kleinesYen += 100;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+            case "500Yen":
+                kleinesYen += 500;
+                soundMan.playKleinesYen();
+                Destroy(collision.gameObject);
+                break;
+        }
+    }
+
+    public int returnKleinesYen()
+    {
+        return kleinesYen;
     }
 }
