@@ -10,6 +10,9 @@ public class NyanCat : MonoBehaviour {
     private int health = 3;
     private SpriteRenderer sr;
 
+    [SerializeField]
+    private GameObject money;
+
     // For It's time to stop
     public bool stop;
 
@@ -104,6 +107,7 @@ public class NyanCat : MonoBehaviour {
 
         // Kill NyanCat.
         alive = false;
+        Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
         Destroy(this.gameObject);
     }
 }
