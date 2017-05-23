@@ -20,6 +20,9 @@ public class Doge : MonoBehaviour
     // For It's time to stop
     public bool stop = false;
 
+    [SerializeField]
+    private GameObject money;
+
     private void Start()
     {
         player = GameObject.Find("Player");
@@ -96,6 +99,7 @@ public class Doge : MonoBehaviour
 
         // Kill Doge.
         alive = false;
+        Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
         Destroy(this.gameObject);
     }
 }

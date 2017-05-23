@@ -50,7 +50,7 @@ public class UIController : MonoBehaviour
         // -1 because ArenaController increases wave right after spawn.
         int wave = arenaController.GetComponent<ArenaController>().wave - 1;
         waveDisplay.text = "WAVE\n" + wave;
-        kleinesYenDisplay.text = FindObjectOfType<Player>().GetComponent<Player>().returnKleinesYen().ToString();
+        kleinesYenDisplay.text = FindObjectOfType<Player>().GetComponent<Player>().returnKleinesYen().ToString("D5");
     }
 
     IEnumerator crit()

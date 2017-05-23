@@ -13,6 +13,9 @@ public class Dolan : MonoBehaviour {
     GameObject knife1, knife2, knife3, knife4;
     public GameObject dropPrefab;
 
+    [SerializeField]
+    private GameObject money;
+
     // For It's time to stop
     public bool stop;
 
@@ -209,6 +212,7 @@ public class Dolan : MonoBehaviour {
 
         // Destroy that duckling
         alive = false;
+        Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
         Destroy(this.gameObject);
     }
 

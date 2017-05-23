@@ -14,6 +14,9 @@ public class DatBoi : MonoBehaviour {
     private float deltaX;
     private float lastPosition;
 
+    [SerializeField]
+    private GameObject money;
+
     [SerializeField] private GameObject oshitwaddupPrefab;
     private GameObject oshitwaddup;
     public bool canShootNext;
@@ -188,6 +191,7 @@ public class DatBoi : MonoBehaviour {
 
         // Kill DatBoi.
         alive = false;
+        Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
         Destroy(this.gameObject);
     } 
 }

@@ -7,7 +7,10 @@ public class MainEnemy : MonoBehaviour {
     [SerializeField]
     private GameObject projectilePrefab;
     private GameObject projectile;
+    [SerializeField]
+    private GameObject money;
 
+    public float moneyChance;
     private bool alive;
     public float speed;
     public float shootPower;
@@ -74,8 +77,12 @@ public class MainEnemy : MonoBehaviour {
         // Destroy enemy and projectile if it gets hit.
         if (collision.tag == "PlayerProjectile")
         {
-            Destroy(gameObject);
+            if(Random.value <= moneyChance)
+            {
+                Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+            }
             Destroy(collision.gameObject);
+            Destroy(gameObject);
         }
         if (collision.tag == "MasterSword")
         {
