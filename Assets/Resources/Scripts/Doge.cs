@@ -20,6 +20,12 @@ public class Doge : MonoBehaviour
     // For It's time to stop
     public bool stop = false;
 
+    // For woof
+    [SerializeField] private GameObject woofPrefab;
+    private int range = 20;
+    private bool canShootNext = true;
+    private float shootPower = 0.075f;
+
     [SerializeField]
     private GameObject money;
 
@@ -57,6 +63,15 @@ public class Doge : MonoBehaviour
                 sr.flipX = true;
             }
 
+            // Distance between Doge and Player
+            float combinedDistance = Mathf.Abs(playerVector.x) + Mathf.Abs(playerVector.y);
+
+            // If Doge's distance to the player is smaller than range
+            if (combinedDistance < range && canShootNext)
+            {
+                StartCoroutine(woof());
+            }
+
         }
 
         if (stop)
@@ -64,6 +79,21 @@ public class Doge : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             anim.SetBool("moving", false);
         }
+    }
+
+    IEnumerator woof()
+    {
+        canShootNext = false;
+
+        // Instantiate woof, movement is in Woof Script (easier for implementing following the player).
+        GameObject woof = Instantiate(woofPrefab) as GameObject;
+
+        // Woof on doge
+        woof.transform.position = this.transform.position;
+
+        yield return new WaitForSeconds(3f);
+
+        canShootNext = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
