@@ -42,7 +42,6 @@ public class UIController : MonoBehaviour
     void Update()
     {
         int heartPoints = player.GetComponent<Player>().health / 5;
-        Debug.Log(heartPoints);
         if (player.GetComponent<Player>().health >= 0)
         {
             heartsIngame.sprite = hearts[heartPoints];

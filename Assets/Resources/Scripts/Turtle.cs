@@ -51,8 +51,7 @@ public class Turtle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update ()
-    {
-        Debug.Log("Turtle HP:" + health);
+    { 
         if (phase == 1 && alive && !stop)
         {
             Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
@@ -61,8 +60,6 @@ public class Turtle : MonoBehaviour {
             
             if (canShootNext)
             {
-                Debug.Log("shoot!");
-                StartCoroutine(shootPhase1(playerVector));
             }
 
             // Get deltaX for current position.
@@ -178,7 +175,6 @@ public class Turtle : MonoBehaviour {
             }
             if (canShootNext)
             {
-                Debug.Log("shoot!");
                 StartCoroutine(shootPhase3());
             }
             if (rotating)
