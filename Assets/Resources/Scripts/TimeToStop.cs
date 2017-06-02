@@ -71,7 +71,11 @@ public class TimeToStop : MonoBehaviour
         }
         for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dogesInScene.Length; i++)
         {
-            FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dogesInScene[i].GetComponent<Doge>().stop = true;
+            FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dogesInScene[i].GetComponent<Doge>().stop = true;   
+        }
+        for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().trollfacesInScene.Length; i++)
+        {
+            FindObjectOfType<ArenaController>().GetComponent<ArenaController>().trollfacesInScene[i].GetComponent<Trollface>().stop = true;
         }
 
         yield return new WaitForSeconds(3f);
@@ -95,6 +99,10 @@ public class TimeToStop : MonoBehaviour
         for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dogesInScene.Length; i++)
         {
             FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dogesInScene[i].GetComponent<Doge>().stop = false;
+        }
+        for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().trollfacesInScene.Length; i++)
+        {
+            FindObjectOfType<ArenaController>().GetComponent<ArenaController>().trollfacesInScene[i].GetComponent<Trollface>().stop = false;
         }
     }
 }
