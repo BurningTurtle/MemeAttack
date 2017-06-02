@@ -28,7 +28,7 @@ public class ArenaController : MonoBehaviour
 
     public GameObject[] mainEnemiesInScene;
 
-    public GameObject[] datBoisInScene, nyanCatsInScene, dogesInScene;
+    public GameObject[] datBoisInScene, nyanCatsInScene, dogesInScene, trollfacesInScene;
 
     public int wave = 1;
 
@@ -180,6 +180,8 @@ public class ArenaController : MonoBehaviour
         nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
 
         dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
+
+        trollfacesInScene = GameObject.FindGameObjectsWithTag("Trollface");
 
 
 
