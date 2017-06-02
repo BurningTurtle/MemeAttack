@@ -62,7 +62,6 @@ public class Trollface : MonoBehaviour
             case 5: // Mountain Dew
                 transform.localScale = new Vector2(0.45f, 0.45f);
                 break;
-            
         }
     }
 
