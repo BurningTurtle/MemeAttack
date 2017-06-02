@@ -60,6 +60,7 @@ public class Turtle : MonoBehaviour {
             
             if (canShootNext)
             {
+                StartCoroutine(shootPhase1(playerVector));
             }
 
             // Get deltaX for current position.
