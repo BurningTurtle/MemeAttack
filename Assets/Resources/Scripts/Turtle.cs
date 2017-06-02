@@ -9,18 +9,26 @@ public class Turtle : MonoBehaviour {
     [SerializeField] int maxHealth;
     public int health;
     public int speed;
+    public float chargeSpeed;
     public float shootPower;
     private int phase;
     private bool phase2init, phase3init, phase4init;
     private bool canShootNext = true;
+    private bool canCharge;
+    private bool rotating;
 
     [SerializeField]
     private GameObject projectilePrefab;
     private GameObject projectile;
+    [SerializeField]
+    private GameObject projectilePrefab2;
 
     // Keep track of which direction Doge is moving to. Important for animation.
     private float deltaX;
     private float lastPosition;
+
+    [SerializeField]
+    private Sprite shellSprite, shellSprite2;
 
     private SpriteRenderer sr;
     private Animator anim;
@@ -50,12 +58,8 @@ public class Turtle : MonoBehaviour {
             Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
             playerVector.Normalize();
             GetComponent<Rigidbody2D>().velocity = playerVector * speed * Time.deltaTime;
-
-            // Get "distance" between enemy and player.
-            Vector2 trueDistance = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
-            float combinedDistance = Mathf.Abs(trueDistance.x) + Mathf.Abs(trueDistance.y);
-            //Debug.Log("combined distance" + combinedDistance);
-            if (canShootNext && !stop)
+            
+            if (canShootNext)
             {
                 Debug.Log("shoot!");
                 StartCoroutine(shootPhase1(playerVector));
@@ -81,21 +85,34 @@ public class Turtle : MonoBehaviour {
         }
 
         // If Turtle's health drops below 3/4 max life.
-        if (health < maxHealth / 4 * 3)
+        if (health < maxHealth / 4 * 3 && !phase3init)
         {
             // Init phase 2.
-            if(!phase2init)
+            if (!phase2init)
             {
-                // Things that have to be done once Turtle hits phase 2.
+                anim.enabled = false;
                 phase = 2;
                 phase2init = true;
+                canCharge = true;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             }
             // Movement and attacks for phase 2.
+            sr.sprite = shellSprite;
+            Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+            playerVector.Normalize();
+            if (canCharge)
+            {
+                StartCoroutine(charge());
+            }
+            if(rotating)
+            {
+                transform.Rotate(0, 0, 720 * Time.deltaTime);
+            }
         }
 
 
         // If Turtle's health drops below 1/2 max life.
-        if (health < maxHealth / 2)
+        if (health < maxHealth / 2 && !phase4init)
         {
             // Init phase 3.
             if (!phase3init)
@@ -103,8 +120,37 @@ public class Turtle : MonoBehaviour {
                 // Things that have to be done once Turtle hits phase 3.
                 phase = 3;
                 phase3init = true;
+                anim.enabled = true;
+                anim.SetInteger("phase", 3);
             }
             // Movement and attacks for phase 3.
+            Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+            playerVector.Normalize();
+            GetComponent<Rigidbody2D>().velocity = playerVector * speed * Time.deltaTime;
+
+            if (canShootNext)
+            {
+                Debug.Log("shoot!");
+                StartCoroutine(shootPhase3());
+            }
+
+            // Get deltaX for current position.
+            deltaX = lastPosition - transform.position.x;
+
+            // Last position for the next frame is the current position from now.
+            lastPosition = transform.position.x;
+
+            // If Doge is moving right
+            if (deltaX < 0)
+            {
+                // Flip Doge
+                sr.flipX = false;
+            }
+            else if (deltaX > 0)
+            {
+                // Flip Doge back to normal
+                sr.flipX = true;
+            }
         }
 
 
@@ -117,14 +163,33 @@ public class Turtle : MonoBehaviour {
                 // Things that have to be done once Turtle hits phase 4.
                 phase = 4;
                 phase4init = true;
+                anim.enabled = false;
+                canCharge = true;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                canShootNext = true;
             }
             // Movement and attacks for phase 4.
+            sr.sprite = shellSprite2;
+            Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+            playerVector.Normalize();
+            if (canCharge)
+            {
+                StartCoroutine(charge());
+            }
+            if (canShootNext)
+            {
+                Debug.Log("shoot!");
+                StartCoroutine(shootPhase3());
+            }
+            if (rotating)
+            {
+                transform.Rotate(0, 0, 720 * Time.deltaTime);
+            }
         }
     }
 
     IEnumerator shootPhase1(Vector2 targetVelocity)
     {
-        Debug.Log("Turtle should shoot");
         canShootNext = false;
 
         // Instantiate projectile, move it into the enemy and add a force.
@@ -133,6 +198,37 @@ public class Turtle : MonoBehaviour {
         projectile.GetComponent<Rigidbody2D>().AddForce(targetVelocity * shootPower);
         yield return new WaitForSeconds(2f);
         canShootNext = true;
+    }
+
+    IEnumerator charge()
+    {
+        canCharge = false;
+        yield return new WaitForSeconds(2f);
+        Vector2 chargeTo = getPlayerVector().normalized;
+        yield return new WaitForSeconds(0.025f);
+        rotating = true;
+        GetComponent<Rigidbody2D>().AddForce(chargeTo / chargeSpeed);
+        yield return new WaitForSeconds(1f);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        rotating = false;
+        transform.rotation = Quaternion.identity;
+        yield return new WaitForSeconds(2f);
+        canCharge = true;
+    }
+
+    IEnumerator shootPhase3()
+    {
+        canShootNext = false;
+        Instantiate(projectilePrefab2, new Vector2(transform.position.x, transform.position.y+1), Quaternion.identity);
+        Instantiate(projectilePrefab2, new Vector2(transform.position.x-1, transform.position.y), Quaternion.identity);
+        Instantiate(projectilePrefab2, new Vector2(transform.position.x+1, transform.position.y), Quaternion.identity);
+        yield return new WaitForSeconds(2f);
+        canShootNext = true;
+    }
+
+        private Vector2 getPlayerVector()
+    {
+        return new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
