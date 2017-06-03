@@ -124,6 +124,9 @@ public class Player : MonoBehaviour
                 case "Turtle":
                     health -= 20;
                     break;
+                case "DatDolan":
+                    health -= 20;
+                    break;
             }
             StartCoroutine(getReadyForDamage());
         }
