@@ -18,6 +18,7 @@ public class SoundManager : MonoBehaviour {
     [SerializeField] private AudioClip timeToStopSound;
     [SerializeField] private AudioClip placeHolderSound;
     [SerializeField] private AudioClip kleinesYenSound;
+    [SerializeField] private AudioClip cottonDamageSound;
 
     // Music
     [SerializeField] private AudioClip zeldaMusic;
@@ -102,5 +103,10 @@ public class SoundManager : MonoBehaviour {
     public void playKleinesYen()
     {
         soundSource.PlayOneShot(kleinesYenSound, 1);
+    }
+
+    public void playCottonDamage()
+    {
+        soundSource.PlayOneShot(cottonDamageSound, 1);
     }
 }
