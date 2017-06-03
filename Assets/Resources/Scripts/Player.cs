@@ -121,6 +121,9 @@ public class Player : MonoBehaviour
                 case "Doge":
                     health -= 5;
                     break;
+                case "Turtle":
+                    health -= 20;
+                    break;
             }
             StartCoroutine(getReadyForDamage());
         }

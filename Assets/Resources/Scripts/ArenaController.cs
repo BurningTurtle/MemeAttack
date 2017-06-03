@@ -28,7 +28,7 @@ public class ArenaController : MonoBehaviour
 
     public GameObject[] mainEnemiesInScene;
 
-    public GameObject[] datBoisInScene, nyanCatsInScene, dogesInScene;
+    public GameObject[] datBoisInScene, nyanCatsInScene, dogesInScene, trollfacesInScene;
 
     public int wave = 1;
 
@@ -42,6 +42,8 @@ public class ArenaController : MonoBehaviour
 
 
     public GameObject UIcontroller;
+    [SerializeField]
+    GameObject hubworldController;
 
 
     // Enemies' Prefabs  
@@ -79,6 +81,8 @@ public class ArenaController : MonoBehaviour
     void Start()
 
     {
+
+        hubworldController = GameObject.Find("HubworldController");
 
         waves = new string[]
 
@@ -166,38 +170,40 @@ public class ArenaController : MonoBehaviour
 
     void Update()
     {
-
-
-
-        // Keep track of enemies in scene
-
-        mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
-
-        datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
-
-        dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
-
-        nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
-
-        dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
-
-
-
-        // If there is no enemy in the scene (anymore)...
-
-        if ((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled)
-
+        if (hubworldController.GetComponent<HubworldController>().area == "arena1")
         {
-            // ... spawn the new wave.
+            Debug.Log("arena1 drin");
+            // Keep track of enemies in scene
 
-            StartCoroutine(NewWave());
+            mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
 
-            // Avoid infinite calling of IEnumerator NewWave() and thus spawning infinitely.
+            datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
 
-            alreadyCalled = true;
+            dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
 
+            nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
+
+            dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
+
+            trollfacesInScene = GameObject.FindGameObjectsWithTag("Trollface");
+
+
+
+            // If there is no enemy in the scene (anymore)...
+
+            if ((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled)
+
+            {
+                // ... spawn the new wave.
+
+                StartCoroutine(NewWave());
+
+                // Avoid infinite calling of IEnumerator NewWave() and thus spawning infinitely.
+
+                alreadyCalled = true;
+
+            }
         }
-
     }
 
 
