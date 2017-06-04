@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Woof : MonoBehaviour
 {
-
     private GameObject player;
     private GameObject doge;
     private float speed = 270f;
     private int damage = 5;
+    public bool stop = false;
 
     // Use this for initialization
     void Start()
@@ -20,7 +20,7 @@ public class Woof : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(doge.GetComponent<Doge>().stop == true)
+        if(stop == true)
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }

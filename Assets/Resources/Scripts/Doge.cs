@@ -78,6 +78,7 @@ public class Doge : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             anim.SetBool("moving", false);
+            FindObjectOfType<Woof>().stop = true;
         }
     }
 
