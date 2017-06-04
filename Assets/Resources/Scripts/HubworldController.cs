@@ -35,6 +35,10 @@ public class HubworldController : MonoBehaviour {
                     HUD.SetActive(false);
                     Debug.Log(area);
                     break;
+                case "special1Trigger":
+                    parentController.GetComponent<HubworldController>().area = "special1";
+                    HUD.SetActive(false);
+                    break;
             }
         }
     }
