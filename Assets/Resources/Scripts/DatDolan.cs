@@ -11,41 +11,149 @@ public class DatDolan : MonoBehaviour {
     private float lastposition;
     private SpriteRenderer sr;
     private bool canDrop = true;
-    private int health = 1000;
+    [SerializeField] private int health = 1000;
     private bool alive = true;
+    [SerializeField] GameObject featherPrefab;
+    private int featherSpeed = 20;
+    private bool canShootNext = true;
+    private Animator anim;
+    private bool canMove = true;
+    private bool canAttackRedEyes = true;
+    [SerializeField] GameObject featherShuurikenPrefab;
+    [SerializeField] GameObject dolanPrefab, datBoiPrefab;
+    private bool canCallForHelp = true;
 
 	// Use this for initialization
 	void Start () {
         player = GameObject.Find("Player");
         sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
         if (alive)
         {
-            Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
-            playerVector.Normalize();
-            GetComponent<Rigidbody2D>().velocity = playerVector * speed * Time.deltaTime;
-
-            deltaX = transform.position.x - lastposition;
-            lastposition = transform.position.x;
-
-            if (deltaX < 0)
+            if (canMove)
             {
-                sr.flipX = false;
+                Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
+                playerVector.Normalize();
+                GetComponent<Rigidbody2D>().velocity = playerVector * speed * Time.deltaTime;
+
+                deltaX = transform.position.x - lastposition;
+                lastposition = transform.position.x;
+
+                if (deltaX < 0)
+                {
+                    sr.flipX = false;
+                }
+                else if (deltaX > 0)
+                {
+                    sr.flipX = true;
+                }
             }
-            else if (deltaX > 0)
+            else
             {
-                sr.flipX = true;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
             }
 
-            if (canDrop)
+            if(health > 700)
             {
-                StartCoroutine(drop());
+                if (canDrop)
+                {
+                    StartCoroutine(drop());
+                }
+            }
+
+            if(health <= 700 && health > 500)
+            {
+                if (canShootNext)
+                {
+                    StartCoroutine(shootFeather());
+                }
+                if (canDrop)
+                {
+                    StartCoroutine(drop());
+                }
+            }
+
+            if(health <= 500 && health > 200)
+            {
+                if (canAttackRedEyes)
+                {
+                    StartCoroutine(redEyes());
+                }
+                if (canShootNext)
+                {
+                    StartCoroutine(shootFeather());
+                }
+            }
+
+            if(health <= 200 && health > 0)
+            {
+                if (canCallForHelp)
+                {
+                    StartCoroutine(callForHelp());
+                }
+                if (canDrop)
+                {
+                    StartCoroutine(drop());
+                }
+                if (canShootNext)
+                {
+                    StartCoroutine(shootFeather());
+                }
             }
         }
+    }
+
+    IEnumerator callForHelp()
+    {
+        // Cool animation here
+        Debug.Log("HALP");
+
+        canCallForHelp = false;
+
+        GameObject dolan1 = Instantiate(dolanPrefab) as GameObject;
+        GameObject dolan2 = Instantiate(dolanPrefab) as GameObject;
+        GameObject datBoi = Instantiate(datBoiPrefab) as GameObject;
+
+        dolan1.transform.position = new Vector2(transform.position.x - 2, transform.position.y);
+        dolan2.transform.position = new Vector2(transform.position.x + 2, transform.position.y);
+        datBoi.transform.position = new Vector2(transform.position.x, transform.position.y + 2);
+
+        yield return new WaitForSeconds(10);
+        canCallForHelp = true;
+    }
+
+    IEnumerator redEyes()
+    {
+        canMove = false;
+        canAttackRedEyes = false;
+        anim.SetBool("redEyes", true);
+        yield return new WaitForSeconds(1.3f);
+        GameObject featherShuuriken = Instantiate(featherShuurikenPrefab) as GameObject;
+        featherShuuriken.transform.position = transform.position;
+        canMove = true;
+        anim.SetBool("redEyes", false);
+        yield return new WaitForSeconds(10);
+        canAttackRedEyes = true;
+    }
+
+    IEnumerator shootFeather()
+    {
+        canShootNext = false;
+        GameObject feather = Instantiate(featherPrefab) as GameObject;
+        Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
+        playerVector.Normalize();
+
+        // Feather is moved up by 1 so that it looks like DatDolan spits it out
+        feather.transform.position = new Vector2(transform.position.x, transform.position.y + 1f);
+
+        feather.GetComponent<Rigidbody2D>().velocity = playerVector * featherSpeed;
+        yield return new WaitForSeconds(1);
+        canShootNext = true;
     }
 
 
