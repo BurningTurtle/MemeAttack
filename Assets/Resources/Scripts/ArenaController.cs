@@ -16,7 +16,7 @@ public class ArenaController : MonoBehaviour
 
     public int gridCols;
 
-    public int offset = 1;
+    public float offset = 1;
 
     public Grass grass1, grass2, grass3, grass4;
 
@@ -34,6 +34,8 @@ public class ArenaController : MonoBehaviour
 
     private string[] waves;
 
+    public bool wavesAreActive = true;
+
 
 
     // For not endlessly calling IEnumerator NewWave()
@@ -50,23 +52,7 @@ public class ArenaController : MonoBehaviour
 
     [SerializeField]
 
-    private GameObject mainEnemyPrefab;
-
-    [SerializeField]
-
-    private GameObject dolanPrefab;
-
-    [SerializeField]
-
-    private GameObject datBoiPrefab;
-
-    [SerializeField]
-
-    private GameObject nyanCatPrefab;
-
-    [SerializeField]
-
-    private GameObject dogePrefab;
+    private GameObject mainEnemyPrefab, nyanCatPrefab, dogePrefab;
 
 
     // Item's prefabs
@@ -86,9 +72,9 @@ public class ArenaController : MonoBehaviour
 
         waves = new string[]
 
-        { "001. 001main000dolan000datboi000nyan", "002. 003main000dolan000datboi000nyan", "003. 010main000dolan000datboi000nyan", "004. 000main001dolan000datboi000nyan", "005. 003main001dolan000datboi001nyan",
-          "006. 010main001dolan000datboi000nyan", "007. 010main001dolan000datboi000nyan", "008. 000main000dolan001datboi000nyan", "009. 005main001dolan001datboi000nyan", "010. 010main002dolan003datboi000nyan",
-          "011. 010main003dolan004datboi000nyan", "012. 015main003dolan001datboi000nyan", "013. 015main004dolan002datboi000nyan", "014. 020main005dolan003datboi000nyan", "015. 025main005dolan005datboi000nyan"};
+        { "001. 001main000doge000nyan", "002. 003main000doge000nyan", "003. 003main001doge000nyan", "004. 005main001doge000nyan", "005. 001main000doge000nyan",
+          "006. 001main000doge000nyan", "007. 001main000doge000nyan", "008. 001main000doge000nyan", "009. 001main000doge000nyan", "010. 001main000doge000nyan",
+          "011. 001main000doge000nyan", "012. 001main000doge000nyan", "013. 001main000doge000nyan", "014. 001main000doge000nyan", "015. 001main000doge000nyan"};
 
 
 
@@ -191,7 +177,7 @@ public class ArenaController : MonoBehaviour
 
             // If there is no enemy in the scene (anymore)...
 
-            if ((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled)
+            if ((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
 
             {
                 // ... spawn the new wave.
@@ -222,11 +208,9 @@ public class ArenaController : MonoBehaviour
 
             int spawningMainEnemies = int.Parse(waves[wave - 2].Substring(5, 3));
 
-            int spawningDolans = int.Parse(waves[wave - 2].Substring(12, 3));
+            int spawningDoges = int.Parse(waves[wave - 2].Substring(12, 3));
 
-            int spawningDatBois = int.Parse(waves[wave - 2].Substring(20, 3));
-
-            int spawningNyanCats = int.Parse(waves[wave - 2].Substring(29, 3));
+            int spawningNyanCats = int.Parse(waves[wave - 2].Substring(19, 3));
 
             // Spawn them.
 
@@ -234,37 +218,23 @@ public class ArenaController : MonoBehaviour
 
             {
 
-                GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(11, 24), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(12.5f, 25), Quaternion.identity) as GameObject;
 
             }
 
-
-
-            for (int i = 1; i <= spawningDolans; i++)
+            for (int i = 1; i <= spawningDoges; i++)
 
             {
 
-                GameObject mainEnemy = Instantiate(dolanPrefab, new Vector2(12, 24 + i), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(dogePrefab, new Vector2(11.5f, 25 + i), Quaternion.identity) as GameObject;
 
             }
-
-
-
-            for (int i = 1; i <= spawningDatBois; i++)
-
-            {
-
-                GameObject mainEnemy = Instantiate(datBoiPrefab, new Vector2(13, 24 + i), Quaternion.identity) as GameObject;
-
-            }
-
-
 
             for (int i = 1; i <= spawningNyanCats; i++)
 
             {
 
-                GameObject mainEnemy = Instantiate(nyanCatPrefab, new Vector2(13, 24 + i), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(nyanCatPrefab, new Vector2(13.5f, 25 + i), Quaternion.identity) as GameObject;
 
             }
         }
@@ -273,6 +243,7 @@ public class ArenaController : MonoBehaviour
 
         catch (System.IndexOutOfRangeException)
         {
+            wavesAreActive = false;
             Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 

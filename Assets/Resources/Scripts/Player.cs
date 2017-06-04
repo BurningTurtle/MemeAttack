@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     private bool attack;
     public float bass;
 
+    public bool hasKey = false;
+
     // Kleines Yen
     public static int kleinesYen;
     private SoundManager soundMan;
