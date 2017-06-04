@@ -22,7 +22,6 @@ public class DatDolan : MonoBehaviour {
     [SerializeField] GameObject featherShuurikenPrefab;
     [SerializeField] GameObject dolanPrefab, datBoiPrefab;
     private bool canCallForHelp = true;
-    [SerializeField] GameObject keyPrefab;
 
 	// Use this for initialization
 	void Start () {
@@ -205,9 +204,6 @@ public class DatDolan : MonoBehaviour {
 
         GameObject pileOfCotton = Instantiate(PileOfCottonPrefab) as GameObject;
         pileOfCotton.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y - 2);
-
-        GameObject key = Instantiate(keyPrefab) as GameObject;
-        key.transform.position = transform.position;
 
         Destroy(this.gameObject);
     }
