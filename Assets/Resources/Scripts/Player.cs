@@ -14,8 +14,9 @@ public class Player : MonoBehaviour
     private bool readyForDamage = true;
 
     private SpriteRenderer sr;
-    private Animator anim;
+    public Animator anim;
     [SerializeField] private GameObject projectilePrefab;
+    public int crazy = 0;
 
     [SerializeField] private Sprite link;
     [SerializeField] private GameObject MasterSword;
@@ -104,7 +105,6 @@ public class Player : MonoBehaviour
         {
             MasterSword.transform.position = new Vector2(transform.position.x + .3f, transform.position.y - .2f);
         }
-
     }
 
 
