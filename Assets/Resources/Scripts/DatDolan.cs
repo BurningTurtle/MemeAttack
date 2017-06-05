@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DatDolan : MonoBehaviour {
+public class DatDolan : MonoBehaviour
+{
 
     [SerializeField] GameObject PileOfCottonPrefab;
     private GameObject player;
@@ -22,16 +23,18 @@ public class DatDolan : MonoBehaviour {
     [SerializeField] GameObject featherShuurikenPrefab;
     [SerializeField] GameObject dolanPrefab, datBoiPrefab;
     private bool canCallForHelp = true;
+    [SerializeField] GameObject keyPrefab;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         player = GameObject.Find("Player");
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate ()
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
     {
         if (alive)
         {
@@ -55,10 +58,10 @@ public class DatDolan : MonoBehaviour {
             }
             else
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             }
 
-            if(health > 700)
+            if (health > 700)
             {
                 if (canDrop)
                 {
@@ -66,7 +69,7 @@ public class DatDolan : MonoBehaviour {
                 }
             }
 
-            if(health <= 700 && health > 500)
+            if (health <= 700 && health > 500)
             {
                 if (canShootNext)
                 {
@@ -78,7 +81,7 @@ public class DatDolan : MonoBehaviour {
                 }
             }
 
-            if(health <= 500 && health > 200)
+            if (health <= 500 && health > 200)
             {
                 if (canAttackRedEyes)
                 {
@@ -90,7 +93,7 @@ public class DatDolan : MonoBehaviour {
                 }
             }
 
-            if(health <= 200 && health > 0)
+            if (health <= 200 && health > 0)
             {
                 if (canCallForHelp)
                 {
@@ -204,6 +207,9 @@ public class DatDolan : MonoBehaviour {
 
         GameObject pileOfCotton = Instantiate(PileOfCottonPrefab) as GameObject;
         pileOfCotton.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y - 2);
+
+        GameObject key = Instantiate(keyPrefab) as GameObject;
+        key.transform.position = transform.position;
 
         Destroy(this.gameObject);
     }
