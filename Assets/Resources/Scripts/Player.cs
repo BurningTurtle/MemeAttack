@@ -132,6 +132,12 @@ public class Player : MonoBehaviour
                 case "DatDolan":
                     health -= 20;
                     break;
+                case "NyanDogeDoge":
+                    health -= 10;
+                    break;
+                case "NyanDogeCat":
+                    health -= 10;
+                    break;
             }
             StartCoroutine(getReadyForDamage());
         }
