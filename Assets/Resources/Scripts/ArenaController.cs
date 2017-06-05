@@ -226,7 +226,7 @@ public class ArenaController : MonoBehaviour
 
             {
 
-                GameObject mainEnemy = Instantiate(dogePrefab, new Vector2(11.5f, 25 + i), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(dogePrefab, new Vector2(12f, 25 + i), Quaternion.identity) as GameObject;
 
             }
 

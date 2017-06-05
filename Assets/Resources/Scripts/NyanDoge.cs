@@ -30,6 +30,10 @@ public class NyanDoge : MonoBehaviour
     [SerializeField] private GameObject nyanDogeDogePrefab;
     [SerializeField] private GameObject nyanDogeCatPrefab;
 
+    private GameObject statue;
+    [SerializeField]
+    private Sprite statueActivated;
+
     // Use this for initialization
     void Start()
     {
@@ -37,6 +41,7 @@ public class NyanDoge : MonoBehaviour
         _centre = player.transform.position;
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        statue = GameObject.Find("nyandogeStatue1");
     }
 
     // Update is called once per frame
@@ -121,6 +126,7 @@ public class NyanDoge : MonoBehaviour
                 canMove = false;
                 GameObject key = Instantiate(keyPrefab) as GameObject;
                 key.transform.position = new Vector2(this.transform.position.x, this.transform.position.y - 1);
+                statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
             }
 
             Destroy(collision.gameObject);
