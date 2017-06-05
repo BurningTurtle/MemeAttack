@@ -270,6 +270,10 @@ public class Turtle : MonoBehaviour {
         alive = false;
         Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
+
+        player.GetComponent<Player>().crazy += 1;
+        player.GetComponent<Player>().anim.SetInteger("Crazy", player.GetComponent<Player>().crazy);
+
         Destroy(this.gameObject);
     }
 }

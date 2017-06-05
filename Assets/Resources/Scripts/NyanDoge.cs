@@ -122,17 +122,22 @@ public class NyanDoge : MonoBehaviour
 
             if(health <= 0)
             {
+                // NyanDoge GameObject gets destroyed at end of animation event
                 anim.SetBool("Break", true);
                 canMove = false;
                 GameObject key = Instantiate(keyPrefab) as GameObject;
                 key.transform.position = new Vector2(this.transform.position.x, this.transform.position.y - 1);
                 statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
+
+                player.GetComponent<Player>().crazy += 1;
+                player.GetComponent<Player>().anim.SetInteger("Crazy", player.GetComponent<Player>().crazy);
             }
 
             Destroy(collision.gameObject);
         }
     }
 
+    // Called at the end of animation
     public void broken()
     {
         GameObject nyanDogeDoge = Instantiate(nyanDogeDogePrefab) as GameObject;

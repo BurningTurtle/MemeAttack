@@ -216,6 +216,10 @@ public class DatDolan : MonoBehaviour
         GameObject key = Instantiate(keyPrefab) as GameObject;
         key.transform.position = transform.position;
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
+
+        player.GetComponent<Player>().crazy += 1;
+        player.GetComponent<Player>().anim.SetInteger("Crazy", player.GetComponent<Player>().crazy);
+
         Destroy(this.gameObject);
     }
 }
