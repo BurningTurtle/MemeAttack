@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public float bass;
 
     public bool hasKey = false;
+    public bool hasCoinMagnet = false;
 
     // Kleines Yen
     public static int kleinesYen;
@@ -249,5 +250,10 @@ public class Player : MonoBehaviour
     public int returnKleinesYen()
     {
         return kleinesYen;
+    }
+
+    public void payYen(int payment)
+    {
+        kleinesYen = kleinesYen - payment;
     }
 }
