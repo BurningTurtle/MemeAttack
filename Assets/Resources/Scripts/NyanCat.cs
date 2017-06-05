@@ -18,6 +18,10 @@ public class NyanCat : MonoBehaviour {
 
     private Animator anim;
 
+    private GameObject statue;
+    [SerializeField]
+    private Sprite statueActivated;
+
     // Use this for initialization
     void Start()
     {
@@ -25,6 +29,7 @@ public class NyanCat : MonoBehaviour {
         player = GameObject.Find("Player");
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        statue = GameObject.Find("nyancatStatue1");
     }
 
     // Update is called once per frame
@@ -108,6 +113,7 @@ public class NyanCat : MonoBehaviour {
         // Kill NyanCat.
         alive = false;
         Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+        statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
         Destroy(this.gameObject);
     }
 }
