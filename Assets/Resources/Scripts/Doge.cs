@@ -29,12 +29,17 @@ public class Doge : MonoBehaviour
     [SerializeField]
     private GameObject money;
 
+    private GameObject statue;
+    [SerializeField]
+    private Sprite statueActivated;
+
     private void Start()
     {
         player = GameObject.Find("Player");
         lastPosition = transform.position.x;
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        statue = GameObject.Find("dogeStatue1");
     }
 
     private void FixedUpdate()
@@ -131,6 +136,7 @@ public class Doge : MonoBehaviour
         // Kill Doge.
         alive = false;
         Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+        statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
         Destroy(this.gameObject);
     }
 }

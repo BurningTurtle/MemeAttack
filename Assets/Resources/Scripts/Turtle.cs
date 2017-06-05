@@ -39,6 +39,10 @@ public class Turtle : MonoBehaviour {
     [SerializeField]
     private GameObject money;
 
+    private GameObject statue;
+    [SerializeField]
+    private Sprite statueActivated;
+
     // Use this for initialization
     void Start ()
     {
@@ -47,6 +51,7 @@ public class Turtle : MonoBehaviour {
         lastPosition = transform.position.x;
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        statue = GameObject.Find("turtleStatue1");
     }
 	
 	// Update is called once per frame
@@ -264,6 +269,7 @@ public class Turtle : MonoBehaviour {
         // Destroy that duckling
         alive = false;
         Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+        statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
         Destroy(this.gameObject);
     }
 }

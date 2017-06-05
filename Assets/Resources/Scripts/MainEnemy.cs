@@ -23,15 +23,19 @@ public class MainEnemy : MonoBehaviour {
 
     private Animator anim;
 
+    private GameObject statue;
+    [SerializeField]
+    private Sprite statueActivated;
+
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         alive = true;
         player = GameObject.Find("Player");
         canShootNext = true;
         anim = GetComponent<Animator>();
+        statue = GameObject.Find("mainEnemyStatue1");
     }
-	
 	// Update is called once per frame
 	void FixedUpdate ()
     {
@@ -82,6 +86,7 @@ public class MainEnemy : MonoBehaviour {
                 Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
             }
             Destroy(collision.gameObject);
+            statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
             Destroy(gameObject);
         }
         if (collision.tag == "MasterSword")

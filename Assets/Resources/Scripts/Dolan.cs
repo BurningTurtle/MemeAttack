@@ -25,12 +25,17 @@ public class Dolan : MonoBehaviour {
     private SpriteRenderer sr;
     private Animator anim;
 
+    private GameObject statue;
+    [SerializeField]
+    private Sprite statueActivated;
+
     private void Start()
     {
         player = GameObject.Find("Player");
         canShootNext = true;
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        statue = GameObject.Find("dolanStatue1");
     }
 
     private void FixedUpdate()
@@ -213,6 +218,7 @@ public class Dolan : MonoBehaviour {
         // Destroy that duckling
         alive = false;
         Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+        statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
         Destroy(this.gameObject);
     }
 

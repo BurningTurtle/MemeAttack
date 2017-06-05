@@ -25,12 +25,17 @@ public class DatDolan : MonoBehaviour
     private bool canCallForHelp = true;
     [SerializeField] GameObject keyPrefab;
 
+    private GameObject statue;
+    [SerializeField]
+    private Sprite statueActivated;
+
     // Use this for initialization
     void Start()
     {
         player = GameObject.Find("Player");
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        statue = GameObject.Find("datdolanStatue1");
     }
 
     // Update is called once per frame
@@ -210,7 +215,7 @@ public class DatDolan : MonoBehaviour
 
         GameObject key = Instantiate(keyPrefab) as GameObject;
         key.transform.position = transform.position;
-
+        statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
         Destroy(this.gameObject);
     }
 }

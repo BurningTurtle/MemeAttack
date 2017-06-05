@@ -25,7 +25,7 @@ public class Teleport : MonoBehaviour {
                     other.transform.position = new Vector2(48, -24);
                     break;
                 case "toGallery":
-                    other.transform.position = new Vector2(-23, -29);
+                    other.transform.position = new Vector2(-42, -26);
                     break;
             }
         }
