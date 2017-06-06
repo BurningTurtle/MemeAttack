@@ -12,7 +12,7 @@ public class DatDolan : MonoBehaviour
     private float lastposition;
     private SpriteRenderer sr;
     private bool canDrop = true;
-    [SerializeField] private int health = 1000;
+    public int health = 1000;
     private bool alive = true;
     [SerializeField] GameObject featherPrefab;
     private int featherSpeed = 20;

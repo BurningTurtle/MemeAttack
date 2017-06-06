@@ -7,7 +7,7 @@ public class NyanCat : MonoBehaviour {
     private bool alive;
     public float speed;
     GameObject player;
-    private int health = 3;
+    public int health = 3;
     private SpriteRenderer sr;
 
     [SerializeField]

@@ -9,7 +9,7 @@ public class NyanDogeBroken : MonoBehaviour {
     private int xVelocity;
     private int yVelocity;
 
-    private int health = 100;
+    public int health = 100;
 
     private GameObject player;
 

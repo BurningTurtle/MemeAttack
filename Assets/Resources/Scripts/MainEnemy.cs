@@ -79,13 +79,16 @@ public class MainEnemy : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Destroy enemy and projectile if it gets hit.
-        if (collision.tag == "PlayerProjectile")
+        if (collision.tag == "PlayerProjectile" || collision.tag == "Bubble")
         {
             if(Random.value <= moneyChance)
             {
                 Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
             }
-            Destroy(collision.gameObject);
+            if(collision.gameObject.tag == "PlayerProjectile")
+            {
+                Destroy(collision.gameObject);
+            }
             statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
             Destroy(gameObject);
         }

@@ -14,7 +14,7 @@ public class NyanDoge : MonoBehaviour
     private bool canMove = true;
 
     // Stuff for NyanDoge
-    [SerializeField] private int health = 500;
+    public int health = 500;
     private GameObject player;
     private bool alive = true;
     private int speed = 200;

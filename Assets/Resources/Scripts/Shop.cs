@@ -11,6 +11,8 @@ public class Shop : MonoBehaviour {
     private Text dialogueText;
     private GameObject player;
 
+    [SerializeField] GameObject bubblePrefab;
+
     private bool processing;
 
     // Use this for initialization
@@ -43,8 +45,44 @@ public class Shop : MonoBehaviour {
                     dialogueBox.SetActive(true);
                     StartCoroutine(buyCoinMagnet());
                 }
+                else if(name == "shopBubble" && !processing)
+                {
+                    processing = true;
+                    dialogueBox.SetActive(true);
+                    StartCoroutine(buyBubble());
+                }
             }
         }
+    }
+
+    IEnumerator buyBubble()
+    {
+        dialogueText.text = "I see, the Bubble. Developer Byn's choice. That will be xxx kleines yen.";
+
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+        yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
+        if (Input.GetKey("y"))
+        {
+            if (player.GetComponent<Player>().returnKleinesYen() >= 10000)
+            {
+                player.GetComponent<Player>().payYen(10000);
+                GameObject bubble = Instantiate(bubblePrefab) as GameObject;
+                dialogueText.text = "Thanks for your purchase!";
+            }
+            else
+            {
+                dialogueText.text = "Oh, you don't have enough kleines yen!";
+            }
+        }
+        else if (Input.GetKey("n"))
+        {
+            dialogueText.text = "Okay, maybe next time!";
+        }
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
+        processing = false;
     }
 
     IEnumerator buySword()
