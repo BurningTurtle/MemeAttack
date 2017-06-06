@@ -6,6 +6,7 @@ public class WoofSpawner : MonoBehaviour {
 
     private GameObject player;
     [SerializeField] private GameObject woofPrefab;
+    private int shotSpeed = 2;
 
 	// Use this for initialization
 	void Start () {
@@ -16,5 +17,11 @@ public class WoofSpawner : MonoBehaviour {
     {
         GameObject woof = Instantiate(woofPrefab) as GameObject;
         woof.transform.position = this.transform.position;
+
+        // Get Vector to the player
+        Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+        playerVector = Vector2.ClampMagnitude(playerVector, shotSpeed);
+
+        woof.GetComponent<Rigidbody2D>().velocity = playerVector * shotSpeed;
     }
 }

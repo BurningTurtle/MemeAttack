@@ -24,7 +24,7 @@ public class Doge : MonoBehaviour
     [SerializeField] private GameObject woofPrefab;
     private int range = 20;
     private bool canShootNext = true;
-    private float shootPower = 0.075f;
+    private int shotSpeed = 2;
 
     [SerializeField]
     private GameObject money;
@@ -93,11 +93,14 @@ public class Doge : MonoBehaviour
     {
         canShootNext = false;
 
-        // Instantiate woof, movement is in Woof Script (easier for implementing following the player).
+        // Instantiate woof on doge
         woofProjectile = Instantiate(woofPrefab) as GameObject;
-
-        // Woof on doge
         woofProjectile.transform.position = this.transform.position;
+
+        // Get Vector to the player
+        Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+        playerVector = Vector2.ClampMagnitude(playerVector, shotSpeed);
+        woofProjectile.GetComponent<Rigidbody2D>().velocity = playerVector *shotSpeed;
 
         yield return new WaitForSeconds(3f);
 
