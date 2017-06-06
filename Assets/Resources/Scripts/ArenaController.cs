@@ -36,6 +36,8 @@ public class ArenaController : MonoBehaviour
 
     public bool wavesAreActive = true;
 
+    public bool bossIsActive;
+
 
 
     // For not endlessly calling IEnumerator NewWave()
@@ -46,13 +48,15 @@ public class ArenaController : MonoBehaviour
     public GameObject UIcontroller;
     [SerializeField]
     GameObject hubworldController;
+    [SerializeField]
+    private GameObject cantEscape;
 
 
     // Enemies' Prefabs  
 
     [SerializeField]
 
-    private GameObject mainEnemyPrefab, nyanCatPrefab, dogePrefab;
+    private GameObject mainEnemyPrefab, nyanCatPrefab, dogePrefab, nyanDogePrefab;
 
 
     // Item's prefabs
@@ -67,14 +71,14 @@ public class ArenaController : MonoBehaviour
     void Start()
 
     {
-
+        cantEscape.SetActive(false);
         hubworldController = GameObject.Find("HubworldController");
 
         waves = new string[]
 
-        { "001. 001main000doge000nyan", "002. 003main000doge000nyan", "003. 003main001doge000nyan", "004. 005main001doge000nyan", "005. 001main000doge000nyan",
-          "006. 001main000doge000nyan", "007. 001main000doge000nyan", "008. 001main000doge000nyan", "009. 001main000doge000nyan", "010. 001main000doge000nyan",
-          "011. 001main000doge000nyan", "012. 001main000doge000nyan", "013. 001main000doge000nyan", "014. 001main000doge000nyan", "015. 001main000doge000nyan"};
+        { "001. 001main000doge000nyan", "002. 003main000doge000nyan", "003. 003main001doge000nyan", "004. 005main001doge000nyan", "005. 001main001doge001nyan",
+          "006. 005main001doge001nyan", "007. 010main002doge001nyan", "008. 010main002doge001nyan", "009. 010main003doge001nyan", "010. 010main004doge000nyan",
+          "011. 015main002doge001nyan", "012. 020main002doge001nyan", "013. 020main003doge001nyan", "014. 025main003doge001nyan", "015. 030main004doge001nyan"};
 
 
 
@@ -158,6 +162,10 @@ public class ArenaController : MonoBehaviour
     {
         if (hubworldController.GetComponent<HubworldController>().area == "arena1")
         {
+            if (!bossIsActive && !cantEscape.activeSelf)
+            {
+                StartCoroutine(activateCantEscapeCoroutine());
+            }
             Debug.Log("arena1 drin");
             // Keep track of enemies in scene
 
@@ -192,7 +200,21 @@ public class ArenaController : MonoBehaviour
         }
     }
 
+    IEnumerator activateCantEscapeCoroutine()
+    {
+        yield return new WaitForSeconds(.5f);
+        cantEscape.SetActive(true);
+    }
 
+    public void activateCantEscape()
+    {
+        StartCoroutine(activateCantEscapeCoroutine());
+    }
+
+    public void deactivateCantEscape()
+    {
+        cantEscape.SetActive(false);
+    }
 
     IEnumerator NewWave()
 
@@ -218,7 +240,7 @@ public class ArenaController : MonoBehaviour
 
             {
 
-                GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(12.5f, 25), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(12.5f, 13), Quaternion.identity) as GameObject;
 
             }
 
@@ -226,7 +248,7 @@ public class ArenaController : MonoBehaviour
 
             {
 
-                GameObject mainEnemy = Instantiate(dogePrefab, new Vector2(12f, 25 + i), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(dogePrefab, new Vector2(13, 13 + i), Quaternion.identity) as GameObject;
 
             }
 
@@ -234,7 +256,7 @@ public class ArenaController : MonoBehaviour
 
             {
 
-                GameObject mainEnemy = Instantiate(nyanCatPrefab, new Vector2(13.5f, 25 + i), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(nyanCatPrefab, new Vector2(13.5f, 13 + i), Quaternion.identity) as GameObject;
 
             }
         }
@@ -244,15 +266,18 @@ public class ArenaController : MonoBehaviour
         catch (System.IndexOutOfRangeException)
         {
             wavesAreActive = false;
+            bossIsActive = true;
+            cantEscape.SetActive(false);
+            Instantiate(nyanDogePrefab, new Vector2(13,13), Quaternion.identity);
             Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 
         // Spawn items
 
-        if (Random.value < .3)
+        if (Random.value < .33)
         {
-            float ranX = Random.Range(6, 18);
-            float ranY = Random.Range(10, 17);
+            float ranX = Random.Range(5, 22);
+            float ranY = Random.Range(5, 16);
             float ran = Random.value;
 
             // 5% Soft Ice, 25% Nike Vans, 30% Seitenbacher, 25% Doritos, 15% Mountain Dew
