@@ -15,6 +15,8 @@ public class NyanDogeBroken : MonoBehaviour {
 
     private bool alive = true;
 
+    [SerializeField] GameObject yen500, yen100;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -58,6 +60,18 @@ public class NyanDogeBroken : MonoBehaviour {
             if (health <= 0 && alive)
             {
                 alive = false;
+
+                int ran = Random.Range(0, 100);
+                if(ran <= 50)
+                {
+                    GameObject fivehundredyen = Instantiate(yen500) as GameObject;
+                    fivehundredyen.transform.position = transform.position;
+                }
+                else
+                {
+                    GameObject hundredyen = Instantiate(yen100) as GameObject;
+                    hundredyen.transform.position = transform.position;
+                }
                 Destroy(this.gameObject);
             }
 

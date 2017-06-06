@@ -29,6 +29,8 @@ public class DatDolan : MonoBehaviour
     [SerializeField]
     private Sprite statueActivated;
 
+    [SerializeField] private GameObject yen100, yen500;
+
     // Use this for initialization
     void Start()
     {
@@ -218,6 +220,22 @@ public class DatDolan : MonoBehaviour
         GameObject key = Instantiate(keyPrefab) as GameObject;
         key.transform.position = transform.position;
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
+
+        GameObject fivehundredyen = Instantiate(yen500) as GameObject;
+        fivehundredyen.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y +1);
+
+        // Reward
+        int ran = Random.Range(0, 100);
+        if(ran < 50)
+        {
+            GameObject fivehundredyen1 = Instantiate(yen500) as GameObject;
+            fivehundredyen1.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y + 1.2f);
+        }
+        else
+        {
+            GameObject onehundredyen = Instantiate(yen100) as GameObject;
+            onehundredyen.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y + 1.2f);
+        }
 
         player.GetComponent<Player>().crazy += 1;
         player.GetComponent<Player>().anim.SetInteger("Crazy", player.GetComponent<Player>().crazy);

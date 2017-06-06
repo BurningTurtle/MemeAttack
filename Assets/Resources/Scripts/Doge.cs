@@ -24,10 +24,10 @@ public class Doge : MonoBehaviour
     [SerializeField] private GameObject woofPrefab;
     private int range = 20;
     private bool canShootNext = true;
-    private float shootPower = 0.075f;
+    private int shotSpeed = 2;
 
     [SerializeField]
-    private GameObject money;
+    private GameObject yen1, yen5, yen10, yen50;
 
     private GameObject statue;
     [SerializeField]
@@ -93,11 +93,14 @@ public class Doge : MonoBehaviour
     {
         canShootNext = false;
 
-        // Instantiate woof, movement is in Woof Script (easier for implementing following the player).
+        // Instantiate woof on doge
         woofProjectile = Instantiate(woofPrefab) as GameObject;
-
-        // Woof on doge
         woofProjectile.transform.position = this.transform.position;
+
+        // Get Vector to the player
+        Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
+        playerVector = Vector2.ClampMagnitude(playerVector, shotSpeed);
+        woofProjectile.GetComponent<Rigidbody2D>().velocity = playerVector *shotSpeed;
 
         yield return new WaitForSeconds(3f);
 
@@ -138,7 +141,34 @@ public class Doge : MonoBehaviour
 
         // Kill Doge.
         alive = false;
-        Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+
+        int ran = Random.Range(0, 100);
+        if (ran < 50)
+        {
+            int ran1 = Random.Range(0, 100);
+
+            if (ran1 < 10)
+            {
+                GameObject oneYen = Instantiate(yen1) as GameObject;
+                oneYen.transform.position = transform.position;
+            }
+            else if (ran1 < 20)
+            {
+                GameObject tenYen = Instantiate(yen5) as GameObject;
+                tenYen.transform.position = transform.position;
+            }
+            else if (ran1 < 80)
+            {
+                GameObject fiveYen = Instantiate(yen10) as GameObject;
+                fiveYen.transform.position = transform.position;
+            }
+            else if (ran1 < 100)
+            {
+                GameObject fiftyYen = Instantiate(yen50) as GameObject;
+                fiftyYen.transform.position = transform.position;
+            }
+        }
+
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
         Destroy(this.gameObject);
     }

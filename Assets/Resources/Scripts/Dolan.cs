@@ -13,8 +13,7 @@ public class Dolan : MonoBehaviour {
     GameObject knife1, knife2, knife3, knife4;
     public GameObject dropPrefab;
 
-    [SerializeField]
-    private GameObject money;
+    [SerializeField] private GameObject yen1, yen5, yen10, yen50;
 
     // For It's time to stop
     public bool stop;
@@ -165,7 +164,7 @@ public class Dolan : MonoBehaviour {
             {
                 if (Random.value < .2)
                 {
-                    GameObject drop = Instantiate(dropPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity) as GameObject;
+                    GameObject drop = Instantiate(dropPrefab, new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity) as GameObject;
                 }
                 
                 // Coroutine because Wait Time is necessary.
@@ -214,10 +213,35 @@ public class Dolan : MonoBehaviour {
             yield return null;
         }
 
-
-        // Destroy that duckling
         alive = false;
-        Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+
+        int ran = Random.Range(0, 100);
+        if (ran < 50)
+        {
+            int ran1 = Random.Range(0, 100);
+
+            if (ran1 < 10)
+            {
+                GameObject oneYen = Instantiate(yen1) as GameObject;
+                oneYen.transform.position = transform.position;
+            }
+            else if (ran1 < 20)
+            {
+                GameObject fiveYen = Instantiate(yen5) as GameObject;
+                fiveYen.transform.position = transform.position;
+            }
+            else if (ran1 < 80)
+            {
+                GameObject tenYen = Instantiate(yen10) as GameObject;
+                tenYen.transform.position = transform.position;
+            }
+            else if (ran1 < 100)
+            {
+                GameObject fiftyYen = Instantiate(yen50) as GameObject;
+                fiftyYen.transform.position = transform.position;
+            }
+        }
+
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
         Destroy(this.gameObject);
     }
