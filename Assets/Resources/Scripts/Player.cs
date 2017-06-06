@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
     public bool hasKey = false;
     public bool hasCoinMagnet = false;
 
+    public Collider2D normalCollider;
+    public Collider2D linkCollider;
+
     // Kleines Yen
     public static int kleinesYen;
     private SoundManager soundMan;
@@ -189,15 +192,14 @@ public class Player : MonoBehaviour
         Destroy(projectile.gameObject);
     }
 
-
-
     public void transformToLink()
     {
         anim.SetBool("isLink", true);
         isLink = true;
         StartCoroutine(waitForDarkLink());
-        transform.localScale += new Vector3(0.2f, 0.2f, 0);
+        transform.localScale += new Vector3(.5f, .5f, 0);
         Debug.Log("transformed");
+        normalCollider.enabled = false;
     }
 
     IEnumerator waitForDarkLink()
