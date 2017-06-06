@@ -13,6 +13,8 @@ public class NyanDogeBroken : MonoBehaviour {
 
     private GameObject player;
 
+    private bool alive = true;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -53,8 +55,9 @@ public class NyanDogeBroken : MonoBehaviour {
         {
             health -= player.GetComponent<Player>().damage;
 
-            if (health <= 0)
+            if (health <= 0 && alive)
             {
+                alive = false;
                 Destroy(this.gameObject);
             }
 

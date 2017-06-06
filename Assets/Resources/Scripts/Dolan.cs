@@ -161,7 +161,7 @@ public class Dolan : MonoBehaviour {
         if (collision.tag == "PlayerProjectile")
         {
             health = health - FindObjectOfType<Player>().damage;
-            if (health <= 0)
+            if (health <= 0 && alive)
             {
                 if (Random.value < .2)
                 {

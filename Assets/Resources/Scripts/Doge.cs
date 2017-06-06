@@ -112,7 +112,7 @@ public class Doge : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if (health <= 0)
+        if (health <= 0 && alive)
         {
             Destroy(woofProjectile.gameObject);
             StartCoroutine(die());

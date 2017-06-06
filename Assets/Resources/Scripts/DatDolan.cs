@@ -190,10 +190,12 @@ public class DatDolan : MonoBehaviour
         if (collision.tag == "PlayerProjectile")
         {
             health = health - FindObjectOfType<Player>().damage;
-            if (health <= 0)
+
+            if (health <= 0 && alive)
             {
                 StartCoroutine(die());
             }
+
             Destroy(collision.gameObject);
         }
     }
