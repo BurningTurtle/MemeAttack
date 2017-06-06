@@ -8,11 +8,14 @@ public class HubworldController : MonoBehaviour {
     [SerializeField]
     private GameObject parentController;
     [SerializeField]
-    GameObject HUD;
+    private GameObject HUD;
+    [SerializeField]
+    private GameObject special1HUD;
 
 	// Use this for initialization
 	void Start () {
         HUD.SetActive(false);
+        special1HUD.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -38,6 +41,7 @@ public class HubworldController : MonoBehaviour {
                 case "special1Trigger":
                     parentController.GetComponent<HubworldController>().area = "special1";
                     HUD.SetActive(false);
+                    special1HUD.SetActive(true);
                     break;
             }
         }

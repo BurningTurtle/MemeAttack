@@ -7,6 +7,7 @@ public class Woof : MonoBehaviour
 
     private GameObject player;
     private GameObject doge;
+    [SerializeField]
     private float speed = 270f;
     private int damage = 5;
     public bool stop = false;

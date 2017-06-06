@@ -33,6 +33,8 @@ public class Doge : MonoBehaviour
     [SerializeField]
     private Sprite statueActivated;
 
+    private GameObject woofProjectile;
+
     private void Start()
     {
         player = GameObject.Find("Player");
@@ -92,10 +94,10 @@ public class Doge : MonoBehaviour
         canShootNext = false;
 
         // Instantiate woof, movement is in Woof Script (easier for implementing following the player).
-        GameObject woof = Instantiate(woofPrefab) as GameObject;
+        woofProjectile = Instantiate(woofPrefab) as GameObject;
 
         // Woof on doge
-        woof.transform.position = this.transform.position;
+        woofProjectile.transform.position = this.transform.position;
 
         yield return new WaitForSeconds(3f);
 
@@ -112,10 +114,11 @@ public class Doge : MonoBehaviour
 
         if (health <= 0)
         {
+            Destroy(woofProjectile.gameObject);
             StartCoroutine(die());
         }
     }
-
+        
     IEnumerator die()
     {
         for (float f = 1f; f >= 0; f -= 0.1f)
