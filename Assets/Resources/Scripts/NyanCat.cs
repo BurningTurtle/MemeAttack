@@ -85,7 +85,7 @@ public class NyanCat : MonoBehaviour {
                 health -= 3;
             }
 
-            if (health <= 0)
+            if (health <= 0 && alive)
             {
                 // Coroutine because Wait Time is necessary.
                 StartCoroutine(die());

@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         // Uncomment this for testing
-        //health = 100;
+        health = 100;
 
         float[] spectrum = AudioListener.GetSpectrumData(1024, 0, FFTWindow.Hamming);
         bass = spectrum[2] + spectrum[0] + spectrum[1];
