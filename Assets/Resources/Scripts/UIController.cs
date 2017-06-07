@@ -20,6 +20,7 @@ public class UIController : MonoBehaviour
     private GameObject player;
     public Text waveDisplay;
     public GameObject arenaController;
+    public GameObject arena2Controller;
     public int passiveItems = 0;
     public int activeItems = 0;
     public Text[] crits;
@@ -27,6 +28,10 @@ public class UIController : MonoBehaviour
     public GameObject timeToStopAnim;
 
     public Text kleinesYenDisplay;
+
+    [SerializeField] GameObject hubworldCtrl;
+
+    private int wave;
 
     // Use this for initialization
     void Start()
@@ -46,8 +51,17 @@ public class UIController : MonoBehaviour
         {
             heartsIngame.sprite = hearts[heartPoints];
         }
-        // -1 because ArenaController increases wave right after spawn.
-        int wave = arenaController.GetComponent<ArenaController>().wave - 1;
+
+        if(hubworldCtrl.GetComponent<HubworldController>().area == "arena1")
+        {
+            // -1 because ArenaController increases wave right after spawn.
+            wave = arenaController.GetComponent<ArenaController>().wave - 1;
+        }
+        else if(hubworldCtrl.GetComponent<HubworldController>().area == "arena2")
+        {
+            wave = arena2Controller.GetComponent<Arena2Controller>().wave - 1;
+        }
+
         if(wave < 16)
         {
             waveDisplay.text = "WAVE\n" + wave;
