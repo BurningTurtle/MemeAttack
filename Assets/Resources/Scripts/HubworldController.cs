@@ -55,7 +55,6 @@ public class HubworldController : MonoBehaviour {
                 case "special1Trigger":
                     parentController.GetComponent<HubworldController>().area = "special1";
                     HUD.SetActive(false);
-                    special1HUD.SetActive(true);
                     if(bubble != null)
                     {
                         bubble.playerInArena = true;

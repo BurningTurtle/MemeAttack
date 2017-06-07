@@ -34,6 +34,7 @@ public class SoundManager : MonoBehaviour {
         StartCoroutine(fadeOut1());
         musicSource2.PlayOneShot(zeldaMusic, 1);
         StartCoroutine(fadeIn2());
+        StartCoroutine(waitForMain());
     }
 
     private IEnumerator fadeOut1()
@@ -48,6 +49,28 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
+    private IEnumerator fadeOut2()
+    {
+        float startVolume = musicSource2.volume;
+
+        while (musicSource2.volume > 0)
+        {
+            musicSource2.volume -= startVolume * Time.deltaTime / 1.5f; // 2.5s
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator fadeIn1()
+    {
+        while (musicSource1.volume < 1)
+        {
+            musicSource1.volume += 1 * Time.deltaTime / 2.5f; // 2.5s
+
+            yield return null;
+        }
+    }
+
     private IEnumerator fadeIn2()
     {
         while (musicSource2.volume < 1)
@@ -56,6 +79,13 @@ public class SoundManager : MonoBehaviour {
 
             yield return null;
         }
+    }
+
+    IEnumerator waitForMain()
+    {
+        yield return new WaitForSeconds(218);
+        StartCoroutine(fadeOut2());
+        StartCoroutine(fadeIn1());
     }
 
     public void playSeitenbacher()

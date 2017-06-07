@@ -6,8 +6,6 @@ public class Woof : MonoBehaviour
 {
     private GameObject player;
     private GameObject doge;
-    [SerializeField]
-    private float speed = 270f;
     private int damage = 5;
     public bool stop = false;
 
@@ -39,10 +37,13 @@ public class Woof : MonoBehaviour
 
     IEnumerator grow()
     {
-        for(float f = 0.3f ; f < 2; f = f + 0.1f)
+        for(float f = 0.3f ; f < 2; f = f + 0.2f)
         {
-            transform.localScale = new Vector3(f,f, 0);
-            yield return new WaitForSeconds(0.2f);
+            if (!stop)
+            {
+                transform.localScale = new Vector3(f, f, 0);
+                yield return new WaitForSeconds(0.2f);
+            }
         }
     }
 
