@@ -21,7 +21,7 @@ public class Trollface : MonoBehaviour
     public bool stop = false;
 
     [SerializeField]
-    private GameObject money;
+    private GameObject yen1, yen5, yen10, yen50;
 
     [SerializeField]
     private Sprite[] itemSprites;
@@ -125,7 +125,7 @@ public class Trollface : MonoBehaviour
                 Destroy(collision.gameObject);
             }
 
-            if (health <= 0)
+            if (health <= 0 && alive)
             {
                 StartCoroutine(die());
             }
@@ -151,7 +151,34 @@ public class Trollface : MonoBehaviour
 
         // Kill Doge.
         alive = false;
-        Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+
+        int ran = Random.Range(0, 100);
+        if (ran < 50)
+        {
+            int ran1 = Random.Range(0, 100);
+
+            if (ran1 < 90)
+            {
+                GameObject oneYen = Instantiate(yen1) as GameObject;
+                oneYen.transform.position = transform.position;
+            }
+            else if (ran1 < 93)
+            {
+                GameObject fiveYen = Instantiate(yen5) as GameObject;
+                fiveYen.transform.position = transform.position;
+            }
+            else if (ran1 < 96)
+            {
+                GameObject tenYen = Instantiate(yen10) as GameObject;
+                tenYen.transform.position = transform.position;
+            }
+            else if (ran1 < 100)
+            {
+                GameObject fiftyYen = Instantiate(yen50) as GameObject;
+                fiftyYen.transform.position = transform.position;
+            }
+        }
+
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
         Destroy(this.gameObject);
     }

@@ -9,9 +9,13 @@ public class NyanDogeBroken : MonoBehaviour {
     private int xVelocity;
     private int yVelocity;
 
-    private int health = 100;
+    public int health = 100;
 
     private GameObject player;
+
+    private bool alive = true;
+
+    [SerializeField] GameObject yen500, yen100;
 
 	// Use this for initialization
 	void Start () {
@@ -53,8 +57,21 @@ public class NyanDogeBroken : MonoBehaviour {
         {
             health -= player.GetComponent<Player>().damage;
 
-            if (health <= 0)
+            if (health <= 0 && alive)
             {
+                alive = false;
+
+                int ran = Random.Range(0, 100);
+                if(ran <= 50)
+                {
+                    GameObject fivehundredyen = Instantiate(yen500) as GameObject;
+                    fivehundredyen.transform.position = transform.position;
+                }
+                else
+                {
+                    GameObject hundredyen = Instantiate(yen100) as GameObject;
+                    hundredyen.transform.position = transform.position;
+                }
                 Destroy(this.gameObject);
             }
 

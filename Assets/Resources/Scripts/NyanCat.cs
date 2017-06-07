@@ -7,11 +7,10 @@ public class NyanCat : MonoBehaviour {
     private bool alive;
     public float speed;
     GameObject player;
-    private int health = 3;
+    public int health = 3;
     private SpriteRenderer sr;
 
-    [SerializeField]
-    private GameObject money;
+    [SerializeField] GameObject yen1, yen5, yen10, yen50, yen100;
 
     // For It's time to stop
     public bool stop;
@@ -85,7 +84,7 @@ public class NyanCat : MonoBehaviour {
                 health -= 3;
             }
 
-            if (health <= 0)
+            if (health <= 0 && alive)
             {
                 // Coroutine because Wait Time is necessary.
                 StartCoroutine(die());
@@ -112,7 +111,34 @@ public class NyanCat : MonoBehaviour {
 
         // Kill NyanCat.
         alive = false;
-        Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+
+        int ran = Random.Range(0, 100);
+        if (ran < 50)
+        {
+            int ran1 = Random.Range(0, 100);
+
+            if (ran1 < 10)
+            {
+                GameObject oneYen = Instantiate(yen1) as GameObject;
+                oneYen.transform.position = transform.position;
+            }
+            else if (ran1 < 20)
+            {
+                GameObject fiveYen = Instantiate(yen5) as GameObject;
+                fiveYen.transform.position = transform.position;
+            }
+            else if (ran1 < 80)
+            {
+                GameObject tenYen = Instantiate(yen10) as GameObject;
+                tenYen.transform.position = transform.position;
+            }
+            else if (ran1 < 100)
+            {
+                GameObject fiftyYen = Instantiate(yen50) as GameObject;
+                fiftyYen.transform.position = transform.position;
+            }
+        }
+
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
         Destroy(this.gameObject);
     }

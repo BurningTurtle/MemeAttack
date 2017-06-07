@@ -14,8 +14,7 @@ public class DatBoi : MonoBehaviour {
     private float deltaX;
     private float lastPosition;
 
-    [SerializeField]
-    private GameObject money;
+    [SerializeField]private GameObject yen1, yen5, yen10, yen50;
 
     [SerializeField] private GameObject oshitwaddupPrefab;
     private GameObject oshitwaddup;
@@ -169,7 +168,7 @@ public class DatBoi : MonoBehaviour {
                 health -= 3;
             }
 
-            if (health <= 0)
+            if (health <= 0 && alive)
             {
                 // Coroutine because Wait Time is necessary.
                 StartCoroutine(die());
@@ -196,7 +195,33 @@ public class DatBoi : MonoBehaviour {
 
         // Kill DatBoi.
         alive = false;
-        Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+
+        int ran = Random.Range(0, 100);
+        if(ran < 50)
+        {
+            int ran1 = Random.Range(0, 100);
+
+            if(ran1 < 10)
+            {
+                GameObject oneYen = Instantiate(yen1) as GameObject;
+                oneYen.transform.position = transform.position;
+            }
+            else if(ran1 < 20)
+            {
+                GameObject fiveYen = Instantiate(yen5) as GameObject;
+                fiveYen.transform.position = transform.position;
+            }
+            else if(ran1 < 80)
+            {
+                GameObject tenYen = Instantiate(yen10) as GameObject;
+                tenYen.transform.position = transform.position;
+            }
+            else if(ran1 < 100)
+            {
+                GameObject fiftyYen = Instantiate(yen50) as GameObject;
+                fiftyYen.transform.position = transform.position;
+            }
+        }
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
         Destroy(this.gameObject);
     } 

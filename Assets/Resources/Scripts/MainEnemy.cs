@@ -8,9 +8,8 @@ public class MainEnemy : MonoBehaviour {
     private GameObject projectilePrefab;
     private GameObject projectile;
     [SerializeField]
-    private GameObject money;
+    private GameObject yen1, yen500;
 
-    public float moneyChance;
     private bool alive;
     public float speed;
     public float shootPower;
@@ -79,13 +78,37 @@ public class MainEnemy : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Destroy enemy and projectile if it gets hit.
-        if (collision.tag == "PlayerProjectile")
+        if (collision.tag == "PlayerProjectile" || collision.tag == "Bubble")
         {
-            if(Random.value <= moneyChance)
+            int ran = Random.Range(0, 100);
+            if(ran <= 50)
             {
-                Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+                int ran1 = Random.Range(0, 1000);
+                if(ran1 == 1)
+                {
+                    GameObject f1 = Instantiate(yen500) as GameObject;
+                    GameObject f2 = Instantiate(yen500) as GameObject;
+                    GameObject f3 = Instantiate(yen500) as GameObject;
+                    GameObject f4 = Instantiate(yen500) as GameObject;
+                    GameObject f5 = Instantiate(yen500) as GameObject;
+                    f1.transform.position = new Vector2(transform.position.x, transform.position.y);
+                    f2.transform.position = new Vector2(transform.position.x, transform.position.y + 1);
+                    f3.transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+                    f4.transform.position = new Vector2(transform.position.x + 1, transform.position.y);
+                    f5.transform.position = new Vector2(transform.position.x - 1, transform.position.y);
+                }
+                else
+                {
+                    GameObject oneYen = Instantiate(yen1) as GameObject;
+                    oneYen.transform.position = transform.position;
+                }
             }
-            Destroy(collision.gameObject);
+
+            if(collision.gameObject.tag == "PlayerProjectile")
+            {
+                Destroy(collision.gameObject);
+            }
+
             statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
             Destroy(gameObject);
         }

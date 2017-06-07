@@ -14,7 +14,7 @@ public class NyanDoge : MonoBehaviour
     private bool canMove = true;
 
     // Stuff for NyanDoge
-    [SerializeField] private int health = 500;
+    public int health = 500;
     private GameObject player;
     private bool alive = true;
     private int speed = 200;
@@ -56,16 +56,15 @@ public class NyanDoge : MonoBehaviour
         {
             if (alive)
             {
-                if (canMove)
-                {
-                    // Rotate around player at all times
-                    _centre = player.transform.position;
-                    _angle += rotateSpeed * Time.deltaTime;
-                    var offset = new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * radius;
-                    transform.position = _centre + offset;
-                    Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
-                    playerVector.Normalize();
-                }
+
+                // Rotate around player at all times
+                _centre = player.transform.position;
+                _angle += rotateSpeed * Time.deltaTime;
+                var offset = new Vector2(Mathf.Sin(_angle), Mathf.Cos(_angle)) * radius;
+                transform.position = _centre + offset;
+                Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
+                playerVector.Normalize();
+
 
                 if (health > 300)
                 {
@@ -75,7 +74,6 @@ public class NyanDoge : MonoBehaviour
                     }
 
                     // Front towards player
-                    Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
                     if (playerVector != Vector2.zero)
                     {
                         float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
@@ -86,7 +84,6 @@ public class NyanDoge : MonoBehaviour
                 if (health <= 300 && health > 0)
                 {
                     // NyanDoge's Rainbow towards Player
-                    Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
                     if (playerVector != Vector2.zero)
                     {
                         float angle = Mathf.Atan2(playerVector.y, playerVector.x) * Mathf.Rad2Deg;
@@ -132,24 +129,28 @@ public class NyanDoge : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "PlayerProjectile")
+        if (collision.gameObject.tag == "PlayerProjectile")
         {
-            health -= player.GetComponent<Player>().damage;
-
-            if(health <= 0)
+            if (activated)
             {
-                // NyanDoge GameObject gets destroyed at end of animation event
-                anim.SetBool("Break", true);
-                canMove = false;
-                GameObject key = Instantiate(keyPrefab) as GameObject;
-                key.transform.position = new Vector2(this.transform.position.x, this.transform.position.y - 1);
-                statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
+                health -= player.GetComponent<Player>().damage;
 
-                player.GetComponent<Player>().crazy += 1;
-                player.GetComponent<Player>().anim.SetInteger("Crazy", player.GetComponent<Player>().crazy);
-                arenaController.GetComponent<ArenaController>().deactivateCantEscape();
+                if (health <= 0 && alive)
+                {
+                    alive = false;
+
+                    // NyanDoge GameObject gets destroyed at end of animation event
+                    anim.SetBool("Break", true);
+
+                    GameObject key = Instantiate(keyPrefab) as GameObject;
+                    key.transform.position = new Vector2(this.transform.position.x, this.transform.position.y - 1);
+                    statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
+
+                    player.GetComponent<Player>().crazy += 1;
+                    player.GetComponent<Player>().anim.SetInteger("Crazy", player.GetComponent<Player>().crazy);
+                    arenaController.GetComponent<ArenaController>().deactivateCantEscape();
+                }
             }
-
             Destroy(collision.gameObject);
         }
     }

@@ -12,7 +12,7 @@ public class DatDolan : MonoBehaviour
     private float lastposition;
     private SpriteRenderer sr;
     private bool canDrop = true;
-    [SerializeField] private int health = 1000;
+    public int health = 1000;
     private bool alive = true;
     [SerializeField] GameObject featherPrefab;
     private int featherSpeed = 20;
@@ -28,6 +28,8 @@ public class DatDolan : MonoBehaviour
     private GameObject statue;
     [SerializeField]
     private Sprite statueActivated;
+
+    [SerializeField] private GameObject yen100, yen500;
 
     // Use this for initialization
     void Start()
@@ -190,10 +192,12 @@ public class DatDolan : MonoBehaviour
         if (collision.tag == "PlayerProjectile")
         {
             health = health - FindObjectOfType<Player>().damage;
-            if (health <= 0)
+
+            if (health <= 0 && alive)
             {
                 StartCoroutine(die());
             }
+
             Destroy(collision.gameObject);
         }
     }
@@ -216,6 +220,22 @@ public class DatDolan : MonoBehaviour
         GameObject key = Instantiate(keyPrefab) as GameObject;
         key.transform.position = transform.position;
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
+
+        GameObject fivehundredyen = Instantiate(yen500) as GameObject;
+        fivehundredyen.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y +1);
+
+        // Reward
+        int ran = Random.Range(0, 100);
+        if(ran < 50)
+        {
+            GameObject fivehundredyen1 = Instantiate(yen500) as GameObject;
+            fivehundredyen1.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y + 1.2f);
+        }
+        else
+        {
+            GameObject onehundredyen = Instantiate(yen100) as GameObject;
+            onehundredyen.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y + 1.2f);
+        }
 
         player.GetComponent<Player>().crazy += 1;
         player.GetComponent<Player>().anim.SetInteger("Crazy", player.GetComponent<Player>().crazy);
