@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class MasterSword : MonoBehaviour {
 
+    [SerializeField]
+    private GameObject player;
+
 	// Use this for initialization
 	void Start () {
-		
+		player = GameObject.Find("Player");
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if(!player.GetComponent<Player>().isDarkLink)
+        {
+            Destroy(gameObject);
+        }
         rotateToMouse();
     }
 
