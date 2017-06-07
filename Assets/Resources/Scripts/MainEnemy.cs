@@ -25,10 +25,13 @@ public class MainEnemy : MonoBehaviour {
     private GameObject statue;
     [SerializeField]
     private Sprite statueActivated;
+    [SerializeField]
+    private GameObject special1Controller;
 
     // Use this for initialization
     void Start()
     {
+        special1Controller = GameObject.Find("Special1Controller");
         alive = true;
         player = GameObject.Find("Player");
         canShootNext = true;
@@ -112,8 +115,19 @@ public class MainEnemy : MonoBehaviour {
             statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
             Destroy(gameObject);
         }
+
         if (collision.tag == "MasterSword")
         {
+            if(player.GetComponent<Player>().bass > 0.9f)
+            {
+                special1Controller.GetComponent<Special1Controller>().crits++;
+                Debug.Log("crit");
+                GameObject.Find("UIController").GetComponent<UIController>().showCrit();
+            }
+            else
+            {
+                special1Controller.GetComponent<Special1Controller>().nonCrits++;
+            }
             Destroy(gameObject);
         }
     }

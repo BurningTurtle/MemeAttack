@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Doge : MonoBehaviour
@@ -24,7 +25,8 @@ public class Doge : MonoBehaviour
     [SerializeField] private GameObject woofPrefab;
     private int range = 20;
     private bool canShootNext = true;
-    private int shotSpeed = 2;
+    [SerializeField]
+    private float shootSpeed;
 
     [SerializeField]
     private GameObject yen1, yen5, yen10, yen50;
@@ -85,7 +87,13 @@ public class Doge : MonoBehaviour
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             anim.SetBool("moving", false);
-            FindObjectOfType<Woof>().GetComponent<Woof>().stop = true;
+            try
+            {
+                FindObjectOfType<Woof>().GetComponent<Woof>().stop = true;
+            }
+            catch (NullReferenceException)
+            {
+            }
         }
     }
 
@@ -99,8 +107,8 @@ public class Doge : MonoBehaviour
 
         // Get Vector to the player
         Vector2 playerVector = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
-        playerVector = Vector2.ClampMagnitude(playerVector, shotSpeed);
-        woofProjectile.GetComponent<Rigidbody2D>().velocity = playerVector *shotSpeed;
+        playerVector = Vector2.ClampMagnitude(playerVector, shootSpeed);
+        woofProjectile.GetComponent<Rigidbody2D>().velocity = playerVector * shootSpeed;
 
         yield return new WaitForSeconds(3f);
 
@@ -142,10 +150,10 @@ public class Doge : MonoBehaviour
         // Kill Doge.
         alive = false;
 
-        int ran = Random.Range(0, 100);
+        int ran = UnityEngine.Random.Range(0, 100);
         if (ran < 50)
         {
-            int ran1 = Random.Range(0, 100);
+            int ran1 = UnityEngine.Random.Range(0, 100);
 
             if (ran1 < 10)
             {

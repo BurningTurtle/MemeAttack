@@ -36,11 +36,16 @@ public class Player : MonoBehaviour
     public static int kleinesYen;
     private SoundManager soundMan;
 
+    [SerializeField]
+    private GameObject special1HUD;
+    private GameObject special1Controller;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         soundMan = FindObjectOfType<SoundManager>();
+        special1Controller = GameObject.Find("Special1Controller");
     }
 
     private void Update()
@@ -48,8 +53,10 @@ public class Player : MonoBehaviour
         // Uncomment this for testing
         health = 100;
 
-        float[] spectrum = AudioListener.GetSpectrumData(1024, 0, FFTWindow.Hamming);
-        bass = spectrum[2] + spectrum[0] + spectrum[1];
+        float[] spectrum = AudioListener.GetSpectrumData(64, 0, FFTWindow.Hamming);
+        bass = spectrum[0] + spectrum[1] + spectrum[2] + spectrum[3] + spectrum[4] + spectrum[5];
+
+        Debug.Log("Bass." + bass);
 
         if (health > 100)
         {
@@ -99,7 +106,7 @@ public class Player : MonoBehaviour
         {
             MasterSword = Instantiate(MasterSword) as GameObject;
             MasterSword.transform.Rotate(0, 0, -90);
-            MasterSword.transform.localScale += new Vector3(0.2f, 0.2f, 0);
+            MasterSword.transform.localScale += new Vector3(0.3f, 0.3f, 0);
 
             hasSword = true;
         }
@@ -197,7 +204,7 @@ public class Player : MonoBehaviour
         anim.SetBool("isLink", true);
         isLink = true;
         StartCoroutine(waitForDarkLink());
-        transform.localScale += new Vector3(.5f, .5f, 0);
+        transform.localScale += new Vector3(.25f, .25f, 0);
         Debug.Log("transformed");
         normalCollider.enabled = false;
     }
@@ -208,8 +215,17 @@ public class Player : MonoBehaviour
         anim.SetBool("isLink", false);
         anim.SetBool("isDarkLink", true);
         yield return new WaitForSeconds(0.3f);
+        special1HUD.SetActive(true);
         isDarkLink = true;
         isLink = false;
+        yield return new WaitForSeconds(181);
+        isDarkLink = false;
+        transform.localScale -= new Vector3(.25f, .25f, 0);
+        anim.SetBool("isDarkLink", false);
+        kleinesYen += Mathf.RoundToInt(special1Controller.GetComponent<Special1Controller>().critRate * 4000);
+        special1Controller.GetComponent<Special1Controller>().canEscape();
+        special1Controller.GetComponent<Special1Controller>().activateExit();
+        normalCollider.enabled = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

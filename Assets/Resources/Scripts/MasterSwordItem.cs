@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class MasterSwordItem : MonoBehaviour
@@ -10,6 +11,11 @@ public class MasterSwordItem : MonoBehaviour
     private SpriteRenderer sr;
     private bool pickedUp = false;
     private GameObject uic;
+
+    [SerializeField]
+    private GameObject dialogueBox;
+    [SerializeField]
+    private Text dialogueText;
 
     void Start()
     {
@@ -33,18 +39,56 @@ public class MasterSwordItem : MonoBehaviour
             sr.material.color = colour;
             if (!pickedUp)
             {
-                soundMan.playZelda();
-
-                // Do something
-                player.GetComponent<Player>().transformToLink();
-
-                // Show MasterSword in the UI
-                //uic.GetComponent<UIController>().masterSword();
-
                 pickedUp = true;
+                StartCoroutine(pickedUpCoroutine());
             }
         }
     }
 
-    
+    IEnumerator pickedUpCoroutine()
+    {   
+        dialogueBox.SetActive(true);
+        dialogueText.text = "This is the Master Sword.";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "It might be familiar to you.";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "Anyway, once this explanation is over, a song will start and you will become Link.";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "As Link, you are immortal. Just get as much money as you can.";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "Later on, you will transform to Dark Link and enemies will stop dropping money.";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "In order to get money, you have to swing your sword to the music's bass.";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "It's important.";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "Once the song is over, this simulation will calculate your \"Hits To The Bass Rate\".";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "Don't hit enemies when there is no bass!";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "The better you perform, the more money you will get.";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "Have fun.";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "One last tip: Don't swing your sword too fast.";
+        yield return new WaitForSeconds(0.25f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueBox.SetActive(false);
+        player.GetComponent<Player>().transformToLink();
+        soundMan.playZelda();
+    }
+
+
 }
