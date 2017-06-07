@@ -43,6 +43,8 @@ public class Turtle : MonoBehaviour {
     [SerializeField]
     private Sprite statueActivated;
 
+    [SerializeField] GameObject playerProjectiles;
+
     // Use this for initialization
     void Start ()
     {
@@ -273,6 +275,7 @@ public class Turtle : MonoBehaviour {
 
         player.GetComponent<Player>().crazy += 1;
         player.GetComponent<Player>().anim.SetInteger("Crazy", player.GetComponent<Player>().crazy);
+        FindObjectOfType<PlayerParticleSystem>().enableParticleSystem();
 
         Destroy(this.gameObject);
     }
