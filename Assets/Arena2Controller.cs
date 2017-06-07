@@ -76,7 +76,7 @@ public class Arena2Controller : MonoBehaviour {
 
         // Starting point for creating the arena.
 
-        Vector2 startPos = new Vector2(-0.5f, 32.5f);
+        Vector2 startPos = new Vector2(-0.5f, 37.1f);
 
 
 
@@ -252,7 +252,7 @@ public class Arena2Controller : MonoBehaviour {
             wavesAreActive = false;
             bossIsActive = true;
             cantEscape.SetActive(false);
-            Instantiate(datDolanPrefab, new Vector2(13, 43), Quaternion.identity);
+            Instantiate(datDolanPrefab, new Vector2(13, 50), Quaternion.identity);
             Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 
