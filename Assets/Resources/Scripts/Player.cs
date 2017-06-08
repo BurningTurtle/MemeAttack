@@ -65,10 +65,15 @@ public class Player : MonoBehaviour
         // Uncomment this for testing
         //health = 100;
 
+        if(hubworldController.GetComponent<HubworldController>().area == "special2")
+        {
+            health = 100;
+        }
+
         float[] spectrum = AudioListener.GetSpectrumData(64, 0, FFTWindow.Hamming);
         bass = spectrum[0] + spectrum[1] + spectrum[2] + spectrum[3] + spectrum[4] + spectrum[5];
 
-        Debug.Log("Bass." + bass);
+        //Debug.Log("Bass." + bass);
 
         if (health > 100)
         {

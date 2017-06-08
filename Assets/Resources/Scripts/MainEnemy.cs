@@ -54,7 +54,7 @@ public class MainEnemy : MonoBehaviour {
             //Debug.Log("combined distance" + combinedDistance);
             if(combinedDistance < range && canShootNext && !stop)
             {
-                Debug.Log("shoot!");
+                //Debug.Log("shoot!");
                 StartCoroutine(shoot(targetVelocity));      
             }
 
