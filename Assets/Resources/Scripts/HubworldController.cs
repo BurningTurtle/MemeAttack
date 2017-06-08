@@ -13,7 +13,7 @@ public class HubworldController : MonoBehaviour
     [SerializeField]
     private GameObject special1HUD;
 
-    public string currentArea;
+    //public string currentArea;
 
     private Bubble bubble = null;
 
@@ -27,7 +27,6 @@ public class HubworldController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //bubble = FindObjectOfType<Bubble>();
     }
 
     void OnTriggerEnter2D(Collider2D other)

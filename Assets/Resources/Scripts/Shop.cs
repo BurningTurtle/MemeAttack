@@ -60,17 +60,14 @@ public class Shop : MonoBehaviour {
 
     IEnumerator buyBubble()
     {
-        player.GetComponent<Player>().canMove = false;
-
-        dialogueText.text = "I see, the Bubble. Developer Byn's choice. That will be 10.000 Kleines Yen.";
-
-        yield return new WaitForSeconds(0.5f);
-        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-        dialogueText.text = "Press \"y\" for yes, \"n\" for no";
-        yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
-        if (Input.GetKey("y"))
+        if (!bubbleBought)
         {
-            if (!bubbleBought)
+            dialogueText.text = "I see, the Bubble. Developer Byn's choice. That will be 10.000 Kleines Yen.";
+            yield return new WaitForSeconds(0.5f);
+            yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+            dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+            yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
+            if (Input.GetKey("y"))
             {
                 if (player.GetComponent<Player>().returnKleinesYen() >= 10000)
                 {
@@ -84,24 +81,25 @@ public class Shop : MonoBehaviour {
                     dialogueText.text = "Oh, you don't have enough Kleines Yen!";
                 }
             }
-            else
+            else if (Input.GetKey("n"))
             {
-                dialogueText.text = "It appears you already own a bubble. Maybe you're interested in buying something else?";
+                dialogueText.text = "Okay, maybe next time!";
             }
+            yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         }
-        else if (Input.GetKey("n"))
+        else
         {
-            dialogueText.text = "Okay, maybe next time!";
+            dialogueText.text = "It appears you already own a bubble. Maybe you're interested in buying something else?";
+            yield return new WaitForSeconds(0.5f);
+            yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         }
-        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
         dialogueBox.SetActive(false);
         processing = false;
-        player.GetComponent<Player>().canMove = true;
     }
 
     IEnumerator buySword()
     {
-        player.GetComponent<Player>().canMove = false;
         switch (dmgUps)
         {
             case 0:
@@ -272,12 +270,10 @@ public class Shop : MonoBehaviour {
                 processing = false;
                 break;
         }
-        player.GetComponent<Player>().canMove = true;
     }
 
     IEnumerator buyNikeVans()
     {
-        player.GetComponent<Player>().canMove = false;
         switch (speedUps)
         {
             case 0:
@@ -448,53 +444,55 @@ public class Shop : MonoBehaviour {
                 processing = false;
                 break;
         }
-        player.GetComponent<Player>().canMove = true;
     }
 
     IEnumerator buyCoinMagnet()
     {
-        player.GetComponent<Player>().canMove = false;
-        float ran = Random.value;
-        if (ran > 0.66)
+        if (!player.GetComponent<Player>().hasCoinMagnet)
         {
-            dialogueText.text = "I see, the Coin Magnet. Good choice. That will be 1.000 Kleines Yen.";
-        }
-        else if (ran > 0.33)
-        {
-            dialogueText.text = "Ah, the good old Coin Magnet. 1.000 Kleines Yen please.";
-        }
-        else
-        {
-            dialogueText.text = "Coin magnet? 1.000 Kleines Yen and we're good to go.";
-        }
-        yield return new WaitForSeconds(0.5f);
-        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-        dialogueText.text = "Press \"y\" for yes, \"n\" for no";
-        yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
-        if (Input.GetKey("y"))
-        {
-            if (player.GetComponent<Player>().returnKleinesYen() >= 1000 && player.GetComponent<Player>().hasCoinMagnet == false)
+            float ran = Random.value;
+            if (ran > 0.66)
             {
-                player.GetComponent<Player>().payYen(1000);
-                player.GetComponent<Player>().hasCoinMagnet = true;
-                dialogueText.text = "Thanks for your purchase!";
+                dialogueText.text = "I see, the Coin Magnet. Good choice. That will be 1.000 Kleines Yen.";
             }
-            else if(player.GetComponent<Player>().hasCoinMagnet == true)
+            else if (ran > 0.33)
             {
-                dialogueText.text = "Looks like you already own a Coin Magnet!";
+                dialogueText.text = "Ah, the good old Coin Magnet. 1.000 Kleines Yen please.";
             }
             else
             {
-                dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                dialogueText.text = "Coin magnet? 1.000 Kleines Yen and we're good to go.";
             }
+            yield return new WaitForSeconds(0.5f);
+            yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+            dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+            yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
+            if (Input.GetKey("y"))
+            {
+                if (player.GetComponent<Player>().returnKleinesYen() >= 1000 && player.GetComponent<Player>().hasCoinMagnet == false)
+                {
+                    player.GetComponent<Player>().payYen(1000);
+                    player.GetComponent<Player>().hasCoinMagnet = true;
+                    dialogueText.text = "Thanks for your purchase!";
+                }
+                else
+                {
+                    dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                }
+            }
+            else if (Input.GetKey("n"))
+            {
+                dialogueText.text = "Okay, maybe next time!";
+            }
+            yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         }
-        else if (Input.GetKey("n"))
+        else
         {
-            dialogueText.text = "Okay, maybe next time!";
+            dialogueText.text = "Looks like you already own this awesome coin magnet!";
+            yield return new WaitForSeconds(0.5f);
+            yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         }
-        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         dialogueBox.SetActive(false);
         processing = false;
-        player.GetComponent<Player>().canMove = true;
     }
 }
