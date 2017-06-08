@@ -41,7 +41,7 @@ public class Arena2Controller : MonoBehaviour {
     [SerializeField]
     GameObject hubworldController;
     [SerializeField]
-    private GameObject cantEscape;
+    private GameObject cantEscape, HUD;
 
 
     // Enemies' Prefabs  
@@ -181,6 +181,8 @@ public class Arena2Controller : MonoBehaviour {
 
                 alreadyCalled = true;
 
+                StartCoroutine(activateCantEscapeCoroutine());
+
             }
         }
     }
@@ -224,7 +226,7 @@ public class Arena2Controller : MonoBehaviour {
 
             {
 
-                GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(12.5f, 43), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(12.5f, 48), Quaternion.identity) as GameObject;
 
             }
 
@@ -232,7 +234,7 @@ public class Arena2Controller : MonoBehaviour {
 
             {
 
-                GameObject mainEnemy = Instantiate(dolanPrefab, new Vector2(13, 43 + i), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(dolanPrefab, new Vector2(13, 48 + i), Quaternion.identity) as GameObject;
 
             }
 
@@ -240,7 +242,7 @@ public class Arena2Controller : MonoBehaviour {
 
             {
 
-                GameObject mainEnemy = Instantiate(datBoiPrefab, new Vector2(13.5f, 43 + i), Quaternion.identity) as GameObject;
+                GameObject mainEnemy = Instantiate(datBoiPrefab, new Vector2(13.5f, 48   + i), Quaternion.identity) as GameObject;
 
             }
         }
@@ -294,5 +296,34 @@ public class Arena2Controller : MonoBehaviour {
 
 
         alreadyCalled = false;
+    }
+
+    public void resetWaves()
+    {
+        wave = 1;
+        foreach (GameObject enemy in mainEnemiesInScene)
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (GameObject enemy in dolansInScene)
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (GameObject enemy in datBoisInScene)
+        {
+            Destroy(enemy.gameObject);
+        }
+        cantEscape.SetActive(false);
+        HUD.SetActive(false);
+        GameObject[] items = GameObject.FindGameObjectsWithTag("item");
+        foreach (GameObject item in items)
+        {
+            Destroy(item.gameObject);
+        }
+        if (!wavesAreActive)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("DatDolan").gameObject);
+            wavesAreActive = true;
+        }
     }
 }

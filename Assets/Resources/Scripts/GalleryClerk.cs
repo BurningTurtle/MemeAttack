@@ -45,7 +45,6 @@ public class GalleryClerk : MonoBehaviour {
 
     IEnumerator introduction()
     {
-        player.GetComponent<Player>().canMove = false;
         introduced = true;
         dialogueText.text = "Hey Player. I welcome you as well.";
         yield return new WaitForSeconds(0.5f);
@@ -70,12 +69,10 @@ public class GalleryClerk : MonoBehaviour {
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         dialogueBox.SetActive(false);
         introductionFinished = true;
-        player.GetComponent<Player>().canMove = true;
     }
 
     IEnumerator back()
     {
-        player.GetComponent<Player>().canMove = false;
         talk = true;
         dialogueText.text = "Hey Player. Wanna go back to the arena?";
         yield return new WaitForSeconds(0.5f);
@@ -88,6 +85,5 @@ public class GalleryClerk : MonoBehaviour {
         }
         dialogueBox.SetActive(false);
         talk = false;
-        player.GetComponent<Player>().canMove = true;
     }
 }
