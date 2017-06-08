@@ -13,8 +13,6 @@ public class HubworldController : MonoBehaviour
     [SerializeField]
     private GameObject special1HUD;
 
-    //public string currentArea;
-
     private Bubble bubble = null;
 
     // Use this for initialization
@@ -78,6 +76,18 @@ public class HubworldController : MonoBehaviour
                     {
                         parentController.GetComponent<HubworldController>().area = "arena2";
                         HUD.SetActive(true);
+                        if (bubble != null)
+                        {
+                            bubble.playerInArena = true;
+                            bubble.fadein();
+                        }
+                    }
+                    break;
+                case "special2Trigger":
+                    if(parentController.GetComponent<HubworldController>().area != "special2")
+                    {
+                        parentController.GetComponent<HubworldController>().area = "special2";
+                        HUD.SetActive(false);
                         if (bubble != null)
                         {
                             bubble.playerInArena = true;
