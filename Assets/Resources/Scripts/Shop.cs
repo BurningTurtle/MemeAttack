@@ -60,6 +60,8 @@ public class Shop : MonoBehaviour {
 
     IEnumerator buyBubble()
     {
+        player.GetComponent<Player>().canMove = false;
+
         dialogueText.text = "I see, the Bubble. Developer Byn's choice. That will be 10.000 Kleines Yen.";
 
         yield return new WaitForSeconds(0.5f);
@@ -94,10 +96,12 @@ public class Shop : MonoBehaviour {
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         dialogueBox.SetActive(false);
         processing = false;
+        player.GetComponent<Player>().canMove = true;
     }
 
     IEnumerator buySword()
     {
+        player.GetComponent<Player>().canMove = false;
         switch (dmgUps)
         {
             case 0:
@@ -267,11 +271,13 @@ public class Shop : MonoBehaviour {
                 dialogueBox.SetActive(false);
                 processing = false;
                 break;
-        }      
+        }
+        player.GetComponent<Player>().canMove = true;
     }
 
     IEnumerator buyNikeVans()
     {
+        player.GetComponent<Player>().canMove = false;
         switch (speedUps)
         {
             case 0:
@@ -442,10 +448,12 @@ public class Shop : MonoBehaviour {
                 processing = false;
                 break;
         }
+        player.GetComponent<Player>().canMove = true;
     }
 
     IEnumerator buyCoinMagnet()
     {
+        player.GetComponent<Player>().canMove = false;
         float ran = Random.value;
         if (ran > 0.66)
         {
@@ -487,5 +495,6 @@ public class Shop : MonoBehaviour {
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         dialogueBox.SetActive(false);
         processing = false;
+        player.GetComponent<Player>().canMove = true;
     }
 }

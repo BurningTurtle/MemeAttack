@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bubble : MonoBehaviour {
+public class Bubble : MonoBehaviour
+{
 
     private GameObject player;
     private int buffer;
@@ -10,9 +11,11 @@ public class Bubble : MonoBehaviour {
     private bool triggered = false;
     private SpriteRenderer sr;
     public bool playerInArena;
+    private HubworldController[] hubWorldCtrl;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         player = GameObject.Find("Player");
         _collider = GetComponent<Collider2D>();
         transform.position = player.transform.position;
@@ -21,10 +24,19 @@ public class Bubble : MonoBehaviour {
         // Bubble is bought in shop, this is not an arena, thus, the bubble has to be transparent
         fadeout();
         playerInArena = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+        // For reference to bubble in HWController
+        hubWorldCtrl = FindObjectsOfType<HubworldController>();
+
+        for (int i = 0; i < hubWorldCtrl.Length; i++)
+        {
+            hubWorldCtrl[i].GetComponent<HubworldController>().getBubble();
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         transform.position = player.transform.position;
 
         if (triggered || !playerInArena)
@@ -35,7 +47,7 @@ public class Bubble : MonoBehaviour {
         {
             _collider.enabled = true;
         }
-	}
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

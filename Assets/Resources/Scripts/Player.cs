@@ -40,6 +40,9 @@ public class Player : MonoBehaviour
     private GameObject special1HUD;
     private GameObject special1Controller;
 
+    // Disabled for Dialogues
+    public bool canMove = true;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -67,13 +70,13 @@ public class Player : MonoBehaviour
         float yValue = Input.GetAxis("Vertical") * speed;
         Vector2 movement = new Vector2(xValue, yValue);
 
+
         // Limit diagonal movement to the same speed as movement along an axis.
         movement = Vector2.ClampMagnitude(movement, speed);
 
         movement *= Time.deltaTime;
 
-
-        if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+        if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && canMove)
         {
             // Switches from idle to walk animation.
             anim.SetBool("isWalking", true);
