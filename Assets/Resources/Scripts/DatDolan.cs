@@ -34,6 +34,8 @@ public class DatDolan : MonoBehaviour
 
     private GameObject arena2Controller;
 
+    [SerializeField] private GameObject special2PortalPrefab;
+
     // Use this for initialization
     void Start()
     {
@@ -238,6 +240,9 @@ public class DatDolan : MonoBehaviour
 
         GameObject fivehundredyen = Instantiate(yen500) as GameObject;
         fivehundredyen.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y +1);
+
+        GameObject special2Portal = Instantiate(special2PortalPrefab) as GameObject;
+        special2Portal.transform.position = new Vector2(13, 48);
 
         // Reward
         int ran = Random.Range(0, 100);

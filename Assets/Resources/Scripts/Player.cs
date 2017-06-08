@@ -48,6 +48,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject arenaController, arena2Controller;
 
+    // This is for bubble
+    private Bubble bubble = null;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -62,10 +65,15 @@ public class Player : MonoBehaviour
         // Uncomment this for testing
         //health = 100;
 
+        if(hubworldController.GetComponent<HubworldController>().area == "special2")
+        {
+            health = 100;
+        }
+
         float[] spectrum = AudioListener.GetSpectrumData(64, 0, FFTWindow.Hamming);
         bass = spectrum[0] + spectrum[1] + spectrum[2] + spectrum[3] + spectrum[4] + spectrum[5];
 
-        Debug.Log("Bass." + bass);
+        //Debug.Log("Bass." + bass);
 
         if (health > 100)
         {
@@ -109,7 +117,6 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             health = 100;
-            transform.position = new Vector2(12.5f, -13);
             if (hubworldController.GetComponent<HubworldController>().area == "arena1")
             {
                 arenaController.GetComponent<ArenaController>().resetWaves();
@@ -118,7 +125,8 @@ public class Player : MonoBehaviour
             {
                 arena2Controller.GetComponent<Arena2Controller>().resetWaves();
             }
-            hubworldController.GetComponent<HubworldController>().area = "hubworld";
+            transform.position = new Vector2(12.5f, -13);
+            bubble.GetComponent<Bubble>().fadeout();
         }
 
         if (!hasSword && isDarkLink)
@@ -135,7 +143,6 @@ public class Player : MonoBehaviour
             MasterSword.transform.position = new Vector2(transform.position.x + .3f, transform.position.y - .2f);
         }
     }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
