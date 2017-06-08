@@ -40,8 +40,13 @@ public class Player : MonoBehaviour
     private GameObject special1HUD;
     private GameObject special1Controller;
 
-    // Disabled for Dialogues
-    public bool canMove = true;
+    [SerializeField]
+    private GameObject dialogueBox;
+
+    private GameObject hubworldController;
+
+    [SerializeField]
+    private GameObject arenaController, arena2Controller;
 
     private void Start()
     {
@@ -49,12 +54,13 @@ public class Player : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         soundMan = FindObjectOfType<SoundManager>();
         special1Controller = GameObject.Find("Special1Controller");
+        hubworldController = GameObject.Find("HubworldController");
     }
 
     private void Update()
     {
         // Uncomment this for testing
-        health = 100;
+        //health = 100;
 
         float[] spectrum = AudioListener.GetSpectrumData(64, 0, FFTWindow.Hamming);
         bass = spectrum[0] + spectrum[1] + spectrum[2] + spectrum[3] + spectrum[4] + spectrum[5];
@@ -76,7 +82,7 @@ public class Player : MonoBehaviour
 
         movement *= Time.deltaTime;
 
-        if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && canMove)
+        if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && dialogueBox.activeSelf == false)
         {
             // Switches from idle to walk animation.
             anim.SetBool("isWalking", true);
@@ -102,7 +108,17 @@ public class Player : MonoBehaviour
 
         if (health <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            health = 100;
+            transform.position = new Vector2(12.5f, -13);
+            if (hubworldController.GetComponent<HubworldController>().area == "arena1")
+            {
+                arenaController.GetComponent<ArenaController>().resetWaves();
+            }
+            else if (hubworldController.GetComponent<HubworldController>().area == "arena2")
+            {
+                arena2Controller.GetComponent<Arena2Controller>().resetWaves();
+            }
+            hubworldController.GetComponent<HubworldController>().area = "hubworld";
         }
 
         if (!hasSword && isDarkLink)

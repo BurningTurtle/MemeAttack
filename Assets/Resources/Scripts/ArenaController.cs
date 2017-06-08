@@ -49,7 +49,7 @@ public class ArenaController : MonoBehaviour
     [SerializeField]
     GameObject hubworldController;
     [SerializeField]
-    private GameObject cantEscape;
+    private GameObject cantEscape, HUD;
 
 
     // Enemies' Prefabs  
@@ -171,15 +171,10 @@ public class ArenaController : MonoBehaviour
 
             mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
 
-            datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
-
-            dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
-
             nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
 
             dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
 
-            trollfacesInScene = GameObject.FindGameObjectsWithTag("Trollface");
 
 
 
@@ -195,6 +190,8 @@ public class ArenaController : MonoBehaviour
                 // Avoid infinite calling of IEnumerator NewWave() and thus spawning infinitely.
 
                 alreadyCalled = true;
+
+                StartCoroutine(activateCantEscapeCoroutine());
 
             }
         }
@@ -310,6 +307,35 @@ public class ArenaController : MonoBehaviour
 
 
         alreadyCalled = false;
+    }
+
+    public void resetWaves()
+    {
+        wave = 1;
+        foreach (GameObject enemy in mainEnemiesInScene)
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (GameObject enemy in nyanCatsInScene)
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (GameObject enemy in dogesInScene)
+        {
+            Destroy(enemy.gameObject);
+        }
+        cantEscape.SetActive(false);
+        HUD.SetActive(false);
+        GameObject[] items = GameObject.FindGameObjectsWithTag("item");
+        foreach (GameObject item in items)
+        {
+            Destroy(item.gameObject);
+        }
+        if (!wavesAreActive)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("NyanDoge").gameObject);
+            wavesAreActive = true;
+        }
     }
 
 }
