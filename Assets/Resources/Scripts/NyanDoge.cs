@@ -54,6 +54,7 @@ public class NyanDoge : MonoBehaviour
     {
         if(activated)
         {
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
             if (alive)
             {
 
@@ -100,12 +101,16 @@ public class NyanDoge : MonoBehaviour
                 }
             }
         }
-        else if(!activated && Vector2.Distance(transform.position, player.transform.position) < 3)
+        else
         {
-            if (Input.GetKeyDown("e"))
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            if(!activated && Vector2.Distance(transform.position, player.transform.position) < 3)
             {
-                activated = true;
-                arenaController.GetComponent<ArenaController>().activateCantEscape();
+                if (Input.GetKeyDown("e"))
+                {
+                    activated = true;
+                    arenaController.GetComponent<ArenaController>().activateCantEscape();
+                }
             }
         }
     }

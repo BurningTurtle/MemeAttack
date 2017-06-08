@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HubworldController : MonoBehaviour {
+public class HubworldController : MonoBehaviour
+{
 
     public string area;
     [SerializeField]
@@ -14,65 +15,83 @@ public class HubworldController : MonoBehaviour {
 
     public string currentArea;
 
-    private Bubble bubble;
+    private Bubble bubble = null;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         HUD.SetActive(false);
         special1HUD.SetActive(false);
-        bubble = FindObjectOfType<Bubble>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         //bubble = FindObjectOfType<Bubble>();
-	}
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.name == "Player")
-        {   
+        {
             switch (this.tag)
             {
                 case "arena1Trigger":
-                    parentController.GetComponent<HubworldController>().area = "arena1";
-                    HUD.SetActive(true);
-                    if(bubble != null)
+                    if (parentController.GetComponent<HubworldController>().area != "arena1")
                     {
-                        bubble.playerInArena = true;
-                        bubble.fadein();
+                        parentController.GetComponent<HubworldController>().area = "arena1";
+                        HUD.SetActive(true);
+                        if (bubble != null)
+                        {
+                            bubble.playerInArena = true;
+                            bubble.fadein();
+                        }
+                        Debug.Log(area);
                     }
-                    Debug.Log(area);
                     break;
                 case "hubworldTrigger":
-                    parentController.GetComponent<HubworldController>().area = "hubworld";
-                    HUD.SetActive(false);
-                    if(bubble != null)
+                    if (parentController.GetComponent<HubworldController>().area != "hubworld")
                     {
-                        bubble.playerInArena = false;
-                        bubble.fadeout();
+                        parentController.GetComponent<HubworldController>().area = "hubworld";
+                        HUD.SetActive(false);
+                        if (bubble != null)
+                        {
+                            bubble.playerInArena = false;
+                            bubble.fadeout();
+                        }
+                        Debug.Log(area);
                     }
-                    Debug.Log(area);
                     break;
                 case "special1Trigger":
-                    parentController.GetComponent<HubworldController>().area = "special1";
-                    HUD.SetActive(false);
-                    if(bubble != null)
+                    if (parentController.GetComponent<HubworldController>().area != "special1")
                     {
-                        bubble.playerInArena = true;
-                        bubble.fadein();
+                        parentController.GetComponent<HubworldController>().area = "special1";
+                        HUD.SetActive(false);
+                        if (bubble != null)
+                        {
+                            bubble.playerInArena = true;
+                            bubble.fadein();
+                        }
                     }
                     break;
                 case "arena2Trigger":
-                    parentController.GetComponent<HubworldController>().area = "arena2";
-                    HUD.SetActive(true);
-                    if(bubble != null)
+                    if (parentController.GetComponent<HubworldController>().area != "arena2")
                     {
-                        bubble.playerInArena = true;
-                        bubble.fadein();
+                        parentController.GetComponent<HubworldController>().area = "arena2";
+                        HUD.SetActive(true);
+                        if (bubble != null)
+                        {
+                            bubble.playerInArena = true;
+                            bubble.fadein();
+                        }
                     }
                     break;
             }
         }
+    }
+
+    public void getBubble()
+    {
+        bubble = FindObjectOfType<Bubble>();
     }
 }

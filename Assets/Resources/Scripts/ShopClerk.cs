@@ -47,6 +47,7 @@ public class ShopClerk : MonoBehaviour
     IEnumerator introduction()
     {
         introduced = true;
+        player.GetComponent<Player>().canMove = false;
         dialogueText.text = "Hey Player. I welcome you.";
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
@@ -72,12 +73,14 @@ public class ShopClerk : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         dialogueBox.SetActive(false);
+        player.GetComponent<Player>().canMove = true;
         introductionFinished = true;
     }
 
     IEnumerator back()
     {
         talk = true;
+        player.GetComponent<Player>().canMove = false;
         dialogueText.text = "Hey Player. Do you wanna go back to the arena?";
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
@@ -89,5 +92,6 @@ public class ShopClerk : MonoBehaviour
         }
         dialogueBox.SetActive(false);
         talk = false;
+        player.GetComponent<Player>().canMove = true;
     }
 }
