@@ -28,8 +28,11 @@ public class DatDolan : MonoBehaviour
     private GameObject statue;
     [SerializeField]
     private Sprite statueActivated;
+    private bool activated = false;
 
     [SerializeField] private GameObject yen100, yen500;
+
+    private GameObject arena2Controller;
 
     // Use this for initialization
     void Start()
@@ -38,82 +41,94 @@ public class DatDolan : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         statue = GameObject.Find("datdolanStatue1");
+        arena2Controller = GameObject.Find("Arena2Controller");
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (alive)
+        if (activated)
         {
-            if (canMove)
+            if (alive)
             {
-                Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
-                playerVector.Normalize();
-                GetComponent<Rigidbody2D>().velocity = playerVector * speed * Time.deltaTime;
-
-                deltaX = transform.position.x - lastposition;
-                lastposition = transform.position.x;
-
-                if (deltaX < 0)
+                if (canMove)
                 {
-                    sr.flipX = false;
+                    Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
+                    playerVector.Normalize();
+                    GetComponent<Rigidbody2D>().velocity = playerVector * speed * Time.deltaTime;
+
+                    deltaX = transform.position.x - lastposition;
+                    lastposition = transform.position.x;
+
+                    if (deltaX < 0)
+                    {
+                        sr.flipX = false;
+                    }
+                    else if (deltaX > 0)
+                    {
+                        sr.flipX = true;
+                    }
                 }
-                else if (deltaX > 0)
+                else
                 {
-                    sr.flipX = true;
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                }
+
+                if (health > 700)
+                {
+                    if (canDrop)
+                    {
+                        StartCoroutine(drop());
+                    }
+                }
+
+                if (health <= 700 && health > 500)
+                {
+                    if (canShootNext)
+                    {
+                        StartCoroutine(shootFeather());
+                    }
+                    if (canDrop)
+                    {
+                        StartCoroutine(drop());
+                    }
+                }
+
+                if (health <= 500 && health > 200)
+                {
+                    if (canAttackRedEyes)
+                    {
+                        StartCoroutine(redEyes());
+                    }
+                    if (canShootNext)
+                    {
+                        StartCoroutine(shootFeather());
+                    }
+                }
+
+                if (health <= 200 && health > 0)
+                {
+                    if (canCallForHelp)
+                    {
+                        StartCoroutine(callForHelp());
+                    }
+                    if (canDrop)
+                    {
+                        StartCoroutine(drop());
+                    }
+                    if (canShootNext)
+                    {
+                        StartCoroutine(shootFeather());
+                    }
                 }
             }
-            else
+        }
+        else if (!activated && Vector2.Distance(transform.position, player.transform.position) < 3)
+        {
+            if (Input.GetKeyDown("e"))
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-            }
-
-            if (health > 700)
-            {
-                if (canDrop)
-                {
-                    StartCoroutine(drop());
-                }
-            }
-
-            if (health <= 700 && health > 500)
-            {
-                if (canShootNext)
-                {
-                    StartCoroutine(shootFeather());
-                }
-                if (canDrop)
-                {
-                    StartCoroutine(drop());
-                }
-            }
-
-            if (health <= 500 && health > 200)
-            {
-                if (canAttackRedEyes)
-                {
-                    StartCoroutine(redEyes());
-                }
-                if (canShootNext)
-                {
-                    StartCoroutine(shootFeather());
-                }
-            }
-
-            if (health <= 200 && health > 0)
-            {
-                if (canCallForHelp)
-                {
-                    StartCoroutine(callForHelp());
-                }
-                if (canDrop)
-                {
-                    StartCoroutine(drop());
-                }
-                if (canShootNext)
-                {
-                    StartCoroutine(shootFeather());
-                }
+                activated = true;
+                arena2Controller.GetComponent<Arena2Controller>().activateCantEscape();
             }
         }
     }
