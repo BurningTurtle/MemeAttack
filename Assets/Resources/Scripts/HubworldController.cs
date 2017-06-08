@@ -13,8 +13,6 @@ public class HubworldController : MonoBehaviour
     [SerializeField]
     private GameObject special1HUD;
 
-    //public string currentArea;
-
     private Bubble bubble = null;
 
     // Use this for initialization

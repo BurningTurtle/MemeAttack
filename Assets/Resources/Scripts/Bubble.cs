@@ -12,6 +12,10 @@ public class Bubble : MonoBehaviour
     private SpriteRenderer sr;
     public bool playerInArena;
     private HubworldController[] hubWorldCtrl;
+    private bool untriggerRunning;
+
+    // Coroutine Object so that Coroutine can be stopped
+    Coroutine co;
 
     // Use this for initialization
     void Start()
@@ -47,6 +51,12 @@ public class Bubble : MonoBehaviour
         {
             _collider.enabled = true;
         }
+        if (!playerInArena && untriggerRunning)
+        {
+            StopCoroutine(co);
+            untriggerRunning = false;
+            triggered = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -58,62 +68,62 @@ public class Bubble : MonoBehaviour
                 case "DatBoi":
                     collision.GetComponent<DatBoi>().health -= 1;
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "DatDolan":
                     collision.GetComponent<DatDolan>().health -= 1;
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "Doge":
                     collision.GetComponent<Doge>().health -= 1;
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "Dolan":
                     collision.GetComponent<Dolan>().health -= 1;
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "NyanCat":
                     collision.GetComponent<NyanCat>().health -= 1;
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "NyanDoge":
                     collision.GetComponent<NyanDoge>().health -= 1;
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "NyanDogeCat":
                     collision.GetComponent<NyanDogeBroken>().health -= 1;
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "NyanDogeDoge":
                     collision.GetComponent<NyanDogeBroken>().health -= 1;
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "Trollface":
                     collision.GetComponent<Trollface>().health -= 1;
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "Turtle":
                     collision.GetComponent<Turtle>().health -= 1;
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "EnemyBullet":
                     Destroy(collision.gameObject);
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
                 case "MainEnemyProjectile":
                     Destroy(collision.gameObject);
                     triggered = true;
-                    StartCoroutine(untrigger());
+                    co = StartCoroutine(untrigger());
                     break;
             }
         }
@@ -121,6 +131,8 @@ public class Bubble : MonoBehaviour
 
     IEnumerator untrigger()
     {
+        untriggerRunning = true;
+
         for (float f = 1; f >= 0; f -= 0.1f)
         {
             Color colour = sr.material.color;
@@ -139,6 +151,8 @@ public class Bubble : MonoBehaviour
             sr.material.color = colour;
             yield return null;
         }
+
+        untriggerRunning = false;
     }
 
     IEnumerator fadeoutCoroutine()

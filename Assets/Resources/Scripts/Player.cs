@@ -48,6 +48,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject arenaController, arena2Controller;
 
+    // This is for bubble
+    private Bubble bubble = null;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -109,7 +112,6 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             health = 100;
-            transform.position = new Vector2(12.5f, -13);
             if (hubworldController.GetComponent<HubworldController>().area == "arena1")
             {
                 arenaController.GetComponent<ArenaController>().resetWaves();
@@ -118,7 +120,8 @@ public class Player : MonoBehaviour
             {
                 arena2Controller.GetComponent<Arena2Controller>().resetWaves();
             }
-            hubworldController.GetComponent<HubworldController>().area = "hubworld";
+            transform.position = new Vector2(12.5f, -13);
+            bubble.GetComponent<Bubble>().fadeout();
         }
 
         if (!hasSword && isDarkLink)
@@ -135,7 +138,6 @@ public class Player : MonoBehaviour
             MasterSword.transform.position = new Vector2(transform.position.x + .3f, transform.position.y - .2f);
         }
     }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
