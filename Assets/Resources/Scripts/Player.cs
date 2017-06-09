@@ -63,9 +63,15 @@ public class Player : MonoBehaviour
     private void Update()
     {
         // Uncomment this for testing
-        //health = 100;
+        health = 100;
 
-        if(hubworldController.GetComponent<HubworldController>().area == "special2")
+        if(dialogueBox.activeSelf == true && Input.GetKeyDown("e"))
+        {
+            soundMan.playAudioClip("DialoguePress");
+            Debug.Log("memes");
+        }
+
+        if(hubworldController.GetComponent<HubworldController>().area == "special2" || hubworldController.GetComponent<HubworldController>().area == "special1")
         {
             health = 100;
         }

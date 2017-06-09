@@ -23,6 +23,7 @@ public class SoundManager : MonoBehaviour {
     // Music
     [SerializeField] private AudioClip zeldaMusic;
 
+    [SerializeField] private AudioClip[] sounds;
 
     private void Start()
     {
@@ -138,5 +139,37 @@ public class SoundManager : MonoBehaviour {
     public void playCottonDamage()
     {
         soundSource.PlayOneShot(cottonDamageSound, 1);
+    }
+
+    public void playAudioClip(string clipToPlay)
+    {
+        if (clipToPlay == "galleryClerk")
+        {
+            float ran = Random.value;
+            if (ran >= 0.75)
+            {
+                clipToPlay = "GalleryClerkAffirmative";
+            }
+            else if (ran >= 0.50)
+            {
+                clipToPlay = "GalleryClerkGoodBye";
+            }
+            else if (ran >= 0.25)
+            {
+                clipToPlay = "GalleryClerkHappy";
+            }
+            else
+            {
+                clipToPlay = "GalleryClerkWondering";
+            }
+        }
+
+        foreach (AudioClip clip in sounds)
+        {
+            if(clip.name == clipToPlay)
+            {
+                soundSource.PlayOneShot(clip, 5);
+            }
+        }
     }
 }
