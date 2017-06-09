@@ -54,5 +54,9 @@ public class Special2Slot : MonoBehaviour {
                 }
             }
         }
+        if(collision.gameObject.tag == "PlayerProjectile")
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }
