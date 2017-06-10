@@ -101,12 +101,10 @@ public class Special2Controller : MonoBehaviour {
         enemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemySpecial");
         if(hwCtrl.GetComponent<HubworldController>().area == "special2" && enemiesInScene.Length < 1)
         {
-            Debug.Log("spaw");
             if (canSpawn)
             {
                 canSpawn = false;
                 StartCoroutine(spawnEnemy());
-                Debug.Log("Spawn");
             }
         }
     }
