@@ -112,7 +112,7 @@ public class Special2Controller : MonoBehaviour {
     IEnumerator spawnEnemy()
     {
         GameObject enemy = Instantiate(MainEnemySpecialPrefab) as GameObject;
-        enemy.transform.position = new Vector2(-28, -45);
+        enemy.transform.position = new Vector2(-28, -67);
 
         yield return new WaitForSeconds(3);
         canSpawn = true;

@@ -49,6 +49,11 @@ public class DatDolan : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!activated)
+        {
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+
         if (activated)
         {
             if (alive)
@@ -208,11 +213,14 @@ public class DatDolan : MonoBehaviour
     {
         if (collision.tag == "PlayerProjectile")
         {
-            health = health - FindObjectOfType<Player>().damage;
-
-            if (health <= 0 && alive)
+            if (activated)
             {
-                StartCoroutine(die());
+                health = health - FindObjectOfType<Player>().damage;
+
+                if (health <= 0 && alive)
+                {
+                    StartCoroutine(die());
+                }
             }
 
             Destroy(collision.gameObject);
@@ -242,7 +250,7 @@ public class DatDolan : MonoBehaviour
         fivehundredyen.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y +1);
 
         GameObject special2Portal = Instantiate(special2PortalPrefab) as GameObject;
-        special2Portal.transform.position = new Vector2(13, 48);
+        special2Portal.transform.position = new Vector2(13, 50);
 
         // Reward
         int ran = Random.Range(0, 100);
