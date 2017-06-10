@@ -45,30 +45,12 @@ public class MainEnemySpecial : MonoBehaviour {
             // Get "distance" between enemy and player.
             Vector2 trueDistance = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
             float combinedDistance = Mathf.Abs(trueDistance.x) + Mathf.Abs(trueDistance.y);
-            //Debug.Log("combined distance" + combinedDistance);
-            if (combinedDistance < range && canShootNext && !stop)
-            {
-                StartCoroutine(shoot(targetVelocity));
-            }
-
         }
         if (stop)
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             anim.SetBool("moving", false);
         }
-    }
-
-    IEnumerator shoot(Vector2 targetVelocity)
-    {
-        canShootNext = false;
-
-        // Instantiate projectile, move it into the enemy and add a force.
-        projectile = Instantiate(projectilePrefab) as GameObject;
-        projectile.transform.position = transform.position;
-        projectile.GetComponent<Rigidbody2D>().AddForce(targetVelocity * shootPower);
-        yield return new WaitForSeconds(2f);
-        canShootNext = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

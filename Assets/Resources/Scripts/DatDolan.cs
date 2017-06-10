@@ -36,6 +36,8 @@ public class DatDolan : MonoBehaviour
 
     [SerializeField] private GameObject special2PortalPrefab;
 
+    private SoundManager soundMan;
+
     // Use this for initialization
     void Start()
     {
@@ -44,6 +46,7 @@ public class DatDolan : MonoBehaviour
         anim = GetComponent<Animator>();
         statue = GameObject.Find("datdolanStatue1");
         arena2Controller = GameObject.Find("Arena2Controller");
+        soundMan = FindObjectOfType<SoundManager>();
     }
 
     // Update is called once per frame
@@ -51,6 +54,8 @@ public class DatDolan : MonoBehaviour
     {
         if (activated)
         {
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+
             if (alive)
             {
                 if (canMove)
@@ -127,6 +132,8 @@ public class DatDolan : MonoBehaviour
         }
         else if (!activated && Vector2.Distance(transform.position, player.transform.position) < 3)
         {
+            //GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+
             if (Input.GetKeyDown("e"))
             {
                 activated = true;
@@ -139,6 +146,8 @@ public class DatDolan : MonoBehaviour
     {
         // Cool animation here
         Debug.Log("HALP");
+
+        soundMan.playAudioClip("CryForHelp");
 
         canCallForHelp = false;
 
@@ -158,9 +167,13 @@ public class DatDolan : MonoBehaviour
     {
         canMove = false;
         canAttackRedEyes = false;
+
+        soundMan.playAudioClip("DatDolanCharge");
         anim.SetBool("redEyes", true);
+
         yield return new WaitForSeconds(1.3f);
         GameObject featherShuuriken = Instantiate(featherShuurikenPrefab) as GameObject;
+        soundMan.playAudioClip("FeatherShuuriken");
         featherShuuriken.transform.position = transform.position;
         canMove = true;
         anim.SetBool("redEyes", false);
@@ -171,6 +184,9 @@ public class DatDolan : MonoBehaviour
     IEnumerator shootFeather()
     {
         canShootNext = false;
+
+        soundMan.playAudioClip("Feather");
+
         GameObject feather = Instantiate(featherPrefab) as GameObject;
         Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
         playerVector.Normalize();
@@ -208,11 +224,14 @@ public class DatDolan : MonoBehaviour
     {
         if (collision.tag == "PlayerProjectile")
         {
-            health = health - FindObjectOfType<Player>().damage;
-
-            if (health <= 0 && alive)
+            if (activated)
             {
-                StartCoroutine(die());
+                health = health - FindObjectOfType<Player>().damage;
+
+                if (health <= 0 && alive)
+                {
+                    StartCoroutine(die());
+                }
             }
 
             Destroy(collision.gameObject);
@@ -242,7 +261,7 @@ public class DatDolan : MonoBehaviour
         fivehundredyen.transform.position = new Vector2(transform.position.x - 0.2f, transform.position.y +1);
 
         GameObject special2Portal = Instantiate(special2PortalPrefab) as GameObject;
-        special2Portal.transform.position = new Vector2(13, 48);
+        special2Portal.transform.position = new Vector2(13, 50);
 
         // Reward
         int ran = Random.Range(0, 100);

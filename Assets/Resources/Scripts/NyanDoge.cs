@@ -37,6 +37,8 @@ public class NyanDoge : MonoBehaviour
 
     private GameObject arenaController;
 
+    private SoundManager soundMan;
+
 
     // Use this for initialization
     void Start()
@@ -47,6 +49,7 @@ public class NyanDoge : MonoBehaviour
         anim = GetComponent<Animator>();
         statue = GameObject.Find("nyandogeStatue1");
         arenaController = GameObject.Find("ArenaController");
+        soundMan = FindObjectOfType<SoundManager>();
     }
 
     // Update is called once per frame
@@ -118,6 +121,14 @@ public class NyanDoge : MonoBehaviour
     IEnumerator shootRainbow()
     {
         canShootRainbow = false;
+        bool canPlayRainbow = true;
+        if (canPlayRainbow)
+        {
+            canPlayRainbow = false;
+            soundMan.playAudioClip("RainbowSplash");
+            yield return new WaitForSeconds(0.5f);
+            canPlayRainbow = true;
+        }
         FindObjectOfType<RainbowShoot>().splash();
         yield return new WaitForSeconds(0.3f);
         canShootRainbow = true;
@@ -126,7 +137,9 @@ public class NyanDoge : MonoBehaviour
     IEnumerator shootNormal()
     {
         canShootNormal = false;
+        soundMan.playAudioClip("Feather");
         FindObjectOfType<PopTartLauncher>().launchPopTart();
+        soundMan.playAudioClip("DogeWoof");
         FindObjectOfType<WoofSpawner>().spawnWoof();
         yield return new WaitForSeconds(1);
         canShootNormal = true;
@@ -145,6 +158,7 @@ public class NyanDoge : MonoBehaviour
                     alive = false;
 
                     // NyanDoge GameObject gets destroyed at end of animation event
+                    soundMan.playAudioClip("BreakSound");
                     anim.SetBool("Break", true);
 
                     GameObject key = Instantiate(keyPrefab) as GameObject;

@@ -25,11 +25,6 @@ public class MasterSwordItem : MonoBehaviour
         uic = GameObject.Find("UIController");
     }
 
-    private void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject == player)
@@ -54,22 +49,22 @@ public class MasterSwordItem : MonoBehaviour
         dialogueText.text = "It might be familiar to you.";
         yield return new WaitForSeconds(0.25f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-        dialogueText.text = "Anyway, once this explanation is over, a song will start and you will become Link.";
+        dialogueText.text = "Once this explanation is over, a song will start playing, and you will turn into Link.";
         yield return new WaitForSeconds(0.25f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-        dialogueText.text = "As Link, you are immortal. Just get as much money as you can.";
+        dialogueText.text = "As Link, you are immortal. Try to get as much money as you can.";
         yield return new WaitForSeconds(0.25f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         dialogueText.text = "Later on, you will transform to Dark Link and enemies will stop dropping money.";
         yield return new WaitForSeconds(0.25f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-        dialogueText.text = "In order to get money, you have to swing your sword to the music's bass.";
+        dialogueText.text = "In order to get a big reward, you have to swing your sword to the music's bass.";
         yield return new WaitForSeconds(0.25f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         dialogueText.text = "It's important.";
         yield return new WaitForSeconds(0.25f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-        dialogueText.text = "Once the song is over, this simulation will calculate your \"Hits To The Bass Rate\".";
+        dialogueText.text = "Once the song is over, the simulation will calculate your \"Hits To The Bass Rate\".";
         yield return new WaitForSeconds(0.25f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         dialogueText.text = "Don't hit enemies when there is no bass!";
@@ -78,10 +73,10 @@ public class MasterSwordItem : MonoBehaviour
         dialogueText.text = "The better you perform, the more money you will get.";
         yield return new WaitForSeconds(0.25f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-        dialogueText.text = "Have fun.";
+        dialogueText.text = "Have fun!";
         yield return new WaitForSeconds(0.25f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-        dialogueText.text = "One last tip: Don't swing your sword too fast.";
+        dialogueText.text = "One last hint: Don't swing your sword too fast.";
         yield return new WaitForSeconds(0.25f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
