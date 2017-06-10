@@ -143,27 +143,6 @@ public class SoundManager : MonoBehaviour {
 
     public void playAudioClip(string clipToPlay)
     {
-        if (clipToPlay == "galleryClerk")
-        {
-            float ran = Random.value;
-            if (ran >= 0.75)
-            {
-                clipToPlay = "GalleryClerkAffirmative";
-            }
-            else if (ran >= 0.50)
-            {
-                clipToPlay = "GalleryClerkGoodBye";
-            }
-            else if (ran >= 0.25)
-            {
-                clipToPlay = "GalleryClerkHappy";
-            }
-            else
-            {
-                clipToPlay = "GalleryClerkWondering";
-            }
-        }
-
         foreach (AudioClip clip in sounds)
         {
             if(clip.name == clipToPlay)

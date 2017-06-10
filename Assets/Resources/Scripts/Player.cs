@@ -266,32 +266,32 @@ public class Player : MonoBehaviour
         {
             case "1Yen":
                 kleinesYen += 1;
-                soundMan.playKleinesYen();
+                soundMan.playAudioClip("Money");
                 Destroy(collision.gameObject);
                 break;
             case "5Yen":
                 kleinesYen += 5;
-                soundMan.playKleinesYen();
+                soundMan.playAudioClip("Money");
                 Destroy(collision.gameObject);
                 break;
             case "10Yen":
                 kleinesYen += 10;
-                soundMan.playKleinesYen();
+                soundMan.playAudioClip("Money");
                 Destroy(collision.gameObject);
                 break;
             case "50Yen":
                 kleinesYen += 50;
-                soundMan.playKleinesYen();
+                soundMan.playAudioClip("Money");
                 Destroy(collision.gameObject);
                 break;
             case "100Yen":
                 kleinesYen += 100;
-                soundMan.playKleinesYen();
+                soundMan.playAudioClip("Money");
                 Destroy(collision.gameObject);
                 break;
             case "500Yen":
                 kleinesYen += 500;
-                soundMan.playKleinesYen();
+                soundMan.playAudioClip("Money");
                 Destroy(collision.gameObject);
                 break;
         }
@@ -305,5 +305,6 @@ public class Player : MonoBehaviour
     public void payYen(int payment)
     {
         kleinesYen = kleinesYen - payment;
+        soundMan.playAudioClip("Buy");
     }
 }

@@ -7,11 +7,13 @@ public class Lock : MonoBehaviour {
     private GameObject player;
     [SerializeField]
     private GameObject otherLock1, otherLock2;
+    private SoundManager soundMan;
 
 
     // Use this for initialization
     void Start () {
         player = GameObject.Find("Player");
+        soundMan = GameObject.FindObjectOfType<SoundManager>();
     }
 	
 	// Update is called once per frame
@@ -23,6 +25,7 @@ public class Lock : MonoBehaviour {
     {
         if(collision.gameObject == player && player.GetComponent<Player>().hasKey == true)
         {
+            soundMan.playAudioClip("Key");
             Destroy(gameObject);
             Destroy(otherLock1);
             Destroy(otherLock2);
