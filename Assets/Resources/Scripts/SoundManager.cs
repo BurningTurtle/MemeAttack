@@ -152,6 +152,14 @@ public class SoundManager : MonoBehaviour {
                 {
                     soundSource.PlayOneShot(clip, 15);
                 }
+                else if(clip.name == "CryForHelp")
+                {
+                    soundSource.PlayOneShot(clip, 15);
+                }
+                else if(clip.name == "Feather")
+                {
+                    soundSource.PlayOneShot(clip, 7);
+                }
                 else
                 {
                     soundSource.PlayOneShot(clip, 5);

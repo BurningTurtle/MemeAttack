@@ -104,7 +104,7 @@ public class Duck : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
-        dialogueText.text = "I sure as hell gave you enough hints boye!";
+        dialogueText.text = "I sure as hell gave you enough hints boy!";
         soundMan.playAudioClip("DuckShort");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
