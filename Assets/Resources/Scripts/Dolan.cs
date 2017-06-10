@@ -28,6 +28,8 @@ public class Dolan : MonoBehaviour {
     [SerializeField]
     private Sprite statueActivated;
 
+    private SoundManager soundMan;
+
     private void Start()
     {
         player = GameObject.Find("Player");
@@ -35,7 +37,9 @@ public class Dolan : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         statue = GameObject.Find("dolanStatue1");
+        soundMan = GameObject.FindObjectOfType<SoundManager>();
     }
+
 
     private void FixedUpdate()
     {
@@ -53,6 +57,7 @@ public class Dolan : MonoBehaviour {
             if (combinedDistance < range && canShootNext)
             {
                 StartCoroutine(shoot(playerVector));
+                soundMan.playAudioClip("Knife1");
             }
         }
 
@@ -112,6 +117,8 @@ public class Dolan : MonoBehaviour {
         {
             yield return new WaitForSeconds(2f);
         }
+
+        soundMan.playAudioClip("FeatherShuuriken");
 
         if (knife2)
         {

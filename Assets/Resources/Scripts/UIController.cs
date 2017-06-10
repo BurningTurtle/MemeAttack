@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
     public Text waveDisplay;
     public GameObject arenaController;
     public GameObject arena2Controller;
+    public GameObject arena3Controller;
     public int passiveItems = 0;
     public int activeItems = 0;
     public Text[] crits;
@@ -61,14 +62,25 @@ public class UIController : MonoBehaviour
         {
             wave = arena2Controller.GetComponent<Arena2Controller>().wave - 1;
         }
+        else if (hubworldCtrl.GetComponent<HubworldController>().area == "arena3")
+        {
+            wave = arena3Controller.GetComponent<Arena3Controller>().wave - 1;
+        }
 
-        if(wave < 16)
+        if (wave < 16)
         {
             waveDisplay.text = "WAVE\n" + wave;
         }
         else
         {
-            waveDisplay.text = "BOSS";
+            if(hubworldCtrl.GetComponent<HubworldController>().area != "arena3")
+            {
+                waveDisplay.text = "BOSS";
+            }
+            else
+            {
+                waveDisplay.text = "DONE";
+            }
         }
         kleinesYenDisplay.text = FindObjectOfType<Player>().GetComponent<Player>().returnKleinesYen().ToString("D5");
     }

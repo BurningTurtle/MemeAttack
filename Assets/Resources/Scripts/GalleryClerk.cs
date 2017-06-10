@@ -48,34 +48,42 @@ public class GalleryClerk : MonoBehaviour {
     IEnumerator introduction()
     {
         introduced = true;
+
         dialogueText.text = "Hey Player. I welcome you as well.";
-        soundMan.playAudioClip("galleryClerk");
+        soundMan.playAudioClip("GalleryClerkHappy");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
         dialogueText.text = "Odds are high that you've already met my brother. He's the salesclerk.";
-        soundMan.playAudioClip("galleryClerk");
+        soundMan.playAudioClip("GalleryClerkWondering");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
         dialogueText.text = "However, my job is to guard our gallery.";
-        soundMan.playAudioClip("galleryClerk");
+        soundMan.playAudioClip("GalleryClerkHappy");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
         dialogueText.text = "Here you can see every Meme inside this simulation portrayed as a grey statue.";
-        soundMan.playAudioClip("galleryClerk");
+        soundMan.playAudioClip("GalleryClerkWondering");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
         dialogueText.text = "Once you've killed at least one of its kind, the statue will assume color.";
-        soundMan.playAudioClip("galleryClerk");
+        soundMan.playAudioClip("GalleryClerkWondering");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
         dialogueText.text = "Then you'll see the Meme's name, too.";
-        soundMan.playAudioClip("galleryClerk");
+        soundMan.playAudioClip("GalleryClerkHappy");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
         dialogueText.text = "If you wanna go back, just talk to me. Have a nice time!";
-        soundMan.playAudioClip("galleryClerk");
+        soundMan.playAudioClip("GalleryClerkGoodbye");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
         dialogueBox.SetActive(false);
         introductionFinished = true;
     }
@@ -84,15 +92,16 @@ public class GalleryClerk : MonoBehaviour {
     {
         talk = true;
         dialogueText.text = "Hey Player. Wanna go back to the arena?";
-        soundMan.playAudioClip("galleryClerk");
+        soundMan.playAudioClip("GalleryClerkWondering");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-        dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+        dialogueText.text = "Press \"y\" for yes, \"n\" for no.";
         soundMan.playAudioClip("galleryClerk");
         yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
         if (Input.GetKey("y"))
         {
             player.transform.position = new Vector2(12.4f, -13.2f);
+            soundMan.playAudioClip("Teleport");
         }
         dialogueBox.SetActive(false);
         talk = false;

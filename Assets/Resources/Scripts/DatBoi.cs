@@ -35,6 +35,7 @@ public class DatBoi : MonoBehaviour {
     private GameObject statue;
     [SerializeField]
     private Sprite statueActivated;
+    private SoundManager soundMan;
 
     private void Start()
     {
@@ -44,6 +45,7 @@ public class DatBoi : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         statue = GameObject.Find("datboiStatue1");
+        soundMan = GameObject.FindObjectOfType<SoundManager>();
     }
 
     private void FixedUpdate()
@@ -82,6 +84,7 @@ public class DatBoi : MonoBehaviour {
             if (combinedDistance < 7 && canShootNext)
             {
                 StartCoroutine(shoot(playerVector));
+                soundMan.playAudioClip("MainEnemyProjectile");
             }
 
             // Spwan new Dat Bois if there is just one in scene (his special ability).
@@ -104,6 +107,8 @@ public class DatBoi : MonoBehaviour {
     {
         // Give Player time to kill single DatBoi. Prevents Endless Spawning.
         yield return new WaitForSeconds(1.5f);
+
+        soundMan.playAudioClip("CryForHelp");
 
         // Cool animation here.
         Debug.Log("Here Come Dem Bois");

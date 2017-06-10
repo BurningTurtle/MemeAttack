@@ -27,6 +27,7 @@ public class MainEnemy : MonoBehaviour {
     private Sprite statueActivated;
     [SerializeField]
     private GameObject special1Controller;
+    private SoundManager soundMan;
 
     // Use this for initialization
     void Start()
@@ -37,6 +38,7 @@ public class MainEnemy : MonoBehaviour {
         canShootNext = true;
         anim = GetComponent<Animator>();
         statue = GameObject.Find("mainEnemyStatue1");
+        soundMan = GameObject.FindObjectOfType<SoundManager>();
     }
 	// Update is called once per frame
 	void FixedUpdate ()
@@ -55,7 +57,8 @@ public class MainEnemy : MonoBehaviour {
             if(combinedDistance < range && canShootNext && !stop)
             {
                 //Debug.Log("shoot!");
-                StartCoroutine(shoot(targetVelocity));      
+                StartCoroutine(shoot(targetVelocity));
+                soundMan.playAudioClip("MainEnemyProjectile");
             }
 
         }
