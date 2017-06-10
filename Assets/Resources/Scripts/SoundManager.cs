@@ -147,7 +147,15 @@ public class SoundManager : MonoBehaviour {
         {
             if(clip.name == clipToPlay)
             {
-                soundSource.PlayOneShot(clip, 5);
+                // Some sounds are too silent, so their volumes have to be adjusted. 
+                if (clip.name == "DogeWoof")
+                {
+                    soundSource.PlayOneShot(clip, 15);
+                }
+                else
+                {
+                    soundSource.PlayOneShot(clip, 5);
+                }
             }
         }
     }

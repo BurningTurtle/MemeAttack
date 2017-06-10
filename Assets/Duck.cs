@@ -56,7 +56,7 @@ public class Duck : MonoBehaviour {
     {
         talking = true;
 
-        dialogueText.text = "Howdy Player, what's good!?";
+        dialogueText.text = "Hey Partner, howdy-do?";
         soundMan.playAudioClip("DuckExcited");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
@@ -80,12 +80,12 @@ public class Duck : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
-        dialogueText.text = "So you gotta place those numbers real good!";
+        dialogueText.text = "So you gotta place them numbers real good, ya hear!";
         soundMan.playAudioClip("DuckShort");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
-        dialogueText.text = "But I'm heckin' sure you'll succed if you paid attention in IT class at school!";
+        dialogueText.text = "But I'm heckin' sure you'll succed if ye kept yer yapper shut in IT class!";
         soundMan.playAudioClip("DuckSympathetic");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
@@ -99,7 +99,7 @@ public class Duck : MonoBehaviour {
     {
         talking = true;
 
-        dialogueText.text = "I'm heckin' sure you'll succed if you paid attention in IT class at school!";
+        dialogueText.text = "I'm heckin' sure you'll succed if ye kept yer yapper shut in IT class!";
         soundMan.playAudioClip("DuckExcited");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
@@ -117,12 +117,12 @@ public class Duck : MonoBehaviour {
     {
         talking = true;
 
-        dialogueText.text = "I knew you'd get it right all the time!";
+        dialogueText.text = "I knew you'd get it right this whole time!";
         soundMan.playAudioClip("DuckExcited");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
-        dialogueText.text = "Oh boye you're heckin' rich now!";
+        dialogueText.text = "Oh boy, you're heckin' rich now!";
         soundMan.playAudioClip("DuckShort");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);

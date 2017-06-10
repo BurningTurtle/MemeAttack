@@ -56,7 +56,7 @@ public class ShopClerk : MonoBehaviour
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = new Color(0, 202, 232);
-        dialogueText.text = "How do you know my name ?";
+        dialogueText.text = "How do you know my name?";
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -91,6 +91,11 @@ public class ShopClerk : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
+        dialogueText.text = "Oh, and if you wanna go back, just hit me up!";
+        soundMan.playAudioClip("ShopClerkSympathetic");
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
         dialogueBox.SetActive(false);
         introductionFinished = true;
     }
@@ -98,7 +103,7 @@ public class ShopClerk : MonoBehaviour
     IEnumerator back()
     {
         talk = true;
-        dialogueText.text = "Hey, Player! Do you wanna go back to the arena?";
+        dialogueText.text = "Hey, Player! Do you wanna go back?";
         soundMan.playAudioClip("ShopClerkSurprised");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
