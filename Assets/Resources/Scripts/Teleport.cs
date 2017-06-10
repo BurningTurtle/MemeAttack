@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Teleport : MonoBehaviour {
 
+    private SoundManager soundMan;
+
 	// Use this for initialization
 	void Start () {
-		
+        soundMan = GameObject.FindObjectOfType<SoundManager>();
 	}
 	
 	// Update is called once per frame
@@ -23,17 +25,22 @@ public class Teleport : MonoBehaviour {
             {
                 case "toShop":
                     other.transform.position = new Vector2(48, -24);
+                    soundMan.playAudioClip("Teleport");
                     break;
                 case "toGallery":
                     other.transform.position = new Vector2(-42, -26);
+                    soundMan.playAudioClip("Teleport");
                     break;
-                case "toHubWorld":
-                    other.transform.position = new Vector2(12.5f, -13);
+                case "toArena2":
+                    other.transform.position = new Vector2(12, 50);
+                    soundMan.playAudioClip("Teleport");
                     break;
+
             }
             if(this.tag == "toSpecial2")
             {
                 other.transform.position = new Vector2(-40, -50);
+                soundMan.playAudioClip("Teleport");
             }
         }
     }

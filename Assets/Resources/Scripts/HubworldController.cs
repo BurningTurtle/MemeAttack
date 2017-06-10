@@ -95,6 +95,18 @@ public class HubworldController : MonoBehaviour
                         }
                     }
                     break;
+                case "arena3Trigger":
+                    if (parentController.GetComponent<HubworldController>().area != "arena3")
+                    {
+                        parentController.GetComponent<HubworldController>().area = "arena3";
+                        HUD.SetActive(true);
+                        if (bubble != null)
+                        {
+                            bubble.playerInArena = true;
+                            bubble.fadein();
+                        }
+                    }
+                    break;
             }
         }
     }

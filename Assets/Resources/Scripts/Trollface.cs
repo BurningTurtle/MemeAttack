@@ -36,8 +36,8 @@ public class Trollface : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        float ranX = Random.Range(6, 18);
-        float ranY = Random.Range(10, 17);
+        float ranX = Random.Range(5, 20);
+        float ranY = Random.Range(87, 100);
         transform.position = new Vector2(ranX, ranY);
         player = GameObject.Find("Player");
         lastPosition = transform.position.x;

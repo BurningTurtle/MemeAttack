@@ -36,6 +36,7 @@ public class Doge : MonoBehaviour
     private Sprite statueActivated;
 
     private GameObject woofProjectile;
+    private SoundManager soundMan;
 
     private void Start()
     {
@@ -44,6 +45,7 @@ public class Doge : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         statue = GameObject.Find("dogeStatue1");
+        soundMan = GameObject.FindObjectOfType<SoundManager>();
     }
 
     private void FixedUpdate()
@@ -79,6 +81,7 @@ public class Doge : MonoBehaviour
             if (combinedDistance < range && canShootNext)
             {
                 StartCoroutine(woof());
+                soundMan.playAudioClip("DogeWoof");
             }
 
         }
