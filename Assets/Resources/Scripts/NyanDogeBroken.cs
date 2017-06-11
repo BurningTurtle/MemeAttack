@@ -17,6 +17,8 @@ public class NyanDogeBroken : MonoBehaviour {
 
     [SerializeField] GameObject yen500, yen100;
 
+    private SoundManager soundMan;
+
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -32,6 +34,8 @@ public class NyanDogeBroken : MonoBehaviour {
         }
 
         player = GameObject.Find("Player");
+
+        soundMan = FindObjectOfType<SoundManager>();
     }
 	
 	// Update is called once per frame
@@ -60,6 +64,7 @@ public class NyanDogeBroken : MonoBehaviour {
             if (health <= 0 && alive)
             {
                 alive = false;
+                soundMan.playAudioClip("KeksSound");
 
                 int ran = Random.Range(0, 100);
                 if(ran <= 50)

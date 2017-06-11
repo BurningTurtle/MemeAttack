@@ -18,9 +18,12 @@ public class Shop : MonoBehaviour {
     private int dmgUps = 0;
     private int speedUps = 0;
 
+    private SoundManager soundMan;
+
     // Use this for initialization
     void Start () {
         player = GameObject.Find("Player");
+        soundMan = FindObjectOfType<SoundManager>();
     }
 
     // Update is called once per frame
@@ -62,10 +65,11 @@ public class Shop : MonoBehaviour {
     {
         if (!bubbleBought)
         {
+            soundMan.playAudioClip("ShopClerkSympathetic");
             dialogueText.text = "I see, the Bubble. Developer Byn's choice. That will be 10.000 Kleines Yen.";
             yield return new WaitForSeconds(0.5f);
             yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-            dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+            dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
             yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
             if (Input.GetKey("y"))
             {
@@ -79,17 +83,20 @@ public class Shop : MonoBehaviour {
                 else
                 {
                     dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                    soundMan.playAudioClip("ShopClerkSurprised");
                 }
             }
             else if (Input.GetKey("n"))
             {
                 dialogueText.text = "Okay, maybe next time!";
+                soundMan.playAudioClip("ShopClerkWondering");
             }
             yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         }
         else
         {
             dialogueText.text = "It appears you already own a bubble. Maybe you're interested in buying something else?";
+            soundMan.playAudioClip("ShopClerkSurprised");
             yield return new WaitForSeconds(0.5f);
             yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         }
@@ -103,6 +110,7 @@ public class Shop : MonoBehaviour {
         switch (dmgUps)
         {
             case 0:
+                soundMan.playAudioClip("ShopClerkSympathetic");
                 float ran = Random.value;
                 if (ran > 0.66)
                 {
@@ -118,7 +126,7 @@ public class Shop : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.5f);
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-                dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+                dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
                 yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
                 if (Input.GetKey("y"))
                 {
@@ -132,17 +140,20 @@ public class Shop : MonoBehaviour {
                     else
                     {
                         dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                        soundMan.playAudioClip("ShopClerkSurprised");
                     }
                 }
                 else if (Input.GetKey("n"))
                 {
                     dialogueText.text = "Okay, maybe next time!";
+                    soundMan.playAudioClip("ShopClerkWondering");
                 }
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
                 dialogueBox.SetActive(false);
                 processing = false;
                 break;
             case 1:
+                soundMan.playAudioClip("ShopClerkSympathetic");
                 float ran1 = Random.value;
                 if (ran1 > 0.66)
                 {
@@ -158,7 +169,7 @@ public class Shop : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.5f);
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-                dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+                dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
                 yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
                 if (Input.GetKey("y"))
                 {
@@ -172,17 +183,20 @@ public class Shop : MonoBehaviour {
                     else
                     {
                         dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                        soundMan.playAudioClip("ShopClerkSurprised");
                     }
                 }
                 else if (Input.GetKey("n"))
                 {
                     dialogueText.text = "Okay, maybe next time!";
+                    soundMan.playAudioClip("ShopClerkWondering");
                 }
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
                 dialogueBox.SetActive(false);
                 processing = false;
                 break;
             case 2:
+                soundMan.playAudioClip("ShopClerkSympathetic");
                 float ran2 = Random.value;
                 if (ran2 > 0.66)
                 {
@@ -198,7 +212,7 @@ public class Shop : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.5f);
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-                dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+                dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
                 yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
                 if (Input.GetKey("y"))
                 {
@@ -212,17 +226,20 @@ public class Shop : MonoBehaviour {
                     else
                     {
                         dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                        soundMan.playAudioClip("ShopClerkSurprised");
                     }
                 }
                 else if (Input.GetKey("n"))
                 {
                     dialogueText.text = "Okay, maybe next time!";
+                    soundMan.playAudioClip("ShopClerkWondering");
                 }
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
                 dialogueBox.SetActive(false);
                 processing = false;
                 break;
             case 3:
+                soundMan.playAudioClip("ShopClerkSympathetic");
                 float ran3 = Random.value;
                 if (ran3 > 0.66)
                 {
@@ -238,7 +255,7 @@ public class Shop : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.5f);
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-                dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+                dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
                 yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
                 if (Input.GetKey("y"))
                 {
@@ -252,17 +269,20 @@ public class Shop : MonoBehaviour {
                     else
                     {
                         dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                        soundMan.playAudioClip("ShopClerkSurprised");
                     }
                 }
                 else if (Input.GetKey("n"))
                 {
                     dialogueText.text = "Okay, maybe next time!";
+                    soundMan.playAudioClip("ShopClerkWondering");
                 }
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
                 dialogueBox.SetActive(false);
                 processing = false;
                 break;
             case 4:
+                soundMan.playAudioClip("ShopClerkSurprised");
                 dialogueText.text = "I'm sorry, but you're powerful enough already. I cannot sell you any more of those.";
                 yield return new WaitForSeconds(0.5f);
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
@@ -277,6 +297,7 @@ public class Shop : MonoBehaviour {
         switch (speedUps)
         {
             case 0:
+                soundMan.playAudioClip("ShopClerkSympathetic");
                 float ran = Random.value;
                 if (ran > 0.66)
                 {
@@ -292,7 +313,7 @@ public class Shop : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.5f);
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-                dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+                dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
                 yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
                 if (Input.GetKey("y"))
                 {
@@ -306,17 +327,20 @@ public class Shop : MonoBehaviour {
                     else
                     {
                         dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                        soundMan.playAudioClip("ShopClerkSurprised");
                     }
                 }
                 else if (Input.GetKey("n"))
                 {
                     dialogueText.text = "Okay, maybe next time!";
+                    soundMan.playAudioClip("ShopClerkWondering");
                 }
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
                 dialogueBox.SetActive(false);
                 processing = false;
                 break;
             case 1:
+                soundMan.playAudioClip("ShopClerkSympathetic");
                 float ran1 = Random.value;
                 if (ran1 > 0.66)
                 {
@@ -332,7 +356,7 @@ public class Shop : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.5f);
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-                dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+                dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
                 yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
                 if (Input.GetKey("y"))
                 {
@@ -346,17 +370,20 @@ public class Shop : MonoBehaviour {
                     else
                     {
                         dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                        soundMan.playAudioClip("ShopClerkSurprised");
                     }
                 }
                 else if (Input.GetKey("n"))
                 {
                     dialogueText.text = "Okay, maybe next time!";
+                    soundMan.playAudioClip("ShopClerkWondering");
                 }
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
                 dialogueBox.SetActive(false);
                 processing = false;
                 break;
             case 2:
+                soundMan.playAudioClip("ShopClerkSympathetic");
                 float ran2 = Random.value;
                 if (ran2 > 0.66)
                 {
@@ -372,7 +399,7 @@ public class Shop : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.5f);
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-                dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+                dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
                 yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
                 if (Input.GetKey("y"))
                 {
@@ -386,17 +413,20 @@ public class Shop : MonoBehaviour {
                     else
                     {
                         dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                        soundMan.playAudioClip("ShopClerkSurprised");
                     }
                 }
                 else if (Input.GetKey("n"))
                 {
                     dialogueText.text = "Okay, maybe next time!";
+                    soundMan.playAudioClip("ShopClerkWondering");
                 }
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
                 dialogueBox.SetActive(false);
                 processing = false;
                 break;
             case 3:
+                soundMan.playAudioClip("ShopClerkSympathetic");
                 float ran3 = Random.value;
                 if (ran3 > 0.66)
                 {
@@ -412,7 +442,7 @@ public class Shop : MonoBehaviour {
                 }
                 yield return new WaitForSeconds(0.5f);
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-                dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+                dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
                 yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
                 if (Input.GetKey("y"))
                 {
@@ -426,17 +456,20 @@ public class Shop : MonoBehaviour {
                     else
                     {
                         dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                        soundMan.playAudioClip("ShopClerkSurprised");
                     }
                 }
                 else if (Input.GetKey("n"))
                 {
                     dialogueText.text = "Okay, maybe next time!";
+                    soundMan.playAudioClip("ShopClerkWondering");
                 }
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
                 dialogueBox.SetActive(false);
                 processing = false;
                 break;
             case 4:
+                soundMan.playAudioClip("ShopClerkSurprised");
                 dialogueText.text = "I'm sorry, but you've almost hit Sanic-Speed already. I cannot sell you any more of those.";
                 yield return new WaitForSeconds(0.5f);
                 yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
@@ -450,6 +483,7 @@ public class Shop : MonoBehaviour {
     {
         if (!player.GetComponent<Player>().hasCoinMagnet)
         {
+            soundMan.playAudioClip("ShopClerkSympathetic");
             float ran = Random.value;
             if (ran > 0.66)
             {
@@ -465,7 +499,7 @@ public class Shop : MonoBehaviour {
             }
             yield return new WaitForSeconds(0.5f);
             yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-            dialogueText.text = "Press \"y\" for yes, \"n\" for no";
+            dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
             yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
             if (Input.GetKey("y"))
             {
@@ -478,16 +512,19 @@ public class Shop : MonoBehaviour {
                 else
                 {
                     dialogueText.text = "Oh, you don't have enough Kleines Yen!";
+                    soundMan.playAudioClip("ShopClerkSurprised");
                 }
             }
             else if (Input.GetKey("n"))
             {
                 dialogueText.text = "Okay, maybe next time!";
+                soundMan.playAudioClip("ShopClerkWondering");
             }
             yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         }
         else
         {
+            soundMan.playAudioClip("ShopClerkSurprised");
             dialogueText.text = "Looks like you already own this awesome coin magnet!";
             yield return new WaitForSeconds(0.5f);
             yield return new WaitUntil(() => Input.GetKeyDown("e") == true);

@@ -18,7 +18,6 @@ public class Teleport : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("tp");
         if (other.transform.name == "Player")
         {
             switch (this.transform.name)
@@ -32,7 +31,7 @@ public class Teleport : MonoBehaviour {
                     soundMan.playAudioClip("Teleport");
                     break;
                 case "toArena2":
-                    other.transform.position = new Vector2(12, 50);
+                    other.transform.position = new Vector2(2, 50);
                     soundMan.playAudioClip("Teleport");
                     break;
 

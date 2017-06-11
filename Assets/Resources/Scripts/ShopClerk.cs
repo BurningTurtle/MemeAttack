@@ -39,7 +39,6 @@ public class ShopClerk : MonoBehaviour
                 }
                 else if (!talk && introductionFinished)
                 {
-                    Debug.Log("inside talk");
                     dialogueBox.SetActive(true);
                     StartCoroutine(back());
                 }
@@ -51,24 +50,23 @@ public class ShopClerk : MonoBehaviour
     {
         introduced = true;
 
-        dialogueText.text = "Hey Player. I welcome you.";
-        soundMan.playAudioClip("ShopClerkSurprised");
+        dialogueText.text = "Hey, Player! I welcome you.";
+        soundMan.playAudioClip("ShopClerkSympathetic");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = new Color(0, 202, 232);
-        dialogueText.text = "How do you know my name ?";
+        dialogueText.text = "How do you know my name?";
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = Color.white;
         dialogueText.text = "I dont know if you've noticed yet but let me make something abundantly clear.";
-        soundMan.playAudioClip("ShopClerkSympathetic"); 
+        soundMan.playAudioClip("ShopClerkSurprised"); 
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
-        dialogueText.text = "We are inside a simulation.";
-        soundMan.playAudioClip("ShopClerkSurprised");
+        dialogueText.text = "We are inside a simulation!";
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -78,18 +76,23 @@ public class ShopClerk : MonoBehaviour
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = Color.white;
-        dialogueText.text = "Everything in here consists of code which I can read and manipulate, hence there is nothing I don't know.";
+        dialogueText.text = "Everything in here consists of code which I can read, and manipulate, hence, there is nothing I don't know!";
         soundMan.playAudioClip("ShopClerkWondering");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
-        dialogueText.text = "I do this for a living. So if you want me to manipulate some code in your favor, just pick the upgrade of your choice and I'll manipulate some code for you.";
+        dialogueText.text = "I do this for a living. So if you want me to manipulate some code in your favour, just pick an item and I'll manipulate some code for you.";
         soundMan.playAudioClip("ShopClerkSympathetic");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
-        dialogueText.text = "If you have enough yen, of course.";
+        dialogueText.text = "If you have enough Kleines Yen, of course.";
         soundMan.playAudioClip("ShopClerkWondering");
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.text = "Oh, and if you wanna go back, just hit me up!";
+        soundMan.playAudioClip("ShopClerkSympathetic");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -100,7 +103,7 @@ public class ShopClerk : MonoBehaviour
     IEnumerator back()
     {
         talk = true;
-        dialogueText.text = "Hey Player. Do you wanna go back to the arena?";
+        dialogueText.text = "Hey, Player! Do you wanna go back?";
         soundMan.playAudioClip("ShopClerkSurprised");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
