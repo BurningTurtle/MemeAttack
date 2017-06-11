@@ -32,6 +32,7 @@ public class Trollface : MonoBehaviour
     private GameObject statue;
     [SerializeField]
     private Sprite statueActivated;
+    private SoundManager soundMan;
 
     // Use this for initialization
     void Start()
@@ -45,6 +46,7 @@ public class Trollface : MonoBehaviour
         spriteInt = Random.Range(0, itemSprites.Length);
         statue = GameObject.Find("trollfaceStatue1");
         sr.sprite = itemSprites[spriteInt];
+        soundMan = FindObjectOfType<SoundManager>();
 
         // Adjust scale
         switch(spriteInt)
@@ -127,6 +129,7 @@ public class Trollface : MonoBehaviour
 
             if (health <= 0 && alive)
             {
+                soundMan.playAudioClip("MainEnemyDeath");
                 StartCoroutine(die());
             }
         }

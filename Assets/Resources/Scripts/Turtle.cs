@@ -45,6 +45,8 @@ public class Turtle : MonoBehaviour {
 
     [SerializeField] GameObject playerProjectiles;
 
+    private SoundManager soundMan;
+
     // Use this for initialization
     void Start ()
     {
@@ -54,6 +56,7 @@ public class Turtle : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         statue = GameObject.Find("turtleStatue1");
+        soundMan = FindObjectOfType<SoundManager>();
     }
 	
 	// Update is called once per frame
@@ -243,6 +246,7 @@ public class Turtle : MonoBehaviour {
             health = health - FindObjectOfType<Player>().damage;
             if (health <= 0 && alive)
             {
+                soundMan.playAudioClip("MainEnemyDeath");
                 StartCoroutine(die());
             }
             Destroy(collision.gameObject);
