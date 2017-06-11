@@ -51,6 +51,7 @@ public class HubworldController : MonoBehaviour
                     {
                         parentController.GetComponent<HubworldController>().area = "hubworld";
                         HUD.SetActive(false);
+                        special1HUD.SetActive(false);
                         if (bubble != null)
                         {
                             bubble.playerInArena = false;
@@ -114,6 +115,17 @@ public class HubworldController : MonoBehaviour
                         itemslots.SetActive(false);
                         persistentCanvas.SetActive(false);
                         HUD.SetActive(true);
+                        if (bubble != null)
+                        {
+                            bubble.playerInArena = true;
+                            bubble.fadein();
+                        }
+                    }
+                    break;
+                case "finalRoomTrigger":
+                    if (parentController.GetComponent<HubworldController>().area != "finalRoom")
+                    {
+                        parentController.GetComponent<HubworldController>().area = "finalRoom";
                         if (bubble != null)
                         {
                             bubble.playerInArena = true;

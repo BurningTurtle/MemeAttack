@@ -47,6 +47,8 @@ public class Turtle : MonoBehaviour {
 
     private SoundManager soundMan;
 
+    private GameObject playerParticles;
+
     // Use this for initialization
     void Start ()
     {
@@ -57,6 +59,7 @@ public class Turtle : MonoBehaviour {
         anim = GetComponent<Animator>();
         statue = GameObject.Find("turtleStatue1");
         soundMan = FindObjectOfType<SoundManager>();
+        playerParticles = GameObject.Find("PlayerParticles");
     }
 	
 	// Update is called once per frame
@@ -279,7 +282,7 @@ public class Turtle : MonoBehaviour {
 
         player.GetComponent<Player>().crazy += 1;
         player.GetComponent<Player>().anim.SetInteger("Crazy", player.GetComponent<Player>().crazy);
-        FindObjectOfType<PlayerParticleSystem>().enableParticleSystem();
+        playerParticles.GetComponent<PlayerParticleSystem>().enableParticleSystem();
 
         Destroy(this.gameObject);
     }
