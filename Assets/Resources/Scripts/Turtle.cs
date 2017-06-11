@@ -246,7 +246,7 @@ public class Turtle : MonoBehaviour {
             health = health - FindObjectOfType<Player>().damage;
             if (health <= 0 && alive)
             {
-                soundMan.playAudioClip("MainEnemyDeath");
+                soundMan.playAudioClip("TurtleDeath");
                 StartCoroutine(die());
             }
             Destroy(collision.gameObject);
