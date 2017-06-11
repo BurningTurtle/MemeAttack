@@ -58,6 +58,9 @@ public class Arena3Controller : MonoBehaviour
 
     private GameObject seitenbacherPrefab, nikeVansPrefab, softIcePrefab, timeToStopPrefab, doritosPrefab, mountainDewPrefab;
 
+    [SerializeField]
+    private GameObject keyPrefab;  
+
 
     // Use this for initialization.
 
@@ -267,6 +270,7 @@ public class Arena3Controller : MonoBehaviour
             wavesAreActive = false;
             cantEscape.SetActive(false);
             Debug.Log("Keine weiteren Wellen mehr vorhanden");
+            Instantiate(keyPrefab, new Vector2(13, 96), Quaternion.identity);
         }
 
         // Spawn items (same chances as in Arena 1
