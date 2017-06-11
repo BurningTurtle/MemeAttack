@@ -231,6 +231,7 @@ public class DatDolan : MonoBehaviour
                 if (health <= 0 && alive)
                 {
                     StartCoroutine(die());
+                    arena2Controller.GetComponent<Arena2Controller>().deactivateCantEscape();
                 }
             }
 
