@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     // This is for bubble
     private Bubble bubble = null;
 
+
     private void Start()
     {
         anim = GetComponent<Animator>();
