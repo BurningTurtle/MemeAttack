@@ -9,7 +9,7 @@ public class HubworldController : MonoBehaviour
     [SerializeField]
     private GameObject parentController;
     [SerializeField]
-    private GameObject HUD;
+    private GameObject HUD, itemslots, persistentCanvas;
     [SerializeField]
     private GameObject special1HUD;
 
@@ -99,6 +99,20 @@ public class HubworldController : MonoBehaviour
                     if (parentController.GetComponent<HubworldController>().area != "arena3")
                     {
                         parentController.GetComponent<HubworldController>().area = "arena3";
+                        HUD.SetActive(true);
+                        if (bubble != null)
+                        {
+                            bubble.playerInArena = true;
+                            bubble.fadein();
+                        }
+                    }
+                    break;
+                case "tunnelTrigger":
+                    if (parentController.GetComponent<HubworldController>().area != "tunnel")
+                    {
+                        parentController.GetComponent<HubworldController>().area = "tunnel";
+                        itemslots.SetActive(false);
+                        persistentCanvas.SetActive(false);
                         HUD.SetActive(true);
                         if (bubble != null)
                         {
