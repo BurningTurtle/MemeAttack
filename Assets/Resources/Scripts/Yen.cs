@@ -7,10 +7,13 @@ public class Yen : MonoBehaviour {
     private GameObject player;
     [SerializeField]
     private float speedToPlayer;
+    GameObject arenaController;
 
     // Use this for initialization
     void Start () {
         player = GameObject.Find("Player");
+        arenaController = GameObject.Find("ArenaController");
+        arenaController.GetComponent<ArenaController>().moneyInScene.Add(this.gameObject);
     }
 	
 	// Update is called once per frame

@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         // Uncomment this for testing
-        health = 100;
+        //health = 100;
 
         if(dialogueBox.activeSelf == true && Input.GetKeyDown("e"))
         {

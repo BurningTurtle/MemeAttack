@@ -23,12 +23,12 @@ public class ArenaController : MonoBehaviour
 
 
     // For ending wave (Keep track of how many enemies there are in the scene)
+    public GameObject[] mainEnemiesInScene, nyanCatsInScene, dogesInScene;
 
-    public GameObject[] dolansInScene;
+    private GameObject[] enemyProjectiles, playerProjectiles, mainEnemyProjectiles;
 
-    public GameObject[] mainEnemiesInScene;
-
-    public GameObject[] datBoisInScene, nyanCatsInScene, dogesInScene, trollfacesInScene;
+    // Kleines Yen adds itself to the list in void Start()
+    public List<GameObject> moneyInScene;
 
     public int wave = 1;
 
@@ -166,7 +166,6 @@ public class ArenaController : MonoBehaviour
             {
                 StartCoroutine(activateCantEscapeCoroutine());
             }
-            Debug.Log("arena1 drin");
             // Keep track of enemies in scene
 
             mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
@@ -175,12 +174,20 @@ public class ArenaController : MonoBehaviour
 
             dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
 
+            playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
+
+            mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
+
+            enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
+
+
+
 
 
 
             // If there is no enemy in the scene (anymore)...
 
-            if ((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
+            if ((mainEnemiesInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
 
             {
                 // ... spawn the new wave.
@@ -323,6 +330,22 @@ public class ArenaController : MonoBehaviour
         foreach (GameObject enemy in dogesInScene)
         {
             Destroy(enemy.gameObject);
+        }
+        foreach(GameObject playerProjectile in playerProjectiles)
+        {
+            Destroy(playerProjectile.gameObject);
+        }
+        foreach(GameObject mainEP in mainEnemyProjectiles)
+        {
+            Destroy(mainEP.gameObject);
+        }
+        foreach(GameObject enemyP in enemyProjectiles)
+        {
+            Destroy(enemyP.gameObject);
+        }
+        foreach(GameObject money in moneyInScene)
+        {
+            Destroy(money.gameObject);
         }
         cantEscape.SetActive(false);
         HUD.SetActive(false);
