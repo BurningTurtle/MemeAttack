@@ -25,8 +25,6 @@ public class ArenaController : MonoBehaviour
     // For ending wave (Keep track of how many enemies there are in the scene)
     public GameObject[] mainEnemiesInScene, nyanCatsInScene, dogesInScene, dolansInScene, datBoisInScene, trollfacesInScene;
 
-    public GameObject[] enemyProjectiles, playerProjectiles, mainEnemyProjectiles;
-
     // Kleines Yen adds itself to the list in void Start()
     public List<GameObject> moneyInScene;
 
@@ -170,9 +168,6 @@ public class ArenaController : MonoBehaviour
         dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
         datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
         trollfacesInScene = GameObject.FindGameObjectsWithTag("Trollface");
-        playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
-        mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
-        enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
 
         if (hubworldController.GetComponent<HubworldController>().area == "arena1")
         {
@@ -269,7 +264,6 @@ public class ArenaController : MonoBehaviour
             bossIsActive = true;
             cantEscape.SetActive(false);
             Instantiate(nyanDogePrefab, new Vector2(13,13), Quaternion.identity);
-            Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 
         // Spawn items
@@ -314,6 +308,10 @@ public class ArenaController : MonoBehaviour
 
     public void resetWaves()
     {
+        GameObject[] playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
+        GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
+        GameObject[] enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
+
         wave = 1;
         foreach (GameObject enemy in mainEnemiesInScene)
         {

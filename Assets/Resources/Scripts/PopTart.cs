@@ -15,8 +15,12 @@ public class PopTart : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            // Substract 2 health from Player if hit by PopTart
-            other.GetComponent<Player>().health -= damage;
+            if (other.GetComponent<Player>().readyForDamage)
+            {
+                // Substract 2 health from Player if hit by PopTart
+                other.GetComponent<Player>().health -= damage;
+                other.GetComponent<Player>().GetReadyForDamage();
+            }
             Destroy(gameObject);
         }
     }

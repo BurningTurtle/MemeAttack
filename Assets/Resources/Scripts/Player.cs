@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public int damage;
     public int health;
 
-    private bool readyForDamage = true;
+    public bool readyForDamage = true;
 
     private SpriteRenderer sr;
     public Animator anim;
@@ -159,45 +159,126 @@ public class Player : MonoBehaviour
                 // Apply colliding damage according to enemy.
                 case "MainEnemy":
                     health -= 5;
+                    StartCoroutine(getReadyForDamage());
                     break;
                 case "Dolan":
                     health -= 5;
+                    StartCoroutine(getReadyForDamage());
                     break;
                 case "DatBoi":
                     health -= 5;
+                    StartCoroutine(getReadyForDamage());
                     break;
                 case "Doge":
                     health -= 5;
+                    StartCoroutine(getReadyForDamage());
                     break;
                 case "Turtle":
                     health -= 20;
+                    StartCoroutine(getReadyForDamage());
                     break;
                 case "DatDolan":
+                    StartCoroutine(getReadyForDamage());
                     health -= 20;
                     break;
                 case "NyanDogeDoge":
+                    StartCoroutine(getReadyForDamage());
                     health -= 10;
                     break;
                 case "NyanDogeCat":
+                    StartCoroutine(getReadyForDamage());
                     health -= 10;
                     break;
             }
-            StartCoroutine(getReadyForDamage());
-        }
-        if (collision.gameObject.tag == "NyanCat")
-        {
-            health -= 20;
-            Destroy(collision.gameObject);
+            if (collision.gameObject.tag == "NyanCat")
+            {
+                health -= 20;
+                StartCoroutine(getReadyForDamage());
+                Destroy(collision.gameObject);
+            }
         }
     }
 
+    public void GetReadyForDamage()
+    {
+        StartCoroutine(getReadyForDamage());
+    }
 
-
-    // Damage the player every second if the enemy sticks with him. (Avoiding way too much damage)
     IEnumerator getReadyForDamage()
     {
         readyForDamage = false;
-        yield return new WaitForSeconds(1.0f);
+        
+        for(float f = 1; f >= 0.1; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a -= 0.05f;
+            sr.color = colour;
+            yield return new WaitForSeconds(0.01f);
+        }
+        for(float f = 1; f >= 0.1; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a += 0.05f;
+            sr.color = colour;
+            yield return new WaitForSeconds(0.01f);
+        }
+        for (float f = 1; f >= 0.1; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a -= 0.05f;
+            sr.color = colour;
+            yield return new WaitForSeconds(0.01f);
+        }
+        for (float f = 1; f >= 0.1; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a += 0.05f;
+            sr.color = colour;
+            yield return new WaitForSeconds(0.01f);
+        }
+        for (float f = 1; f >= 0.1; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a -= 0.05f;
+            sr.color = colour;
+            yield return new WaitForSeconds(0.01f);
+        }
+        for (float f = 1; f >= 0.1; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a += 0.05f;
+            sr.color = colour;
+            yield return new WaitForSeconds(0.01f);
+        }
+        for (float f = 1; f >= 0.1; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a -= 0.05f;
+            sr.color = colour;
+            yield return new WaitForSeconds(0.01f);
+        }
+        for (float f = 1; f >= 0.1; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a += 0.05f;
+            sr.color = colour;
+            yield return new WaitForSeconds(0.01f);
+        }
+        for (float f = 1; f >= 0.1; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a -= 0.05f;
+            sr.color = colour;
+            yield return new WaitForSeconds(0.01f);
+        }
+        for (float f = 1; f >= 0.1; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a += 0.05f;
+            sr.color = colour;
+            yield return new WaitForSeconds(0.01f);
+        }
+
         readyForDamage = true;
     }
 

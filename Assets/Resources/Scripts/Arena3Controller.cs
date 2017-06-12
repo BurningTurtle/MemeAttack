@@ -13,16 +13,6 @@ public class Arena3Controller : MonoBehaviour
 
     public Grass grass1, grass2, grass3, grass4;
 
-
-
-    // For ending wave (Keep track of how many enemies there are in the scene): Done in ArenaController
-
-    //public GameObject[] dolansInScene;
-
-    //public GameObject[] mainEnemiesInScene;
-
-    //public GameObject[] datBoisInScene, nyanCatsInScene, dogesInScene, trollfacesInScene;
-
     public int wave = 1;
 
     private string[] waves;
@@ -170,16 +160,6 @@ public class Arena3Controller : MonoBehaviour
                 StartCoroutine(activateCantEscapeCoroutine());
             }
 
-            // Keep track of enemies in scene: Done in ArenaController
-            //mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
-            //datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
-            //dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
-            //nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
-            //dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
-            //trollfacesInScene = GameObject.FindGameObjectsWithTag("Trollface");
-
-
-
             // If there is no enemy in the scene (anymore)...
 
             if ((arena1Controller.mainEnemiesInScene.Length + arena1Controller.datBoisInScene.Length + arena1Controller.dolansInScene.Length + arena1Controller.nyanCatsInScene.Length + arena1Controller.dogesInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
@@ -315,6 +295,10 @@ public class Arena3Controller : MonoBehaviour
 
     public void resetWaves()
     {
+        GameObject[] playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
+        GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
+        GameObject[] enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
+
         wave = 1;
         foreach (GameObject enemy in arena1Controller.mainEnemiesInScene)
         {
@@ -328,15 +312,15 @@ public class Arena3Controller : MonoBehaviour
         {
             Destroy(enemy.gameObject);
         }
-        foreach (GameObject playerProjectile in arena1Controller.GetComponent<ArenaController>().playerProjectiles)
+        foreach (GameObject playerProjectile in playerProjectiles)
         {
             Destroy(playerProjectile.gameObject);
         }
-        foreach (GameObject mainEP in arena1Controller.GetComponent<ArenaController>().mainEnemyProjectiles)
+        foreach (GameObject mainEP in mainEnemyProjectiles)
         {
             Destroy(mainEP.gameObject);
         }
-        foreach (GameObject enemyP in arena1Controller.GetComponent<ArenaController>().enemyProjectiles)
+        foreach (GameObject enemyP in enemyProjectiles)
         {
             Destroy(enemyP.gameObject);
         }
