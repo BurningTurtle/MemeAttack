@@ -66,16 +66,16 @@ public class Shop : MonoBehaviour {
         if (!bubbleBought)
         {
             soundMan.playAudioClip("ShopClerkSympathetic");
-            dialogueText.text = "I see, the Bubble. Developer Byn's choice. That will be 10.000 Kleines Yen.";
+            dialogueText.text = "I see, the Bubble. Developer Byn's choice. That will be 5.000 Kleines Yen.";
             yield return new WaitForSeconds(0.5f);
             yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
             dialogueText.text = "Press \"y\" if you wanna buy it, or \"n\" if you don't.";
             yield return new WaitUntil(() => Input.GetKeyDown("y") == true || Input.GetKeyDown("n"));
             if (Input.GetKey("y"))
             {
-                if (player.GetComponent<Player>().returnKleinesYen() >= 10000)
+                if (player.GetComponent<Player>().returnKleinesYen() >= 5000)
                 {
-                    player.GetComponent<Player>().payYen(10000);
+                    player.GetComponent<Player>().payYen(5000);
                     GameObject bubble = Instantiate(bubblePrefab) as GameObject;
                     bubbleBought = true;
                     dialogueText.text = "Thanks for your purchase!";

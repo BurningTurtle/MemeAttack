@@ -12,10 +12,9 @@ public class MainEnemySpecial : MonoBehaviour {
 
     private bool alive;
     public float speed;
-    public float shootPower;
-    public float range;
     GameObject player;
-    private bool canShootNext;
+
+    SoundManager soundMan;
 
     // For It's time to stop
     public bool stop;
@@ -29,8 +28,8 @@ public class MainEnemySpecial : MonoBehaviour {
     {
         alive = true;
         player = GameObject.Find("Player");
-        canShootNext = true;
         anim = GetComponent<Animator>();
+        soundMan = FindObjectOfType<SoundManager>();
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -58,6 +57,8 @@ public class MainEnemySpecial : MonoBehaviour {
         // Destroy enemy and projectile if it gets hit.
         if (collision.tag == "PlayerProjectile" || collision.tag == "Bubble")
         {
+            soundMan.playAudioClip("MainEnemyDeath");
+
             int ran = Random.Range(0, 100);
             if (ran <= 50)
             {

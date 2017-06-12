@@ -128,6 +128,7 @@ public class Doge : MonoBehaviour
 
         if (health <= 0 && alive)
         {
+            soundMan.playAudioClip("MainEnemyDeath");
             Destroy(woofProjectile.gameObject);
             StartCoroutine(die());
         }

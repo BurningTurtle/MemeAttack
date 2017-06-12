@@ -151,33 +151,13 @@ public class DatBoi : MonoBehaviour {
         {
             health = health - FindObjectOfType<Player>().damage; ;
 
-            if (health <= 0)
+            if (health <= 0  && alive)
             {
                 // Coroutine because Wait Time is necessary.
                 StartCoroutine(die());
+                soundMan.playAudioClip("MainEnemyDeath");
             }
-
             Destroy(collision.gameObject);
-        }
-
-        if (collision.tag == "MasterSword")
-        {
-            if(player.GetComponent<Player>().isDarkLink && player.GetComponent<Player>().bass > 0.3f)
-            {
-                Debug.Log("crit");
-                GameObject.Find("UIController").GetComponent<UIController>().showCrit();
-                Destroy(gameObject);
-            }
-            else
-            {
-                health -= 3;
-            }
-
-            if (health <= 0 && alive)
-            {
-                // Coroutine because Wait Time is necessary.
-                StartCoroutine(die());
-            }
         }
     }
 
