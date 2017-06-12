@@ -23,9 +23,9 @@ public class ArenaController : MonoBehaviour
 
 
     // For ending wave (Keep track of how many enemies there are in the scene)
-    public GameObject[] mainEnemiesInScene, nyanCatsInScene, dogesInScene;
+    public GameObject[] mainEnemiesInScene, nyanCatsInScene, dogesInScene, dolansInScene, datBoisInScene, trollfacesInScene;
 
-    private GameObject[] enemyProjectiles, playerProjectiles, mainEnemyProjectiles;
+    public GameObject[] enemyProjectiles, playerProjectiles, mainEnemyProjectiles;
 
     // Kleines Yen adds itself to the list in void Start()
     public List<GameObject> moneyInScene;
@@ -160,30 +160,26 @@ public class ArenaController : MonoBehaviour
 
     void Update()
     {
+
+        Debug.Log(mainEnemiesInScene.Length + nyanCatsInScene.Length + dogesInScene.Length + dolansInScene.Length + datBoisInScene.Length + trollfacesInScene.Length);
+
+        // Keep track of enemies in scene
+        mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
+        nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
+        dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
+        dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
+        datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
+        trollfacesInScene = GameObject.FindGameObjectsWithTag("Trollface");
+        playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
+        mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
+        enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
+
         if (hubworldController.GetComponent<HubworldController>().area == "arena1")
         {
             if (!bossIsActive && !cantEscape.activeSelf)
             {
                 StartCoroutine(activateCantEscapeCoroutine());
             }
-            // Keep track of enemies in scene
-
-            mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
-
-            nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
-
-            dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
-
-            playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
-
-            mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
-
-            enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
-
-
-
-
-
 
             // If there is no enemy in the scene (anymore)...
 
