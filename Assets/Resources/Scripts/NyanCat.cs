@@ -20,6 +20,8 @@ public class NyanCat : MonoBehaviour {
     private GameObject statue;
     [SerializeField]
     private Sprite statueActivated;
+    private SoundManager soundMan;
+
 
     // Use this for initialization
     void Start()
@@ -29,6 +31,7 @@ public class NyanCat : MonoBehaviour {
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         statue = GameObject.Find("nyancatStatue1");
+        soundMan = FindObjectOfType<SoundManager>();
     }
 
     // Update is called once per frame
@@ -62,9 +65,10 @@ public class NyanCat : MonoBehaviour {
         {
             health = health - FindObjectOfType<Player>().damage; ;
 
-            if (health <= 0)
+            if (health <= 0 && alive)
             {
                 // Coroutine because Wait Time is necessary.
+                soundMan.playAudioClip("MainEnemyDeath");
                 StartCoroutine(die());
             }
 

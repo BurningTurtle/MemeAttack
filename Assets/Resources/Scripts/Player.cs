@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     // This is for bubble
     private Bubble bubble = null;
 
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -68,7 +69,6 @@ public class Player : MonoBehaviour
         if(dialogueBox.activeSelf == true && Input.GetKeyDown("e"))
         {
             soundMan.playAudioClip("DialoguePress");
-            Debug.Log("memes");
         }
 
         if(hubworldController.GetComponent<HubworldController>().area == "special2" || hubworldController.GetComponent<HubworldController>().area == "special1")

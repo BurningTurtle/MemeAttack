@@ -230,7 +230,9 @@ public class DatDolan : MonoBehaviour
 
                 if (health <= 0 && alive)
                 {
+                    soundMan.playAudioClip("MainEnemyDeath");
                     StartCoroutine(die());
+                    arena2Controller.GetComponent<Arena2Controller>().deactivateCantEscape();
                 }
             }
 

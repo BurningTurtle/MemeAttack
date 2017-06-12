@@ -173,8 +173,9 @@ public class Dolan : MonoBehaviour {
                 {
                     GameObject drop = Instantiate(dropPrefab, new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity) as GameObject;
                 }
-                
+
                 // Coroutine because Wait Time is necessary.
+                soundMan.playAudioClip("MainEnemyDeath");
                 StartCoroutine(die());
             }
             Destroy(collision.gameObject);

@@ -86,6 +86,7 @@ public class MainEnemy : MonoBehaviour {
         // Destroy enemy and projectile if it gets hit.
         if (collision.tag == "PlayerProjectile" || collision.tag == "Bubble")
         {
+            soundMan.playAudioClip("MainEnemyDeath");
             int ran = Random.Range(0, 100);
             if(ran <= 50)
             {
@@ -131,6 +132,7 @@ public class MainEnemy : MonoBehaviour {
             {
                 special1Controller.GetComponent<Special1Controller>().nonCrits++;
             }
+            soundMan.playAudioClip("MainEnemyDeath");
             Destroy(gameObject);
         }
     }

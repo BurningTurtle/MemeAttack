@@ -130,7 +130,7 @@ public class Special1Controller : MonoBehaviour {
             }
             else
             {
-                critText.text = "GAINED " + Mathf.RoundToInt(critRate * 2000) + " YEN"; 
+                critText.text = "GAINED " + Mathf.RoundToInt(critRate * 2000) + " KLEINES YEN"; 
             }
             
         }

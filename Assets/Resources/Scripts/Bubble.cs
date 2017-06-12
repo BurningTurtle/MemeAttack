@@ -13,6 +13,7 @@ public class Bubble : MonoBehaviour
     public bool playerInArena;
     private HubworldController[] hubWorldCtrl;
     private bool untriggerRunning;
+    private SoundManager soundMan;
 
     // Coroutine Object so that Coroutine can be stopped
     Coroutine co;
@@ -24,6 +25,7 @@ public class Bubble : MonoBehaviour
         _collider = GetComponent<Collider2D>();
         transform.position = player.transform.position;
         sr = GetComponent<SpriteRenderer>();
+        soundMan = FindObjectOfType<SoundManager>();
 
         // Bubble is bought in shop, this is not an arena, thus, the bubble has to be transparent
         fadeout();
@@ -69,61 +71,73 @@ public class Bubble : MonoBehaviour
                     collision.GetComponent<DatBoi>().health -= 1;
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "DatDolan":
                     collision.GetComponent<DatDolan>().health -= 1;
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "Doge":
                     collision.GetComponent<Doge>().health -= 1;
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "Dolan":
                     collision.GetComponent<Dolan>().health -= 1;
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "NyanCat":
                     collision.GetComponent<NyanCat>().health -= 1;
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "NyanDoge":
                     collision.GetComponent<NyanDoge>().health -= 1;
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "NyanDogeCat":
                     collision.GetComponent<NyanDogeBroken>().health -= 1;
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "NyanDogeDoge":
                     collision.GetComponent<NyanDogeBroken>().health -= 1;
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "Trollface":
                     collision.GetComponent<Trollface>().health -= 1;
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "Turtle":
                     collision.GetComponent<Turtle>().health -= 1;
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "EnemyBullet":
                     Destroy(collision.gameObject);
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
                 case "MainEnemyProjectile":
                     Destroy(collision.gameObject);
                     triggered = true;
                     co = StartCoroutine(untrigger());
+                    soundMan.playAudioClip("Bubble");
                     break;
             }
         }
