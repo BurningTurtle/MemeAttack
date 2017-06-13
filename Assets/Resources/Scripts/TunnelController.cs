@@ -33,6 +33,8 @@ public class TunnelController : MonoBehaviour {
     [SerializeField]
     private GameObject mainEnemyPrefab, dolanPrefab, datBoiPrefab, nyanCatPrefab, dogePrefab, trollfacePrefab;
 
+    public bool cantEscapeActivated = false;
+
     // Use this for initialization
     void Start () {
         cantEscape.SetActive(false);
@@ -127,6 +129,7 @@ public class TunnelController : MonoBehaviour {
 
     IEnumerator activateCantEscapeCoroutine()
     {
+        cantEscapeActivated = true;
         yield return new WaitForSeconds(.5f);
         cantEscape.SetActive(true);
     }

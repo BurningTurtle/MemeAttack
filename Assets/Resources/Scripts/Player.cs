@@ -206,80 +206,83 @@ public class Player : MonoBehaviour
 
     IEnumerator getReadyForDamage()
     {
-        readyForDamage = false;
-        
-        for(float f = 1; f >= 0.1; f -= 0.1f)
+        if(hubworldController.GetComponent<HubworldController>().area != "special1" && hubworldController.GetComponent<HubworldController>().area != "special2")
         {
-            Color colour = sr.color;
-            colour.a -= 0.05f;
-            sr.color = colour;
-            yield return new WaitForSeconds(0.01f);
-        }
-        for(float f = 1; f >= 0.1; f -= 0.1f)
-        {
-            Color colour = sr.color;
-            colour.a += 0.05f;
-            sr.color = colour;
-            yield return new WaitForSeconds(0.01f);
-        }
-        for (float f = 1; f >= 0.1; f -= 0.1f)
-        {
-            Color colour = sr.color;
-            colour.a -= 0.05f;
-            sr.color = colour;
-            yield return new WaitForSeconds(0.01f);
-        }
-        for (float f = 1; f >= 0.1; f -= 0.1f)
-        {
-            Color colour = sr.color;
-            colour.a += 0.05f;
-            sr.color = colour;
-            yield return new WaitForSeconds(0.01f);
-        }
-        for (float f = 1; f >= 0.1; f -= 0.1f)
-        {
-            Color colour = sr.color;
-            colour.a -= 0.05f;
-            sr.color = colour;
-            yield return new WaitForSeconds(0.01f);
-        }
-        for (float f = 1; f >= 0.1; f -= 0.1f)
-        {
-            Color colour = sr.color;
-            colour.a += 0.05f;
-            sr.color = colour;
-            yield return new WaitForSeconds(0.01f);
-        }
-        for (float f = 1; f >= 0.1; f -= 0.1f)
-        {
-            Color colour = sr.color;
-            colour.a -= 0.05f;
-            sr.color = colour;
-            yield return new WaitForSeconds(0.01f);
-        }
-        for (float f = 1; f >= 0.1; f -= 0.1f)
-        {
-            Color colour = sr.color;
-            colour.a += 0.05f;
-            sr.color = colour;
-            yield return new WaitForSeconds(0.01f);
-        }
-        for (float f = 1; f >= 0.1; f -= 0.1f)
-        {
-            Color colour = sr.color;
-            colour.a -= 0.05f;
-            sr.color = colour;
-            yield return new WaitForSeconds(0.01f);
-        }
-        for (float f = 1; f >= 0.1; f -= 0.1f)
-        {
-            Color colour = sr.color;
-            colour.a += 0.05f;
-            sr.color = colour;
-            yield return new WaitForSeconds(0.01f);
-        }
+            readyForDamage = false;
+            soundMan.playAudioClip("PlayerDamage");
 
-        readyForDamage = true;
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = sr.color;
+                colour.a -= 0.05f;
+                sr.color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = sr.color;
+                colour.a += 0.05f;
+                sr.color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = sr.color;
+                colour.a -= 0.05f;
+                sr.color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = sr.color;
+                colour.a += 0.05f;
+                sr.color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = sr.color;
+                colour.a -= 0.05f;
+                sr.color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = sr.color;
+                colour.a += 0.05f;
+                sr.color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = sr.color;
+                colour.a -= 0.05f;
+                sr.color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = sr.color;
+                colour.a += 0.05f;
+                sr.color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = sr.color;
+                colour.a -= 0.05f;
+                sr.color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = sr.color;
+                colour.a += 0.05f;
+                sr.color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            readyForDamage = true;
+        }
     }
 
     IEnumerator shoot()

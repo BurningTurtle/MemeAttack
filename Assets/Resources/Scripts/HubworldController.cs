@@ -15,11 +15,22 @@ public class HubworldController : MonoBehaviour
 
     private Bubble bubble = null;
 
+    private ArenaController arena1Ctrl;
+    private Arena2Controller arena2Ctrl;
+    private Special1Controller special1Ctrl;
+    private Arena3Controller arena3Ctrl;
+    private TunnelController tunnelCtrl;
+
     // Use this for initialization
     void Start()
     {
         HUD.SetActive(false);
         special1HUD.SetActive(false);
+        arena1Ctrl = FindObjectOfType<ArenaController>();
+        arena2Ctrl = FindObjectOfType<Arena2Controller>();
+        arena3Ctrl = FindObjectOfType<Arena3Controller>();
+        special1Ctrl = FindObjectOfType<Special1Controller>();
+        tunnelCtrl = FindObjectOfType<TunnelController>();
     }
 
     // Update is called once per frame
@@ -49,6 +60,33 @@ public class HubworldController : MonoBehaviour
                 case "hubworldTrigger":
                     if (parentController.GetComponent<HubworldController>().area != "hubworld")
                     {
+                        // Prevent bugging out of closed Arena
+                        if (arena1Ctrl.GetComponent<ArenaController>().cantEscapeActivated)
+                        {
+                            other.transform.position = new Vector2(12.5f, 2);
+                            break;
+                        }
+                        if (special1Ctrl.GetComponent<Special1Controller>().cantEscapeActivated)
+                        {
+                            other.transform.position = new Vector2(34, 12.5f);
+                            break;
+                        }
+                        if (arena2Ctrl.GetComponent<Arena2Controller>().cantEscapeActivated)
+                        {
+                            other.transform.position = new Vector2(24, 50);
+                            break;
+                        }
+                        if (arena3Ctrl.GetComponent<Arena3Controller>().cantEscapeActivated)
+                        {
+                            other.transform.position = new Vector2(1, 90);
+                            break;
+                        }
+                        if (tunnelCtrl.GetComponent<TunnelController>().cantEscapeActivated)
+                        {
+                            other.transform.position = new Vector2(0, 0);
+                            break;
+                        }
+
                         parentController.GetComponent<HubworldController>().area = "hubworld";
                         HUD.SetActive(false);
                         special1HUD.SetActive(false);

@@ -63,6 +63,8 @@ public class ArenaController : MonoBehaviour
 
     private GameObject seitenbacherPrefab, nikeVansPrefab, softIcePrefab, timeToStopPrefab, doritosPrefab, mountainDewPrefab;
 
+    public bool cantEscapeActivated = false;
+
 
     // Use this for initialization.
 
@@ -197,6 +199,7 @@ public class ArenaController : MonoBehaviour
 
     IEnumerator activateCantEscapeCoroutine()
     {
+        cantEscapeActivated = true;
         yield return new WaitForSeconds(.5f);
         cantEscape.SetActive(true);
     }
@@ -209,6 +212,7 @@ public class ArenaController : MonoBehaviour
     public void deactivateCantEscape()
     {
         cantEscape.SetActive(false);
+        cantEscapeActivated = false;
     }
 
     IEnumerator NewWave()
@@ -262,6 +266,7 @@ public class ArenaController : MonoBehaviour
         {
             wavesAreActive = false;
             bossIsActive = true;
+            cantEscapeActivated = false;
             cantEscape.SetActive(false);
             Instantiate(nyanDogePrefab, new Vector2(13,13), Quaternion.identity);
         }
