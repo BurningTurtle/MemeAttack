@@ -12,16 +12,6 @@ public class Arena2Controller : MonoBehaviour {
 
     public Grass grass1, grass2, grass3, grass4;
 
-
-
-    // For ending wave (Keep track of how many enemies there are in the scene)
-
-    public GameObject[] dolansInScene;
-
-    public GameObject[] mainEnemiesInScene;
-
-    public GameObject[] datBoisInScene, nyanCatsInScene, dogesInScene, trollfacesInScene;
-
     public int wave = 1;
 
     private string[] waves;
@@ -57,12 +47,16 @@ public class Arena2Controller : MonoBehaviour {
 
     private GameObject seitenbacherPrefab, nikeVansPrefab, softIcePrefab, timeToStopPrefab, doritosPrefab, mountainDewPrefab;
 
+    private GameObject arena1Controller;
+
 
     // Use this for initialization.
 
     void Start()
 
     {
+        arena1Controller = GameObject.Find("ArenaController");
+
         cantEscape.SetActive(false);
         hubworldController = GameObject.Find("HubworldController");
 
@@ -158,19 +152,10 @@ public class Arena2Controller : MonoBehaviour {
             {
                 StartCoroutine(activateCantEscapeCoroutine());
             }
-            Debug.Log("arena2 drin");
-            // Keep track of enemies in scene
-
-            mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
-
-            datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
-
-            dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
-
 
             // If there is no enemy in the scene (anymore)...
 
-            if ((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
+            if ((arena1Controller.GetComponent<ArenaController>().mainEnemiesInScene.Length + arena1Controller.GetComponent<ArenaController>().datBoisInScene.Length + arena1Controller.GetComponent<ArenaController>().dolansInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
 
             {
                 // ... spawn the new wave.
@@ -300,18 +285,38 @@ public class Arena2Controller : MonoBehaviour {
 
     public void resetWaves()
     {
+        GameObject[] playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
+        GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
+        GameObject[] enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
+
         wave = 1;
-        foreach (GameObject enemy in mainEnemiesInScene)
+        foreach (GameObject enemy in arena1Controller.GetComponent<ArenaController>().mainEnemiesInScene)
         {
             Destroy(enemy.gameObject);
         }
-        foreach (GameObject enemy in dolansInScene)
+        foreach (GameObject enemy in arena1Controller.GetComponent<ArenaController>().dolansInScene)
         {
             Destroy(enemy.gameObject);
         }
-        foreach (GameObject enemy in datBoisInScene)
+        foreach (GameObject enemy in arena1Controller.GetComponent<ArenaController>().datBoisInScene)
         {
             Destroy(enemy.gameObject);
+        }
+        foreach (GameObject playerProjectile in playerProjectiles)
+        {
+            Destroy(playerProjectile.gameObject);
+        }
+        foreach (GameObject mainEP in mainEnemyProjectiles)
+        {
+            Destroy(mainEP.gameObject);
+        }
+        foreach (GameObject enemyP in enemyProjectiles)
+        {
+            Destroy(enemyP.gameObject);
+        }
+        foreach (GameObject money in arena1Controller.GetComponent<ArenaController>().moneyInScene)
+        {
+            Destroy(money.gameObject);
         }
         cantEscape.SetActive(false);
         HUD.SetActive(false);

@@ -28,7 +28,11 @@ public class MainEnemyProjectile : MonoBehaviour {
         // Subtract one healthpoint from the player if he gets hit by the projectile.
         if (other.tag == "Player")
         {
-            other.GetComponent<Player>().health -= damage;
+            if (GameObject.Find("Player").GetComponent<Player>().readyForDamage)
+            {
+                other.GetComponent<Player>().health -= damage;
+                other.GetComponent<Player>().GetReadyForDamage();
+            }
             Destroy(gameObject);
         }
     }
