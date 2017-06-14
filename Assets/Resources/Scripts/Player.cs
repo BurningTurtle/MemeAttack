@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
     private GameObject hubworldController;
 
     [SerializeField]
-    private GameObject arenaController, arena2Controller;
+    private GameObject arenaController, arena2Controller, arena3Controller;
 
     // This is for bubble
     private Bubble bubble = null;
@@ -130,6 +130,10 @@ public class Player : MonoBehaviour
             else if (hubworldController.GetComponent<HubworldController>().area == "arena2")
             {
                 arena2Controller.GetComponent<Arena2Controller>().resetWaves();
+            }
+            else if(hubworldController.GetComponent<HubworldController>().area == "arena3")
+            {
+                arena3Controller.GetComponent<Arena3Controller>().resetWaves();
             }
             transform.position = new Vector2(12.5f, -13);
             bubble.GetComponent<Bubble>().fadeout();

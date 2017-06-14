@@ -21,6 +21,9 @@ public class HubworldController : MonoBehaviour
     private Arena3Controller arena3Ctrl;
     private TunnelController tunnelCtrl;
 
+    // Changed in respective Arena Scripts
+    public bool resetting = false;
+
     // Use this for initialization
     void Start()
     {
@@ -60,31 +63,34 @@ public class HubworldController : MonoBehaviour
                 case "hubworldTrigger":
                     if (parentController.GetComponent<HubworldController>().area != "hubworld")
                     {
-                        // Prevent bugging out of closed Arena
-                        if (arena1Ctrl.GetComponent<ArenaController>().cantEscapeActivated)
+                        if (!resetting)
                         {
-                            other.transform.position = new Vector2(12.5f, 2);
-                            break;
-                        }
-                        if (special1Ctrl.GetComponent<Special1Controller>().cantEscapeActivated)
-                        {
-                            other.transform.position = new Vector2(34, 12.5f);
-                            break;
-                        }
-                        if (arena2Ctrl.GetComponent<Arena2Controller>().cantEscapeActivated)
-                        {
-                            other.transform.position = new Vector2(24, 50);
-                            break;
-                        }
-                        if (arena3Ctrl.GetComponent<Arena3Controller>().cantEscapeActivated)
-                        {
-                            other.transform.position = new Vector2(1, 90);
-                            break;
-                        }
-                        if (tunnelCtrl.GetComponent<TunnelController>().cantEscapeActivated)
-                        {
-                            other.transform.position = new Vector2(0, 0);
-                            break;
+                            // Prevent bugging out of closed Arena (but only if Player didn't just die)
+                            if (arena1Ctrl.GetComponent<ArenaController>().cantEscapeActivated)
+                            {
+                                other.transform.position = new Vector2(12.5f, 2);
+                                break;
+                            }
+                            if (special1Ctrl.GetComponent<Special1Controller>().cantEscapeActivated)
+                            {
+                                other.transform.position = new Vector2(34, 12.5f);
+                                break;
+                            }
+                            if (arena2Ctrl.GetComponent<Arena2Controller>().cantEscapeActivated)
+                            {
+                                other.transform.position = new Vector2(24, 50);
+                                break;
+                            }
+                            if (arena3Ctrl.GetComponent<Arena3Controller>().cantEscapeActivated)
+                            {
+                                other.transform.position = new Vector2(1, 90);
+                                break;
+                            }
+                            if (tunnelCtrl.GetComponent<TunnelController>().cantEscapeActivated)
+                            {
+                                other.transform.position = new Vector2(0, 0);
+                                break;
+                            }
                         }
 
                         parentController.GetComponent<HubworldController>().area = "hubworld";
