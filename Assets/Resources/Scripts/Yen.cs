@@ -7,10 +7,16 @@ public class Yen : MonoBehaviour {
     private GameObject player;
     [SerializeField]
     private float speedToPlayer;
+    GameObject arenaController;
+    private SpriteRenderer sr;
 
     // Use this for initialization
     void Start () {
         player = GameObject.Find("Player");
+        arenaController = GameObject.Find("ArenaController");
+        arenaController.GetComponent<ArenaController>().moneyInScene.Add(this.gameObject);
+        sr = GetComponent<SpriteRenderer>();
+        StartCoroutine(die());
     }
 	
 	// Update is called once per frame
@@ -25,4 +31,18 @@ public class Yen : MonoBehaviour {
             }
         }
 	}
+
+    IEnumerator die()
+    {
+        yield return new WaitForSeconds(5);
+
+        for(float f = 1; f >= 0; f -= 0.1f)
+        {
+            Color colour = sr.color;
+            colour.a = f;
+            sr.color = colour;
+            yield return null;
+        }
+        Destroy(gameObject);
+    }
 }

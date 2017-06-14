@@ -37,7 +37,11 @@ public class TurtleProjectile : MonoBehaviour {
     {
         if (collision.tag == "Player")
         {
-            collision.GetComponent<Player>().health -= damage;
+            if (collision.GetComponent<Player>().readyForDamage)
+            {
+                collision.GetComponent<Player>().health -= damage;
+                collision.GetComponent<Player>().GetReadyForDamage();
+            }
             Destroy(this.gameObject);
         }
     }

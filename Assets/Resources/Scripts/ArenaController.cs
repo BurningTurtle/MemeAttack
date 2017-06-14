@@ -23,12 +23,10 @@ public class ArenaController : MonoBehaviour
 
 
     // For ending wave (Keep track of how many enemies there are in the scene)
+    public GameObject[] mainEnemiesInScene, nyanCatsInScene, dogesInScene, dolansInScene, datBoisInScene, trollfacesInScene;
 
-    public GameObject[] dolansInScene;
-
-    public GameObject[] mainEnemiesInScene;
-
-    public GameObject[] datBoisInScene, nyanCatsInScene, dogesInScene, trollfacesInScene;
+    // Kleines Yen adds itself to the list in void Start()
+    public List<GameObject> moneyInScene;
 
     public int wave = 1;
 
@@ -64,6 +62,8 @@ public class ArenaController : MonoBehaviour
     [SerializeField]
 
     private GameObject seitenbacherPrefab, nikeVansPrefab, softIcePrefab, timeToStopPrefab, doritosPrefab, mountainDewPrefab;
+
+    public bool cantEscapeActivated = false;
 
 
     // Use this for initialization.
@@ -160,27 +160,27 @@ public class ArenaController : MonoBehaviour
 
     void Update()
     {
+
+        Debug.Log(mainEnemiesInScene.Length + nyanCatsInScene.Length + dogesInScene.Length + dolansInScene.Length + datBoisInScene.Length + trollfacesInScene.Length);
+
+        // Keep track of enemies in scene
+        mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
+        nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
+        dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
+        dolansInScene = GameObject.FindGameObjectsWithTag("Dolan");
+        datBoisInScene = GameObject.FindGameObjectsWithTag("DatBoi");
+        trollfacesInScene = GameObject.FindGameObjectsWithTag("Trollface");
+
         if (hubworldController.GetComponent<HubworldController>().area == "arena1")
         {
             if (!bossIsActive && !cantEscape.activeSelf)
             {
                 StartCoroutine(activateCantEscapeCoroutine());
             }
-            Debug.Log("arena1 drin");
-            // Keep track of enemies in scene
-
-            mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
-
-            nyanCatsInScene = GameObject.FindGameObjectsWithTag("NyanCat");
-
-            dogesInScene = GameObject.FindGameObjectsWithTag("Doge");
-
-
-
 
             // If there is no enemy in the scene (anymore)...
 
-            if ((mainEnemiesInScene.Length + datBoisInScene.Length + dolansInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
+            if ((mainEnemiesInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
 
             {
                 // ... spawn the new wave.
@@ -199,6 +199,7 @@ public class ArenaController : MonoBehaviour
 
     IEnumerator activateCantEscapeCoroutine()
     {
+        cantEscapeActivated = true;
         yield return new WaitForSeconds(.5f);
         cantEscape.SetActive(true);
     }
@@ -211,6 +212,7 @@ public class ArenaController : MonoBehaviour
     public void deactivateCantEscape()
     {
         cantEscape.SetActive(false);
+        cantEscapeActivated = false;
     }
 
     IEnumerator NewWave()
@@ -264,9 +266,9 @@ public class ArenaController : MonoBehaviour
         {
             wavesAreActive = false;
             bossIsActive = true;
+            cantEscapeActivated = false;
             cantEscape.SetActive(false);
             Instantiate(nyanDogePrefab, new Vector2(13,13), Quaternion.identity);
-            Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 
         // Spawn items
@@ -311,6 +313,10 @@ public class ArenaController : MonoBehaviour
 
     public void resetWaves()
     {
+        GameObject[] playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
+        GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
+        GameObject[] enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
+
         wave = 1;
         foreach (GameObject enemy in mainEnemiesInScene)
         {
@@ -323,6 +329,22 @@ public class ArenaController : MonoBehaviour
         foreach (GameObject enemy in dogesInScene)
         {
             Destroy(enemy.gameObject);
+        }
+        foreach(GameObject playerProjectile in playerProjectiles)
+        {
+            Destroy(playerProjectile.gameObject);
+        }
+        foreach(GameObject mainEP in mainEnemyProjectiles)
+        {
+            Destroy(mainEP.gameObject);
+        }
+        foreach(GameObject enemyP in enemyProjectiles)
+        {
+            Destroy(enemyP.gameObject);
+        }
+        foreach(GameObject money in moneyInScene)
+        {
+            Destroy(money.gameObject);
         }
         cantEscape.SetActive(false);
         HUD.SetActive(false);

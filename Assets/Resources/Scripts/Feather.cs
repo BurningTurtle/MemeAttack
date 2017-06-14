@@ -33,7 +33,11 @@ public class Feather : MonoBehaviour {
     {
         if(collision.gameObject == player)
         {
-            collision.GetComponent<Player>().health -= damage;
+            if (player.GetComponent<Player>().readyForDamage)
+            {
+                collision.GetComponent<Player>().health -= damage;
+                collision.GetComponent<Player>().GetReadyForDamage();
+            }
             Destroy(this.gameObject);
         }
     }

@@ -18,8 +18,12 @@ public class PileOfCotton : MonoBehaviour {
     {
         if (other.gameObject == player)
         {
-            other.GetComponent<Player>().health -= damage;
-            soundMan.playCottonDamage();
+            if (other.GetComponent<Player>().readyForDamage)
+            {
+                other.GetComponent<Player>().health -= damage;
+                other.GetComponent<Player>().GetReadyForDamage();
+                soundMan.playCottonDamage();
+            }
             Destroy(gameObject);
         }
     }
