@@ -39,6 +39,10 @@ public class MainEnemy : MonoBehaviour {
         anim = GetComponent<Animator>();
         statue = GameObject.Find("mainEnemyStatue1");
         soundMan = GameObject.FindObjectOfType<SoundManager>();
+        if(GameObject.Find("HubworldController").GetComponent<HubworldController>().area == "special1")
+        {
+            StartCoroutine(die());
+        }
     }
 	// Update is called once per frame
 	void FixedUpdate ()
@@ -135,6 +139,12 @@ public class MainEnemy : MonoBehaviour {
             soundMan.playAudioClip("MainEnemyDeath");
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator die()
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(gameObject);
     }
 
 }

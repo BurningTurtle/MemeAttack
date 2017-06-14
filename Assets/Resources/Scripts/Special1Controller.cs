@@ -15,7 +15,7 @@ public class Special1Controller : MonoBehaviour {
     private GameObject player;
 
     [SerializeField]
-    private GameObject mainEnemyPrefab, nyanCatPrefab, dogePrefab;
+    private GameObject mainEnemyPrefab;
 
     private bool started = false;
 
@@ -25,6 +25,8 @@ public class Special1Controller : MonoBehaviour {
     public float crits;
     public float nonCrits;
     public float critRate;
+
+    public bool cantEscapeActivated = false;
 
     // Use this for initialization
     void Start()
@@ -166,12 +168,14 @@ public class Special1Controller : MonoBehaviour {
 
     IEnumerator cantEscapeCoroutine()
     {
+        cantEscapeActivated = true;
         yield return new WaitForSeconds(.5f);
         cantEscape.SetActive(true);
     }
 
     public void canEscape()
     {
+        cantEscapeActivated = false;
         cantEscape.SetActive(false);
     }
 

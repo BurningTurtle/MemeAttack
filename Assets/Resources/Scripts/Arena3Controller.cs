@@ -53,6 +53,7 @@ public class Arena3Controller : MonoBehaviour
 
     private ArenaController arena1Controller;
 
+    public bool cantEscapeActivated = false;
 
     // Use this for initialization.
 
@@ -180,6 +181,7 @@ public class Arena3Controller : MonoBehaviour
 
     IEnumerator activateCantEscapeCoroutine()
     {
+        cantEscapeActivated = true;
         yield return new WaitForSeconds(.5f);
         cantEscape.SetActive(true);
     }
@@ -191,6 +193,7 @@ public class Arena3Controller : MonoBehaviour
 
     public void deactivateCantEscape()
     {
+        cantEscapeActivated = false;
         cantEscape.SetActive(false);
     }
 
@@ -250,6 +253,7 @@ public class Arena3Controller : MonoBehaviour
         catch (System.IndexOutOfRangeException)
         {
             wavesAreActive = false;
+            cantEscapeActivated = false;
             cantEscape.SetActive(false);
             Debug.Log("Keine weiteren Wellen mehr vorhanden");
             Instantiate(keyPrefab, new Vector2(13, 96), Quaternion.identity);

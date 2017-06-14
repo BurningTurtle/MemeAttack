@@ -49,6 +49,8 @@ public class Arena2Controller : MonoBehaviour {
 
     private GameObject arena1Controller;
 
+    public bool cantEscapeActivated = false;
+
 
     // Use this for initialization.
 
@@ -174,6 +176,7 @@ public class Arena2Controller : MonoBehaviour {
 
     IEnumerator activateCantEscapeCoroutine()
     {
+        cantEscapeActivated = true;
         yield return new WaitForSeconds(.5f);
         cantEscape.SetActive(true);
     }
@@ -185,6 +188,7 @@ public class Arena2Controller : MonoBehaviour {
 
     public void deactivateCantEscape()
     {
+        cantEscapeActivated = false;
         cantEscape.SetActive(false);
     }
 
@@ -238,6 +242,7 @@ public class Arena2Controller : MonoBehaviour {
         {
             wavesAreActive = false;
             bossIsActive = true;
+            cantEscapeActivated = false;
             cantEscape.SetActive(false);
             Instantiate(datDolanPrefab, new Vector2(13, 50), Quaternion.identity);
             Debug.Log("Keine weiteren Wellen mehr vorhanden");

@@ -22,6 +22,7 @@ public class NyanCat : MonoBehaviour {
     private Sprite statueActivated;
     private SoundManager soundMan;
 
+    private bool moving;
 
     // Use this for initialization
     void Start()
@@ -42,7 +43,7 @@ public class NyanCat : MonoBehaviour {
             // Get Vector to the player.
             Vector2 targetVelocity = new Vector2(player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y);
             targetVelocity.Normalize();
-            GetComponent<Rigidbody2D>().velocity = targetVelocity * speed * Time.deltaTime;  
+            GetComponent<Rigidbody2D>().velocity = targetVelocity * speed * Time.deltaTime;
         }
         if (stop)
         {
