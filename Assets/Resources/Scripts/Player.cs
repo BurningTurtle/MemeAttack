@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
     // This is for bubble
     private Bubble bubble = null;
 
+    public bool dead;
+
 
     private void Start()
     {
@@ -123,6 +125,7 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             health = 100;
+            StartCoroutine(undeadify());
             if (hubworldController.GetComponent<HubworldController>().area == "arena1")
             {
                 arenaController.GetComponent<ArenaController>().resetWaves();
@@ -136,7 +139,10 @@ public class Player : MonoBehaviour
                 arena3Controller.GetComponent<Arena3Controller>().resetWaves();
             }
             transform.position = new Vector2(12.5f, -13);
-            bubble.GetComponent<Bubble>().fadeout();
+            if(bubble != null)
+            {
+                bubble.GetComponent<Bubble>().fadeout();
+            }
         }
 
         if (!hasSword && isDarkLink)
@@ -152,6 +158,13 @@ public class Player : MonoBehaviour
         {
             MasterSword.transform.position = new Vector2(transform.position.x + .3f, transform.position.y - .2f);
         }
+    }
+
+    IEnumerator undeadify()
+    {
+        dead = true;
+        yield return null;
+        dead = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

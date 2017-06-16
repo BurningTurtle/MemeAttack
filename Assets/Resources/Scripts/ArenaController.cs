@@ -161,7 +161,7 @@ public class ArenaController : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(mainEnemiesInScene.Length + nyanCatsInScene.Length + dogesInScene.Length + dolansInScene.Length + datBoisInScene.Length + trollfacesInScene.Length);
+        //Debug.Log(mainEnemiesInScene.Length + nyanCatsInScene.Length + dogesInScene.Length + dolansInScene.Length + datBoisInScene.Length + trollfacesInScene.Length);
 
         // Keep track of enemies in scene
         mainEnemiesInScene = GameObject.FindGameObjectsWithTag("MainEnemy");
@@ -313,6 +313,10 @@ public class ArenaController : MonoBehaviour
 
     public void resetWaves()
     {
+        hubworldController.GetComponent<HubworldController>().resetting = true;
+        cantEscape.SetActive(false);
+        cantEscapeActivated = false;
+
         GameObject[] playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
         GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
         GameObject[] enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
@@ -346,7 +350,7 @@ public class ArenaController : MonoBehaviour
         {
             Destroy(money.gameObject);
         }
-        cantEscape.SetActive(false);
+
         HUD.SetActive(false);
         GameObject[] items = GameObject.FindGameObjectsWithTag("item");
         foreach (GameObject item in items)
