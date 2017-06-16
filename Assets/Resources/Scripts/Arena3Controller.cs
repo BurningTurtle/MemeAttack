@@ -299,6 +299,8 @@ public class Arena3Controller : MonoBehaviour
 
     public void resetWaves()
     {
+        hubworldController.GetComponent<HubworldController>().resetting = true;
+
         GameObject[] playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
         GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
         GameObject[] enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
