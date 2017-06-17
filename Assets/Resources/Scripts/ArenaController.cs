@@ -160,7 +160,7 @@ public class ArenaController : MonoBehaviour
 
     void Update()
     {
-
+        //Debug.Log(bossIsActive);
         //Debug.Log(mainEnemiesInScene.Length + nyanCatsInScene.Length + dogesInScene.Length + dolansInScene.Length + datBoisInScene.Length + trollfacesInScene.Length);
 
         // Keep track of enemies in scene
@@ -173,14 +173,14 @@ public class ArenaController : MonoBehaviour
 
         if (hubworldController.GetComponent<HubworldController>().area == "arena1")
         {
-            if (!bossIsActive && !cantEscape.activeSelf)
+            if (!cantEscape.activeSelf && !bossIsActive)
             {
                 StartCoroutine(activateCantEscapeCoroutine());
             }
 
             // If there is no enemy in the scene (anymore)...
 
-            if ((mainEnemiesInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
+            if (!bossIsActive && (mainEnemiesInScene.Length + nyanCatsInScene.Length + dogesInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
 
             {
                 // ... spawn the new wave.
@@ -321,7 +321,11 @@ public class ArenaController : MonoBehaviour
         GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
         GameObject[] enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
 
-        wave = 1;
+        if (!bossIsActive)
+        {
+            wave = 1;
+        }
+
         foreach (GameObject enemy in mainEnemiesInScene)
         {
             Destroy(enemy.gameObject);
@@ -357,10 +361,13 @@ public class ArenaController : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
-        if (!wavesAreActive)
+
+        if (!wavesAreActive && bossIsActive)
         {
             Destroy(GameObject.FindGameObjectWithTag("NyanDoge").gameObject);
-            wavesAreActive = true;
+
+            GameObject nyanDoge = Instantiate(nyanDogePrefab) as GameObject;
+            nyanDoge.transform.position = new Vector2(13, 13);
         }
     }
 

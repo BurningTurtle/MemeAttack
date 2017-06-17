@@ -302,6 +302,7 @@ public class Arena3Controller : MonoBehaviour
         hubworldController.GetComponent<HubworldController>().resetting = true;
         cantEscape.SetActive(false);
         cantEscapeActivated = false;
+        wavesAreActive = false;
 
         GameObject[] playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
         GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");

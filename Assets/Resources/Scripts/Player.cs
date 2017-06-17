@@ -300,8 +300,11 @@ public class Player : MonoBehaviour
                     StartCoroutine(getReadyForDamage());
                     break;
                 case "DatDolan":
-                    StartCoroutine(getReadyForDamage());
-                    health -= 20;
+                    if (collision.gameObject.GetComponent<DatDolan>().activated)
+                    {
+                        StartCoroutine(getReadyForDamage());
+                        health -= 20;
+                    }
                     break;
                 case "NyanDogeDoge":
                     StartCoroutine(getReadyForDamage());

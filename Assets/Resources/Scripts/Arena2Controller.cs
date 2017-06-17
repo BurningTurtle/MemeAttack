@@ -150,14 +150,14 @@ public class Arena2Controller : MonoBehaviour {
     {
         if (hubworldController.GetComponent<HubworldController>().area == "arena2")
         {
-            if (!bossIsActive && !cantEscape.activeSelf)
+            if (!cantEscape.activeSelf && !bossIsActive)
             {
                 StartCoroutine(activateCantEscapeCoroutine());
             }
 
             // If there is no enemy in the scene (anymore)...
 
-            if ((arena1Controller.GetComponent<ArenaController>().mainEnemiesInScene.Length + arena1Controller.GetComponent<ArenaController>().datBoisInScene.Length + arena1Controller.GetComponent<ArenaController>().dolansInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
+            if (!bossIsActive && (arena1Controller.GetComponent<ArenaController>().mainEnemiesInScene.Length + arena1Controller.GetComponent<ArenaController>().datBoisInScene.Length + arena1Controller.GetComponent<ArenaController>().dolansInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
 
             {
                 // ... spawn the new wave.
@@ -245,10 +245,9 @@ public class Arena2Controller : MonoBehaviour {
             cantEscapeActivated = false;
             cantEscape.SetActive(false);
             Instantiate(datDolanPrefab, new Vector2(13, 50), Quaternion.identity);
-            Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 
-        // Spawn items (same chances as in Arena 1
+        // Spawn items (same chances as in Arena 1)
 
         if (Random.value < .33)
         {
@@ -298,7 +297,11 @@ public class Arena2Controller : MonoBehaviour {
         GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
         GameObject[] enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
 
-        wave = 1;
+        if (!bossIsActive)
+        {
+            wave = 1;
+        }
+
         foreach (GameObject enemy in arena1Controller.GetComponent<ArenaController>().mainEnemiesInScene)
         {
             Destroy(enemy.gameObject);
@@ -334,10 +337,12 @@ public class Arena2Controller : MonoBehaviour {
         {
             Destroy(item.gameObject);
         }
-        if (!wavesAreActive)
+        if (!wavesAreActive && bossIsActive)
         {
             Destroy(GameObject.FindGameObjectWithTag("DatDolan").gameObject);
-            wavesAreActive = true;
+
+            GameObject datDolan = Instantiate(datDolanPrefab) as GameObject;
+            datDolan.transform.position = new Vector2(13, 50);
         }
     }
 }

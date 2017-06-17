@@ -25,6 +25,9 @@ public class HubworldController : MonoBehaviour
     public bool resetting = false;
     public string deathArea;
 
+    // So that the Player doesn't get teleported into the Arena while it's still closed and Player hits Hubworld Trigger
+    public bool mentorIntroductionFinished = false;
+
     // Use this for initialization
     void Start()
     {
@@ -64,7 +67,7 @@ public class HubworldController : MonoBehaviour
                 case "hubworldTrigger":
                     if (parentController.GetComponent<HubworldController>().area != "hubworld")
                     {
-                        if (!GameObject.Find("Player").GetComponent<Player>().dead && GameObject.Find("Mentor").GetComponent<Mentor>().introductionFinished)
+                        if (!GameObject.Find("Player").GetComponent<Player>().dead && mentorIntroductionFinished)
                         {
                             // Prevent bugging out of closed Arena (but only if Player didn't just die)
                             if (arena1Ctrl.GetComponent<ArenaController>().cantEscapeActivated)

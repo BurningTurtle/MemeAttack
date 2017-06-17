@@ -13,9 +13,6 @@ public class Mentor : MonoBehaviour {
 
     private bool introduced = false;
 
-    // Public is important for Hubworld Triggers so that the Player doesn't get teleported into the Arena while it's still closed
-    public bool introductionFinished = false;
-
     private bool talking = false;
 
     private ArenaController arenaController;
@@ -24,6 +21,8 @@ public class Mentor : MonoBehaviour {
 
     [SerializeField] GameObject mentorParticles;
     private SpriteRenderer sr;
+
+    private bool disappeared = false;
 
     // Use this for initialization
     void Start () {
@@ -49,7 +48,7 @@ public class Mentor : MonoBehaviour {
                     dialogueBox.SetActive(true);
                     StartCoroutine(introduction());
                 }
-                else if (!talking && introductionFinished && player.GetComponent<Player>().canTalkToMentor)
+                else if (!talking && introduced && player.GetComponent<Player>().canTalkToMentor && !disappeared)
                 {
                     dialogueBox.SetActive(true);
                     StartCoroutine(talk());
@@ -152,7 +151,7 @@ public class Mentor : MonoBehaviour {
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueBox.SetActive(false);
-        introductionFinished = true;
+        FindObjectOfType<HubworldController>().mentorIntroductionFinished = true;
 
         player.GetComponent<Player>().StartFreakingOut();
     }
@@ -185,7 +184,12 @@ public class Mentor : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
-        dialogueText.text = "You will earn money in there. In order to succeed in further arenas, you'll also have to spend some of it in she shop. Otherwise it'll get pretty difficult.";
+        dialogueText.text = "You will earn money in there. In order to succeed in further arenas, you'll also have to spend some of it in the Shop. Otherwise it'll get pretty difficult.";
+        soundMan.playAudioClip("MentorWise");
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.text = "Sometimes, enemies drop items that help you! But I've heard Arena Bosses are immune to some!";
         soundMan.playAudioClip("MentorWise");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
@@ -197,6 +201,9 @@ public class Mentor : MonoBehaviour {
 
         dialogueBox.SetActive(false);
         talking = false;
+
+        // So that a new dialoguebox can't be called right after he finished talking which would result in bugs
+        disappeared = true;
 
         mentorParticles.GetComponent<PlayerParticleSystem>().enableParticleSystem();
 
@@ -216,5 +223,6 @@ public class Mentor : MonoBehaviour {
         }
 
         mentorParticles.GetComponent<ParticleSystem>().Stop();
+        Destroy(gameObject);
     }
 }
