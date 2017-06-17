@@ -40,7 +40,7 @@ public class HubworldController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(resetting);
+        //Debug.Log(resetting);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -64,7 +64,7 @@ public class HubworldController : MonoBehaviour
                 case "hubworldTrigger":
                     if (parentController.GetComponent<HubworldController>().area != "hubworld")
                     {
-                        if (!GameObject.Find("Player").GetComponent<Player>().dead)
+                        if (!GameObject.Find("Player").GetComponent<Player>().dead && GameObject.Find("Mentor").GetComponent<Mentor>().introductionFinished)
                         {
                             // Prevent bugging out of closed Arena (but only if Player didn't just die)
                             if (arena1Ctrl.GetComponent<ArenaController>().cantEscapeActivated)

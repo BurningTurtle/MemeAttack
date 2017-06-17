@@ -49,6 +49,7 @@ public class GalleryClerk : MonoBehaviour {
     {
         introduced = true;
 
+        dialogueText.color = Color.white;
         dialogueText.text = "Hey! I welcome you as well.";
         soundMan.playAudioClip("GalleryClerkHappy");
         yield return new WaitForSeconds(0.5f);
