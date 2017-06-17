@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -51,6 +52,14 @@ public class Player : MonoBehaviour
     // This is for bubble
     private Bubble bubble = null;
 
+    public bool dead;
+
+    [SerializeField]
+    private Text dialogueText;
+    public bool canTalkToMentor;
+
+    private bool canMove = true;
+
 
     private void Start()
     {
@@ -59,6 +68,9 @@ public class Player : MonoBehaviour
         soundMan = FindObjectOfType<SoundManager>();
         special1Controller = GameObject.Find("Special1Controller");
         hubworldController = GameObject.Find("HubworldController");
+
+        dialogueBox.SetActive(false);
+        StartCoroutine(whatsGoingOn());
     }
 
     private void Update()
@@ -96,15 +108,18 @@ public class Player : MonoBehaviour
 
         movement *= Time.deltaTime;
 
-        if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && dialogueBox.activeSelf == false)
+        if (canMove)
         {
-            // Switches from idle to walk animation.
-            anim.SetBool("isWalking", true);
-            transform.Translate(movement);
-        }
-        else
-        {
-            anim.SetBool("isWalking", false);
+            if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && dialogueBox.activeSelf == false)
+            {
+                // Switches from idle to walk animation.
+                anim.SetBool("isWalking", true);
+                transform.Translate(movement);
+            }
+            else
+            {
+                anim.SetBool("isWalking", false);
+            }
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -123,6 +138,7 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             health = 100;
+            StartCoroutine(undeadify());
             if (hubworldController.GetComponent<HubworldController>().area == "arena1")
             {
                 arenaController.GetComponent<ArenaController>().resetWaves();
@@ -136,7 +152,10 @@ public class Player : MonoBehaviour
                 arena3Controller.GetComponent<Arena3Controller>().resetWaves();
             }
             transform.position = new Vector2(12.5f, -13);
-            bubble.GetComponent<Bubble>().fadeout();
+            if(bubble != null)
+            {
+                bubble.GetComponent<Bubble>().fadeout();
+            }
         }
 
         if (!hasSword && isDarkLink)
@@ -152,6 +171,105 @@ public class Player : MonoBehaviour
         {
             MasterSword.transform.position = new Vector2(transform.position.x + .3f, transform.position.y - .2f);
         }
+    }
+
+    IEnumerator whatsGoingOn()
+    {
+        yield return new WaitUntil(() => (Input.GetKeyDown("w") || Input.GetKeyDown("a") || Input.GetKeyDown("s") || Input.GetKeyDown("d")) == true);
+        yield return new WaitForSeconds(0.75f);
+        dialogueBox.SetActive(true);
+
+        dialogueText.color = new Color(0, 202, 232);
+        dialogueText.text = "Umm...";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.text = "What's going on?";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.text = "...";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.text = "Where the hell am I?";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.text = "...";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.text = "And why is that creepy old dude at the end of the hall staring at me ...";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueBox.SetActive(false);
+    }
+
+    public void StartFreakingOut()
+    {
+        StartCoroutine(freakingOut());
+    }
+
+    IEnumerator freakingOut()
+    {
+        canTalkToMentor = false;
+
+        yield return new WaitUntil(() => (Input.GetKeyDown("w") || Input.GetKeyDown("a") || Input.GetKeyDown("s") || Input.GetKeyDown("d")) == true);
+        canMove = false;
+
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, -2);
+        yield return new WaitForSeconds(3f);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        anim.SetBool("isWalking", false);
+
+        dialogueBox.SetActive(true);
+        dialogueText.color = new Color(0, 202, 232);
+        dialogueText.text = "There must be a way out.";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
+
+        anim.SetBool("isWalking", true);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, -2) * 3;
+        yield return new WaitForSeconds(2f);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        anim.SetBool("isWalking", false);
+
+        dialogueBox.SetActive(true);
+        dialogueText.text = "...";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
+
+        anim.SetBool("isWalking", true);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 2) * 1.5f;
+        yield return new WaitForSeconds(2f);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        anim.SetBool("isWalking", false);
+
+        dialogueBox.SetActive(true);
+        dialogueText.text = "...";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
+
+        dialogueBox.SetActive(true);
+        dialogueText.text = "Ugh.";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
+
+        canMove = true;
+        canTalkToMentor = true;
+    }
+
+    IEnumerator undeadify()
+    {
+        dead = true;
+        yield return null;
+        dead = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -182,8 +300,11 @@ public class Player : MonoBehaviour
                     StartCoroutine(getReadyForDamage());
                     break;
                 case "DatDolan":
-                    StartCoroutine(getReadyForDamage());
-                    health -= 20;
+                    if (collision.gameObject.GetComponent<DatDolan>().activated)
+                    {
+                        StartCoroutine(getReadyForDamage());
+                        health -= 20;
+                    }
                     break;
                 case "NyanDogeDoge":
                     StartCoroutine(getReadyForDamage());

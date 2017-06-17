@@ -64,9 +64,9 @@ public class Arena2Controller : MonoBehaviour {
 
         waves = new string[]
 
-        { "001. 001main000dolan000datboi", "002. 003main000dolan000datboi", "003. 003main001dolan000datboi", "004. 005main001dolan000datboi", "005. 001main001dolan001datboi",
-          "006. 005main001dolan001datboi", "007. 010main002dolan001datboi", "008. 010main002dolan001datboi", "009. 010main003dolan001datboi", "010. 010main004dolan000datboi",
-          "011. 015main002dolan001datboi", "012. 020main002dolan001datboi", "013. 020main003dolan001datboi", "014. 025main003dolan001datboi", "015. 030main004dolan001datboi"};
+        { "001. 001main000dolan001datboi", "002. 003main000dolan001datboi", "003. 003main001dolan000datboi", "004. 005main001dolan000datboi", "005. 001main001dolan001datboi",
+          "006. 005main001dolan001datboi", "007. 010main001dolan001datboi", "008. 005main002dolan001datboi", "009. 005main002dolan000datboi", "010. 010main001dolan000datboi",
+          "011. 015main000dolan002datboi", "012. 010main001dolan003datboi", "013. 002main003dolan000datboi", "014. 005main001dolan005datboi", "015. 000main004dolan001datboi"};
 
 
 
@@ -150,14 +150,14 @@ public class Arena2Controller : MonoBehaviour {
     {
         if (hubworldController.GetComponent<HubworldController>().area == "arena2")
         {
-            if (!bossIsActive && !cantEscape.activeSelf)
+            if (!cantEscape.activeSelf && !bossIsActive)
             {
                 StartCoroutine(activateCantEscapeCoroutine());
             }
 
             // If there is no enemy in the scene (anymore)...
 
-            if ((arena1Controller.GetComponent<ArenaController>().mainEnemiesInScene.Length + arena1Controller.GetComponent<ArenaController>().datBoisInScene.Length + arena1Controller.GetComponent<ArenaController>().dolansInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
+            if (!bossIsActive && (arena1Controller.GetComponent<ArenaController>().mainEnemiesInScene.Length + arena1Controller.GetComponent<ArenaController>().datBoisInScene.Length + arena1Controller.GetComponent<ArenaController>().dolansInScene.Length) < 1 && !alreadyCalled && wavesAreActive)
 
             {
                 // ... spawn the new wave.
@@ -245,10 +245,9 @@ public class Arena2Controller : MonoBehaviour {
             cantEscapeActivated = false;
             cantEscape.SetActive(false);
             Instantiate(datDolanPrefab, new Vector2(13, 50), Quaternion.identity);
-            Debug.Log("Keine weiteren Wellen mehr vorhanden");
         }
 
-        // Spawn items (same chances as in Arena 1
+        // Spawn items (same chances as in Arena 1)
 
         if (Random.value < .33)
         {
@@ -290,11 +289,19 @@ public class Arena2Controller : MonoBehaviour {
 
     public void resetWaves()
     {
+        hubworldController.GetComponent<HubworldController>().resetting = true;
+        cantEscape.SetActive(false);
+        cantEscapeActivated = false;
+
         GameObject[] playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
         GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
         GameObject[] enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
 
-        wave = 1;
+        if (!bossIsActive)
+        {
+            wave = 1;
+        }
+
         foreach (GameObject enemy in arena1Controller.GetComponent<ArenaController>().mainEnemiesInScene)
         {
             Destroy(enemy.gameObject);
@@ -323,17 +330,19 @@ public class Arena2Controller : MonoBehaviour {
         {
             Destroy(money.gameObject);
         }
-        cantEscape.SetActive(false);
+
         HUD.SetActive(false);
         GameObject[] items = GameObject.FindGameObjectsWithTag("item");
         foreach (GameObject item in items)
         {
             Destroy(item.gameObject);
         }
-        if (!wavesAreActive)
+        if (!wavesAreActive && bossIsActive)
         {
             Destroy(GameObject.FindGameObjectWithTag("DatDolan").gameObject);
-            wavesAreActive = true;
+
+            GameObject datDolan = Instantiate(datDolanPrefab) as GameObject;
+            datDolan.transform.position = new Vector2(13, 50);
         }
     }
 }

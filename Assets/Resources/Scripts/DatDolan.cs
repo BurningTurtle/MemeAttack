@@ -28,7 +28,7 @@ public class DatDolan : MonoBehaviour
     private GameObject statue;
     [SerializeField]
     private Sprite statueActivated;
-    private bool activated = false;
+    public bool activated = false;
 
     [SerializeField] private GameObject yen100, yen500;
 

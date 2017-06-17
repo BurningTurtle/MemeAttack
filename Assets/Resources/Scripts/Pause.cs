@@ -28,7 +28,7 @@ public class Pause : MonoBehaviour {
                 {
                     dialogueWasActive = false;
                 }
-                Time.timeScale = 0;
+                Time.timeScale = 100;
                 pausePanel.SetActive(true);
             }
             else

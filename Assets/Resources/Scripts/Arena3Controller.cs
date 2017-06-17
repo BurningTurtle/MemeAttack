@@ -300,6 +300,9 @@ public class Arena3Controller : MonoBehaviour
     public void resetWaves()
     {
         hubworldController.GetComponent<HubworldController>().resetting = true;
+        cantEscape.SetActive(false);
+        cantEscapeActivated = false;
+        wavesAreActive = false;
 
         GameObject[] playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
         GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
@@ -334,17 +337,12 @@ public class Arena3Controller : MonoBehaviour
         {
             Destroy(money.gameObject);
         }
-        cantEscape.SetActive(false);
+
         HUD.SetActive(false);
         GameObject[] items = GameObject.FindGameObjectsWithTag("item");
         foreach (GameObject item in items)
         {
             Destroy(item.gameObject);
-        }
-        if (!wavesAreActive)
-        {
-            Destroy(GameObject.FindGameObjectWithTag("DatDolan").gameObject);
-            wavesAreActive = true;
         }
     }
 }
