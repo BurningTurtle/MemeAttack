@@ -50,6 +50,7 @@ public class ShopClerk : MonoBehaviour
     {
         introduced = true;
 
+        dialogueText.color = Color.white;
         dialogueText.text = "Hey, Player! I welcome you.";
         soundMan.playAudioClip("ShopClerkSympathetic");
         yield return new WaitForSeconds(0.5f);
@@ -71,7 +72,7 @@ public class ShopClerk : MonoBehaviour
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = new Color(0, 202, 232);
-        dialogueText.text = "Oh, well. Why not.";
+        dialogueText.text = "Are you ignoring me!?";
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -81,11 +82,23 @@ public class ShopClerk : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
+        dialogueText.color = new Color(0, 202, 232);
+        dialogueText.text = "You're not gonna give me any advice, are you?";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.color = Color.white;
         dialogueText.text = "I do this for a living. So if you want me to manipulate some code in your favour, just pick an item and I'll manipulate some code for you.";
         soundMan.playAudioClip("ShopClerkSympathetic");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
+        dialogueText.color = new Color(0, 202, 232);
+        dialogueText.text = "...";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.color = Color.white;
         dialogueText.text = "If you have enough Kleines Yen, of course.";
         soundMan.playAudioClip("ShopClerkWondering");
         yield return new WaitForSeconds(0.5f);

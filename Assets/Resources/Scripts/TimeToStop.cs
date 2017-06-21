@@ -53,8 +53,6 @@ public class TimeToStop : MonoBehaviour
 
     IEnumerator itsTimeToStop()
     {
-        // Arena3Controller because it keeps track of all enemies. Doing it in ArenaController would result in unnecessary storage of enemies unnecessary arrays.
-
         for (int i = 0; i < FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dolansInScene.Length; i++)
         {
             FindObjectOfType<ArenaController>().GetComponent<ArenaController>().dolansInScene[i].GetComponent<Dolan>().stop = true;

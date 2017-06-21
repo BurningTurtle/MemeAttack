@@ -61,6 +61,7 @@ public class Villain : MonoBehaviour {
         dialogueText.color = Color.white;
         dialogueText.text = "Yes, silly. Don't you remember?";
         soundMan.playAudioClip("VillainLaugh");
+        sr.sprite = villainSmiling;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -91,6 +92,7 @@ public class Villain : MonoBehaviour {
         dialogueText.color = Color.white;
         dialogueText.text = "HOW DARE YOU ASK THAT QUESTION!";
         soundMan.playAudioClip("VillainAttack2");
+        sr.sprite = villainAngry;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -102,12 +104,14 @@ public class Villain : MonoBehaviour {
         dialogueText.color = Color.white;
         dialogueText.text = "Oh? It appears you've lost your memory.";
         soundMan.playAudioClip("VillainArrogant");
+        sr.sprite = villainNormal;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = Color.white;
         dialogueText.text = "Let my little friend help you remember!";
         soundMan.playAudioClip("VillainAttack2");
+        sr.sprite = villainAngry;
         yield return new WaitForSeconds(0.5f);
         sr.sprite = villainAngry;
         yield return new WaitForSeconds(0.5f);
