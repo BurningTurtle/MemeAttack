@@ -33,8 +33,8 @@ public class FeatherShuuriken : MonoBehaviour {
                 collision.GetComponent<Player>().health -= damage;
                 collision.GetComponent<Player>().GetReadyForDamage();
             }
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
     }
 
     IEnumerator die()
