@@ -43,7 +43,7 @@ public class Knife : MonoBehaviour {
             {
                 GetComponent<Rigidbody2D>().velocity = forceBeforeStop;
             }
-            Debug.Log("back force from Knife script");
+            //Debug.Log("back force from Knife script");
             back = true;
         }
     }
@@ -52,12 +52,13 @@ public class Knife : MonoBehaviour {
     {
         if(collision.tag == "Player")
         {
-            if(collision.GetComponent<Player>().readyForDamage)
-            // Give Player 2 Damage on hit, then destroy knife.
-            collision.GetComponent<Player>().health -= damage;
-            collision.GetComponent<Player>().GetReadyForDamage();
-            Destroy(this.gameObject);
+            if (GameObject.Find("Player").GetComponent<Player>().readyForDamage)
+            {
+                collision.GetComponent<Player>().health -= damage;
+                collision.GetComponent<Player>().GetReadyForDamage();
+            }
         }
+        Destroy(gameObject);
     }
 
     IEnumerator die()

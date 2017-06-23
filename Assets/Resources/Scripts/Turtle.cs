@@ -49,6 +49,8 @@ public class Turtle : MonoBehaviour {
 
     private GameObject playerParticles;
 
+    [SerializeField] GameObject keyPrefab;
+
     // Use this for initialization
     void Start ()
     {
@@ -278,6 +280,7 @@ public class Turtle : MonoBehaviour {
         // Destroy that duckling
         alive = false;
         Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+        Instantiate(keyPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
 
         player.GetComponent<Player>().crazy += 1;

@@ -28,8 +28,8 @@ public class Splash : MonoBehaviour {
                 other.GetComponent<Player>().GetReadyForDamage();
 
             }
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
     }
 
     IEnumerator die()
