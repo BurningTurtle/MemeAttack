@@ -215,6 +215,16 @@ public class ArenaController : MonoBehaviour
         cantEscapeActivated = false;
     }
 
+    IEnumerator spawnMain(int number)
+    {
+        for (int i = 1; i <= number; i++)
+        {
+            GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(12.5f, 13), Quaternion.identity) as GameObject;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+    }
+
     IEnumerator NewWave()
 
     {
@@ -235,13 +245,7 @@ public class ArenaController : MonoBehaviour
 
             // Spawn them.
 
-            for (int i = 1; i <= spawningMainEnemies; i++)
-
-            {
-
-                GameObject mainEnemy = Instantiate(mainEnemyPrefab, new Vector2(12.5f, 13), Quaternion.identity) as GameObject;
-
-            }
+            StartCoroutine(spawnMain(spawningMainEnemies));
 
             for (int i = 1; i <= spawningDoges; i++)
 
