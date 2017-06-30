@@ -105,7 +105,7 @@ public class Dolan : MonoBehaviour {
         knife4.transform.rotation = Quaternion.AngleAxis(angle + 270, Vector3.forward);
         Debug.Log("force from Dolan init");
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1);
 
         // Wait and destroy the knife
 
