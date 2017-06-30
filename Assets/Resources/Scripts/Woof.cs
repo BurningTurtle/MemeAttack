@@ -62,7 +62,7 @@ public class Woof : MonoBehaviour
                 collision.GetComponent<Player>().health -= damage;
                 collision.GetComponent<Player>().GetReadyForDamage();
             }
-            Destroy(this.gameObject);
         }
+        Destroy(this.gameObject);
     }
 }

@@ -20,6 +20,7 @@ public class HubworldController : MonoBehaviour
     private Special1Controller special1Ctrl;
     private Arena3Controller arena3Ctrl;
     private TunnelController tunnelCtrl;
+    private VillainArenaController villainCtrl;
 
     // Changed in respective Arena Scripts
     public bool resetting = false;
@@ -38,6 +39,7 @@ public class HubworldController : MonoBehaviour
         arena3Ctrl = FindObjectOfType<Arena3Controller>();
         special1Ctrl = FindObjectOfType<Special1Controller>();
         tunnelCtrl = FindObjectOfType<TunnelController>();
+        villainCtrl = FindObjectOfType<VillainArenaController>();
     }
 
     // Update is called once per frame
@@ -94,12 +96,6 @@ public class HubworldController : MonoBehaviour
                                 resetting = false;
                                 break;
                             }
-                            if (tunnelCtrl.GetComponent<TunnelController>().cantEscapeActivated)
-                            {
-                                other.transform.position = new Vector2(0, 0);
-                                resetting = false;
-                                break;
-                            }
                         }
                         else
                         {
@@ -153,6 +149,12 @@ public class HubworldController : MonoBehaviour
                 case "arena3Trigger":
                     if (parentController.GetComponent<HubworldController>().area != "arena3")
                     {
+                        if (tunnelCtrl.GetComponent<TunnelController>().cantEscapeActivated)
+                        {
+                            other.transform.position = new Vector2(12, 107.5f);
+                            resetting = false;
+                            break;
+                        }
                         parentController.GetComponent<HubworldController>().area = "arena3";
                         HUD.SetActive(true);
                         if (bubble != null)
@@ -165,6 +167,12 @@ public class HubworldController : MonoBehaviour
                 case "tunnelTrigger":
                     if (parentController.GetComponent<HubworldController>().area != "tunnel")
                     {
+                        if (villainCtrl.GetComponent<VillainArenaController>().cantEscapeActivated)
+                        {
+                            other.transform.position = new Vector2(12, 315);
+                            resetting = false;
+                            break;
+                        }
                         parentController.GetComponent<HubworldController>().area = "tunnel";
                         itemslots.SetActive(false);
                         persistentCanvas.SetActive(false);
@@ -184,6 +192,10 @@ public class HubworldController : MonoBehaviour
                         {
                             bubble.playerInArena = true;
                             bubble.fadein();
+                        }
+                        foreach (GameObject mE in arena1Ctrl.GetComponent<ArenaController>().mainEnemiesInScene)
+                        {
+                            Destroy(mE.gameObject);
                         }
                     }
                     break;

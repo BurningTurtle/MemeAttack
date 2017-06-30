@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     private GameObject hubworldController;
 
     [SerializeField]
-    private GameObject arenaController, arena2Controller, arena3Controller;
+    private GameObject arenaController, arena2Controller, arena3Controller, tunnelController, villainCtrl;
 
     // This is for bubble
     private Bubble bubble = null;
@@ -70,7 +70,15 @@ public class Player : MonoBehaviour
         hubworldController = GameObject.Find("HubworldController");
 
         dialogueBox.SetActive(false);
-        StartCoroutine(whatsGoingOn());
+        if(Application.loadedLevelName == "Arena")
+        {
+            //StartCoroutine(whatsGoingOn());
+        }
+        else if (Application.loadedLevelName == "Arena 1")
+        {
+            StartCoroutine(whatsGoingOn1());
+        }
+
     }
 
     private void Update()
@@ -83,9 +91,12 @@ public class Player : MonoBehaviour
             soundMan.playAudioClip("DialoguePress");
         }
 
-        if(hubworldController.GetComponent<HubworldController>().area == "special2" || hubworldController.GetComponent<HubworldController>().area == "special1")
+        if(Application.loadedLevelName == "Arena")
         {
-            health = 100;
+            if (hubworldController.GetComponent<HubworldController>().area == "special2" || hubworldController.GetComponent<HubworldController>().area == "special1")
+            {
+                health = 100;
+            }
         }
 
         float[] spectrum = AudioListener.GetSpectrumData(64, 0, FFTWindow.Hamming);
@@ -151,6 +162,14 @@ public class Player : MonoBehaviour
             {
                 arena3Controller.GetComponent<Arena3Controller>().resetWaves();
             }
+            else if (hubworldController.GetComponent<HubworldController>().area == "tunnel")
+            {
+                tunnelController.GetComponent<TunnelController>().diedInTunnel();
+            }
+            else if(hubworldController.GetComponent<HubworldController>().area == "finalRoom")
+            {
+                villainCtrl.GetComponent<VillainArenaController>().diedInVillainArena();
+            }
             transform.position = new Vector2(12.5f, -13);
             if(bubble != null)
             {
@@ -171,6 +190,32 @@ public class Player : MonoBehaviour
         {
             MasterSword.transform.position = new Vector2(transform.position.x + .3f, transform.position.y - .2f);
         }
+    }
+
+    IEnumerator whatsGoingOn1()
+    {
+        yield return new WaitForSeconds (3);
+        dialogueBox.SetActive(true);
+
+        dialogueText.color = new Color(0, 202, 232);
+        dialogueText.text = "What the heck!?";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
+
+        // Give Player some time inside teleport room
+        yield return new WaitForSeconds(30);
+
+        soundMan.playAudioClip("Teleport");
+        transform.position = new Vector2(0, 0);
+        yield return new WaitForSeconds(1);
+
+        soundMan.playAudioClip("Teleport");
+        transform.position = new Vector2(0, 13);
+        yield return new WaitForSeconds(1);
+
+        soundMan.playAudioClip("Teleport");
+        transform.position = new Vector2(12.3f, -13.2f);
     }
 
     IEnumerator whatsGoingOn()

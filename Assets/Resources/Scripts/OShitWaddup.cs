@@ -46,8 +46,8 @@ public class OShitWaddup : MonoBehaviour {
                 other.GetComponent<Player>().health -= damage;
                 other.GetComponent<Player>().GetReadyForDamage();
             }
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
     }
 
     IEnumerator die()
