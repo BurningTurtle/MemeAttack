@@ -214,6 +214,8 @@ public class Player : MonoBehaviour
         transform.position = new Vector2(0, 13);
         yield return new WaitForSeconds(1);
 
+        soundMan.playAudioClip("Teleport");
+        transform.position = new Vector2(12.3f, -13.2f);
     }
 
     IEnumerator whatsGoingOn()
