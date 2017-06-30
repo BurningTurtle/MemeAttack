@@ -33,6 +33,8 @@ public class TunnelController : MonoBehaviour {
     [SerializeField]
     private GameObject mainEnemyPrefab, dolanPrefab, datBoiPrefab, nyanCatPrefab, dogePrefab, trollfacePrefab;
 
+    [SerializeField] private GameObject arena1Controller;
+
     public bool cantEscapeActivated = false;
 
     // Use this for initialization
@@ -112,16 +114,16 @@ public class TunnelController : MonoBehaviour {
 	void Update () {
         if (hubworldController.GetComponent<HubworldController>().area == "tunnel")
         {
-            if (!cantEscape.activeSelf)
+            if (!cantEscape.activeSelf && !hubworldController.GetComponent<HubworldController>().resetting)
             {
                 StartCoroutine(activateCantEscapeCoroutine());
+                Debug.Log("starting cantactiveatasd");
             }
 
             if (!alreadyCalled)
 
             {
                 // ... spawn the new wave.
-                Debug.Log("should start spawn coroutine");
                 StartCoroutine(NewWave());
             }
         }
@@ -144,4 +146,52 @@ public class TunnelController : MonoBehaviour {
         yield return new WaitForSeconds(2.5f);
         alreadyCalled = false;
     }
+
+    public void diedInTunnel()
+    {
+        hubworldController.GetComponent<HubworldController>().resetting = true;
+        cantEscape.SetActive(false);
+        cantEscapeActivated = false;
+
+        GameObject[] playerProjectiles = GameObject.FindGameObjectsWithTag("PlayerProjectile");
+        GameObject[] mainEnemyProjectiles = GameObject.FindGameObjectsWithTag("MainEnemyProjectile");
+        GameObject[] enemyProjectiles = GameObject.FindGameObjectsWithTag("EnemyBullet");
+
+        foreach (GameObject enemy in arena1Controller.GetComponent<ArenaController>().mainEnemiesInScene)
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (GameObject enemy in arena1Controller.GetComponent<ArenaController>().dolansInScene)
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (GameObject enemy in arena1Controller.GetComponent<ArenaController>().datBoisInScene)
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (GameObject playerProjectile in playerProjectiles)
+        {
+            Destroy(playerProjectile.gameObject);
+        }
+        foreach (GameObject mainEP in mainEnemyProjectiles)
+        {
+            Destroy(mainEP.gameObject);
+        }
+        foreach (GameObject enemyP in enemyProjectiles)
+        {
+            Destroy(enemyP.gameObject);
+        }
+        foreach (GameObject money in arena1Controller.GetComponent<ArenaController>().moneyInScene)
+        {
+            Destroy(money.gameObject);
+        }
+
+        HUD.SetActive(false);
+        GameObject[] items = GameObject.FindGameObjectsWithTag("item");
+        foreach (GameObject item in items)
+        {
+            Destroy(item.gameObject);
+        }
+    }
 }
+
