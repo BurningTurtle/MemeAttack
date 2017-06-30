@@ -8,8 +8,8 @@ public class Villain : MonoBehaviour {
     private GameObject hubworldCtrl;
     private bool canTalk = true;
     private SoundManager soundMan;
-    [SerializeField] private Text dialogueText;
-    [SerializeField] private GameObject dialogueBox;
+    private Text dialogueText;
+    private GameObject dialogueBox;
     private SpriteRenderer sr;
     [SerializeField] private Sprite villainSmiling, villainAngry, villainNormal;
 
@@ -24,6 +24,8 @@ public class Villain : MonoBehaviour {
         hubworldCtrl = GameObject.Find("HubworldController");
         sr = GetComponent<SpriteRenderer>();
         soundMan = FindObjectOfType<SoundManager>();
+        dialogueBox = GameObject.Find("GameObjectManager").GetComponent<GameObjectManager>().dialogueBox;
+        dialogueText = GameObject.Find("GameObjectManager").GetComponent<GameObjectManager>().dialogueText;
         dialogueBox.SetActive(false);
         villainParticles = GameObject.Find("VillainParticles");
 	}

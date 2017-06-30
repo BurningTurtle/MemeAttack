@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
     private GameObject hubworldController;
 
     [SerializeField]
-    private GameObject arenaController, arena2Controller, arena3Controller, tunnelController;
+    private GameObject arenaController, arena2Controller, arena3Controller, tunnelController, villainCtrl;
 
     // This is for bubble
     private Bubble bubble = null;
@@ -154,6 +154,10 @@ public class Player : MonoBehaviour
             else if (hubworldController.GetComponent<HubworldController>().area == "tunnel")
             {
                 tunnelController.GetComponent<TunnelController>().diedInTunnel();
+            }
+            else if(hubworldController.GetComponent<HubworldController>().area == "finalRoom")
+            {
+                villainCtrl.GetComponent<VillainArenaController>().diedInVillainArena();
             }
             transform.position = new Vector2(12.5f, -13);
             if(bubble != null)
