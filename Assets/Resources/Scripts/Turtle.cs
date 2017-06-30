@@ -279,7 +279,7 @@ public class Turtle : MonoBehaviour {
 
         // Destroy that duckling
         alive = false;
-        Instantiate(keyPrefab, new Vector2(transform.position.x, transform.position.y + 5), Quaternion.identity);
+        Instantiate(keyPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
 
         player.GetComponent<Player>().crazy += 1;
