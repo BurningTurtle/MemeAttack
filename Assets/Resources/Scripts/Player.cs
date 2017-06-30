@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
         hubworldController = GameObject.Find("HubworldController");
 
         dialogueBox.SetActive(false);
-        StartCoroutine(whatsGoingOn());
+        //StartCoroutine(whatsGoingOn());
     }
 
     private void Update()
