@@ -47,42 +47,49 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int heartPoints = player.GetComponent<Player>().health / 5;
-        if (player.GetComponent<Player>().health >= 0)
+        if(Application.loadedLevelName == "Arena")
         {
-            heartsIngame.sprite = hearts[heartPoints];
-        }
-
-        if(hubworldCtrl.GetComponent<HubworldController>().area == "arena1")
-        {
-            // -1 because ArenaController increases wave right after spawn.
-            wave = arenaController.GetComponent<ArenaController>().wave - 1;
-        }
-        else if(hubworldCtrl.GetComponent<HubworldController>().area == "arena2")
-        {
-            wave = arena2Controller.GetComponent<Arena2Controller>().wave - 1;
-        }
-        else if (hubworldCtrl.GetComponent<HubworldController>().area == "arena3")
-        {
-            wave = arena3Controller.GetComponent<Arena3Controller>().wave - 1;
-        }
-
-        if (wave < 16)
-        {
-            waveDisplay.text = "WAVE\n" + wave;
-        }
-        else
-        {
-            if(hubworldCtrl.GetComponent<HubworldController>().area != "arena3")
+            int heartPoints = player.GetComponent<Player>().health / 5;
+            if (player.GetComponent<Player>().health >= 0)
             {
-                waveDisplay.text = "BOSS";
+                heartsIngame.sprite = hearts[heartPoints];
+            }
+
+            if (hubworldCtrl.GetComponent<HubworldController>().area == "arena1")
+            {
+                // -1 because ArenaController increases wave right after spawn.
+                wave = arenaController.GetComponent<ArenaController>().wave - 1;
+            }
+            else if (hubworldCtrl.GetComponent<HubworldController>().area == "arena2")
+            {
+                wave = arena2Controller.GetComponent<Arena2Controller>().wave - 1;
+            }
+            else if (hubworldCtrl.GetComponent<HubworldController>().area == "arena3")
+            {
+                wave = arena3Controller.GetComponent<Arena3Controller>().wave - 1;
+            }
+
+            if (wave < 16)
+            {
+                waveDisplay.text = "WAVE\n" + wave;
             }
             else
             {
-                waveDisplay.text = "DONE";
+                if (hubworldCtrl.GetComponent<HubworldController>().area != "arena3")
+                {
+                    waveDisplay.text = "BOSS";
+                }
+                else
+                {
+                    waveDisplay.text = "DONE";
+                }
             }
+            kleinesYenDisplay.text = FindObjectOfType<Player>().GetComponent<Player>().returnKleinesYen().ToString("D5");
         }
-        kleinesYenDisplay.text = FindObjectOfType<Player>().GetComponent<Player>().returnKleinesYen().ToString("D5");
+        else
+        {
+            
+        }
     }
 
     IEnumerator crit()

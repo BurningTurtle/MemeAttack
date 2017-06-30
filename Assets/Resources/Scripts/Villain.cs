@@ -123,7 +123,7 @@ public class Villain : MonoBehaviour {
 
         soundMan.playAudioClip("VillainAttack1");
         GameObject turtle = Instantiate(turtlePrefab) as GameObject;
-        turtle.transform.position = transform.position;
+        turtle.transform.position = new Vector2(transform.position.x, transform.position.y + 2);
 
         villainParticles.GetComponent<PlayerParticleSystem>().enableParticleSystem();
 

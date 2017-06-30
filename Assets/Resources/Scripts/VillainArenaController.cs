@@ -103,8 +103,12 @@ public class VillainArenaController : MonoBehaviour {
         {
             Destroy(item.gameObject);
         }
+
         GameObject turtle = GameObject.FindGameObjectWithTag("Turtle");
-        Destroy(turtle.gameObject);
+        if(turtle != null)
+        {
+            Destroy(turtle.gameObject);
+        }
 
         GameObject villain = Instantiate(villainPrefab) as GameObject;
         villain.transform.position = new Vector2(12, 318);
