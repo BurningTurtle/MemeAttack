@@ -8,9 +8,12 @@ public class TurtleProjectile : MonoBehaviour {
     [SerializeField]
     private int damage = 5;
 
+    private VillainArenaController villainArenaCtrl;
+
     // Use this for initialization
     void Start()
     {
+        villainArenaCtrl = FindObjectOfType<VillainArenaController>();
         player = GameObject.Find("Player");
         StartCoroutine(die());
         Vector2 playerVector = new Vector2(player.transform.position.x - this.transform.position.x, player.transform.position.y - this.transform.position.y);
@@ -35,12 +38,15 @@ public class TurtleProjectile : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if(villainArenaCtrl.GetComponent<VillainArenaController>().bossBeaten == false)
         {
-            if (collision.GetComponent<Player>().readyForDamage)
+            if (collision.tag == "Player")
             {
-                collision.GetComponent<Player>().health -= damage;
-                collision.GetComponent<Player>().GetReadyForDamage();
+                if (collision.GetComponent<Player>().readyForDamage)
+                {
+                    collision.GetComponent<Player>().health -= damage;
+                    collision.GetComponent<Player>().GetReadyForDamage();
+                }
             }
         }
         Destroy(this.gameObject);
