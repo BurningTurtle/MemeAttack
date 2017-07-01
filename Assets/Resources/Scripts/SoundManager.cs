@@ -21,13 +21,22 @@ public class SoundManager : MonoBehaviour {
     [SerializeField] private AudioClip cottonDamageSound;
 
     // Music
-    [SerializeField] private AudioClip zeldaMusic;
+    [SerializeField] private AudioClip zeldaMusic, tunnelMusic;
 
     [SerializeField] private AudioClip[] sounds;
 
     private void Start()
     {
-        
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void playTunnel()
+    {
+        soundSource.volume = 0.1f;
+        StartCoroutine(fadeOut1());
+        musicSource2.PlayOneShot(tunnelMusic, 1);
+        musicSource2.loop = true;
+        StartCoroutine(fadeIn2());
     }
 
     public void playZelda()
@@ -35,7 +44,7 @@ public class SoundManager : MonoBehaviour {
         StartCoroutine(fadeOut1());
         musicSource2.PlayOneShot(zeldaMusic, 1);
         StartCoroutine(fadeIn2());
-        StartCoroutine(waitForMain());
+        StartCoroutine(waitForMain(218));
     }
 
     private IEnumerator fadeOut1()
@@ -82,9 +91,9 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
-    IEnumerator waitForMain()
+    IEnumerator waitForMain(int s)
     {
-        yield return new WaitForSeconds(218);
+        yield return new WaitForSeconds(s);
         StartCoroutine(fadeOut2());
         StartCoroutine(fadeIn1());
     }

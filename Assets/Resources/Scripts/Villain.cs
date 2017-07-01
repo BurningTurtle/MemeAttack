@@ -37,11 +37,15 @@ public class Villain : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(hubworldCtrl.GetComponent<HubworldController>().area == "finalRoom" && canTalk)
+	}
+
+    public void startTalking()
+    {
+        if (canTalk)
         {
             StartCoroutine(talk());
         }
-	}
+    }
 
     IEnumerator talk()
     {
@@ -53,6 +57,10 @@ public class Villain : MonoBehaviour {
 
         dialogueText.text = "So we meet again.";
         soundMan.playAudioClip("VillainArrogant");
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.text = "I'm sorry for absorbing all the color, my presence is too strong.";
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -169,10 +177,9 @@ public class Villain : MonoBehaviour {
 
         dialogueText.text = "As long as it's not too late...";
         yield return new WaitForSeconds(0.5f);
-        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         StartCoroutine(fadeVillainOut());
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
 
         dialogueText.color = new Color(0, 202, 232);
         dialogueText.text = "WAIT!";
@@ -194,7 +201,7 @@ public class Villain : MonoBehaviour {
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = Color.white;
-        dialogueText.text = "I wanted to teach you a lesseon.";
+        dialogueText.text = "I wanted to teach you a lesson.";
         soundMan.playAudioClip("VillainArrogant");
         sr.sprite = villainNormal;
         yield return new WaitForSeconds(0.5f);
@@ -241,7 +248,7 @@ public class Villain : MonoBehaviour {
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = Color.white;
-        dialogueText.text = "Can't you remember how they feel like?!";
+        dialogueText.text = "Can't you imagine how they feel like?!";
         soundMan.playAudioClip("VillainArrogant");
         sr.sprite = villainNormal;
         yield return new WaitForSeconds(0.5f);
