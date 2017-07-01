@@ -63,6 +63,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject keyPrefab, alternateKeyTrigger, particles;
     public bool triedToCollectKey = false;
     private CameraShaking camShake;
+    public bool openedPortalRoom = false;
+    private GameObject portal;
 
 
     private void Start()
@@ -80,9 +82,10 @@ public class Player : MonoBehaviour
         }
         else if (Application.loadedLevelName == "Arena 1")
         {
-            //StartCoroutine(whatsGoingOn1());
+            StartCoroutine(whatsGoingOn1());
             particles.GetComponent<ParticleSystem>().Stop();
             camShake = FindObjectOfType<CameraShaking>();
+            portal = GameObject.Find("Big Portal");
         }
 
     }
@@ -198,6 +201,105 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void startPortalFixing()
+    {
+        StartCoroutine(portalFixing());
+    }
+
+    IEnumerator portalFixing()
+    {
+        yield return new WaitForSeconds(1);
+
+        dialogueBox.SetActive(true);
+
+        dialogueText.color = new Color(0, 202, 232);
+        dialogueText.text = "Are you still there!?";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.text = "The portal is still broken!";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.color = Color.white;
+        dialogueText.text = "Oh no! I totally forgot about that!";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
+
+        yield return new WaitForSeconds(1);
+
+        dialogueBox.SetActive(true);
+        dialogueText.text = "Let me see ... ";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
+
+        portal.GetComponent<SpriteRenderer>().enabled = false;
+        portal.GetComponent<Collider2D>().enabled = false;
+        yield return new WaitForSeconds(3);
+
+        dialogueBox.SetActive(true);
+        dialogueText.text = "God dammit.";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueText.color = new Color(0, 202, 232);
+        dialogueText.text = "WHAT ARE YOU DOING!?";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
+
+        yield return new WaitForSeconds(3);
+        portal.GetComponent<SpriteRenderer>().enabled = true;
+
+        for (int i = 0; i <= 10; i++)
+        {
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = portal.GetComponent<SpriteRenderer>().color;
+                colour.a -= 0.05f;
+                portal.GetComponent<SpriteRenderer>().color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+            for (float f = 1; f >= 0.1; f -= 0.1f)
+            {
+                Color colour = portal.GetComponent<SpriteRenderer>().color;
+                colour.a += 0.05f;
+                portal.GetComponent<SpriteRenderer>().color = colour;
+                yield return new WaitForSeconds(0.01f);
+            }
+        }
+
+        dialogueBox.SetActive(true);
+        dialogueText.color = Color.white;
+        dialogueText.text = "Now it should work!";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "...";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "It was nice meeting you, Player.";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "All of us in here will miss you. Have a good time with your family.";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "...";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueText.text = "Bye.";
+        soundMan.playAudioClip("ShopClerkSympathetic");
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
+
+        yield return new WaitForSeconds(1);
+
+        portal.GetComponent<Teleport>().canFinallyEnter = true;
+        portal.GetComponent<Collider2D>().enabled = true;
+    }
+
     public void finalDialogue()
     {
         StartCoroutine(startFinalDialogue());
@@ -289,11 +391,17 @@ public class Player : MonoBehaviour
         GameObject.Find("AlternateKeyTrigger").GetComponent<FinalTrigger>().canTrigger = true;
 
         yield return new WaitUntil(() => triedToCollectKey == true);
-        yield return new WaitForSeconds(1);
+
+        yield return new WaitForSeconds(20);
+
+        transform.position = new Vector2(key.transform.position.x, key.transform.position.y - 3.5f);
+        soundMan.playAudioClip("Teleport");
+        yield return new WaitForSeconds(0.1f);
+
         soundMan.playAudioClip("ShopClerkSympathetic");
         dialogueBox.SetActive(true);
         dialogueText.color = Color.white;
-        dialogueText.text = "Hey there, hope you remember me!";
+        dialogueText.text = "(you stay here...) Hey there, hope you remember me!";
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -351,7 +459,7 @@ public class Player : MonoBehaviour
 
         dialogueText.color = Color.white;
         dialogueText.text = "Get to the portal already!!!";
-        camShake.ShakeCamera(0.2f, 1);
+        camShake.ShakeCamera(2f, 2f);
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 

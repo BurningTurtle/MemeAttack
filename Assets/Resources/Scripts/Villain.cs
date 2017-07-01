@@ -140,9 +140,7 @@ public class Villain : MonoBehaviour {
     }
 
     IEnumerator turtleDead()
-    {
-        
-        
+    {   
         StartCoroutine(fadeVillainIn());
 
         canTalk = false;
@@ -152,6 +150,7 @@ public class Villain : MonoBehaviour {
         dialogueBox.SetActive(true);
 
         dialogueText.text = "You did it.";
+        sr.sprite = villainSmiling;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -164,6 +163,7 @@ public class Villain : MonoBehaviour {
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.text = "I can tell you've grown mentally. Take this key and go home.";
+        sr.sprite = villainNormal;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -226,20 +226,18 @@ public class Villain : MonoBehaviour {
         dialogueText.color = Color.white;
         dialogueText.text = "And you? You've been sitting in front of your computer all day!";
         soundMan.playAudioClip("VillainAttack2");
-        sr.sprite = villainNormal;
+        sr.sprite = villainAngry;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = Color.white;
         dialogueText.text = "For years!";
-        sr.sprite = villainNormal;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = Color.white;
         dialogueText.text = "Can't you imagine how they feel!?";
-        soundMan.playAudioClip("VillainArrogant");
-        sr.sprite = villainNormal;
+        soundMan.playAudioClip("VillainAttack2");
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -250,13 +248,13 @@ public class Villain : MonoBehaviour {
 
         dialogueText.color = Color.white;
         dialogueText.text = "You fool! I hope you've learned your lesson!";
-        soundMan.playAudioClip("VillainArrogant");
-        sr.sprite = villainNormal;
+        sr.sprite = villainAngry;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
         dialogueText.color = Color.white;
         dialogueText.text = "Now, go back and do something with them. Even though they've grown old ...";
+        soundMan.playAudioClip("VillainArrogant");
         sr.sprite = villainNormal;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
@@ -284,6 +282,7 @@ public class Villain : MonoBehaviour {
 
         dialogueText.color = Color.white;
         dialogueText.text = "I dont know! My simulation seems to collapse!";
+        sr.sprite = villainAngry;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
@@ -357,16 +356,19 @@ public class Villain : MonoBehaviour {
 
         dialogueText.color = Color.white;
         dialogueText.text = "It was nice meeting you.";
+        sr.sprite = villainNormal;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+        dialogueBox.SetActive(false);
 
         StartCoroutine(fadeVillainOut());
+        yield return new WaitForSeconds(2);
 
+        dialogueBox.SetActive(true);
         dialogueText.color = new Color(0, 202, 232);
         dialogueText.text = "I have to get to the portal quickly.";
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
-
         dialogueBox.SetActive(false);
     }
 
