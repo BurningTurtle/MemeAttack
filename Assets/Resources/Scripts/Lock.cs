@@ -25,6 +25,11 @@ public class Lock : MonoBehaviour {
     {
         if(collision.gameObject == player && player.GetComponent<Player>().hasKey == true)
         {
+            if(this.tag == "finalLock")
+            {
+                player.GetComponent<Player>().openedPortalRoom = true;
+            }
+
             soundMan.playAudioClip("Key");
             Destroy(gameObject);
             Destroy(otherLock1);

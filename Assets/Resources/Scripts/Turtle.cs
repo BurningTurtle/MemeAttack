@@ -279,6 +279,7 @@ public class Turtle : MonoBehaviour {
 
         // Destroy that duckling
         alive = false;
+        FindObjectOfType<VillainArenaController>().GetComponent<VillainArenaController>().bossBeaten = true;
         Instantiate(keyPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
 
