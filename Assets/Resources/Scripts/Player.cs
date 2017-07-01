@@ -70,19 +70,19 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         soundMan = FindObjectOfType<SoundManager>();
-        special1Controller = GameObject.Find("Special1Controller");
-        hubworldController = GameObject.Find("HubworldController");
-        particles.SetActive(false);
-        camShake = FindObjectOfType<CameraShaking>();
 
         dialogueBox.SetActive(false);
         if(Application.loadedLevelName == "Arena")
         {
+            special1Controller = GameObject.Find("Special1Controller");
+            hubworldController = GameObject.Find("HubworldController");
             //StartCoroutine(whatsGoingOn());
         }
         else if (Application.loadedLevelName == "Arena 1")
         {
             //StartCoroutine(whatsGoingOn1());
+            particles.GetComponent<ParticleSystem>().Stop();
+            camShake = FindObjectOfType<CameraShaking>();
         }
 
     }
@@ -221,25 +221,22 @@ public class Player : MonoBehaviour
 
         GameObject key = Instantiate(keyPrefab, new Vector3(transform.position.x - 10, transform.position.y + 1, transform.position.z), Quaternion.identity);
         key.GetComponent<Collider2D>().enabled = false;
-
         soundMan.playAudioClip("Key");
         yield return new WaitForSeconds(0.1f);
-        key.transform.position = new Vector2(transform.position.x - 10, transform.position.y + 1);
-        soundMan.playAudioClip("Teleport");
-        yield return new WaitForSeconds(0.1f);
-        soundMan.playAudioClip("Teleport");
-        key.transform.position = new Vector2(transform.position.x + 10, transform.position.y + 5);
-        yield return new WaitForSeconds(0.1f);
-        soundMan.playAudioClip("Teleport");
-        key.transform.position = new Vector2(15, 341);
-        yield return new WaitForSeconds(0.1f);
-        soundMan.playAudioClip("Teleport");
-        key.transform.position = new Vector2(13, 345);
-        yield return new WaitForSeconds(0.1f);
+
+        for (int i = 0; i < 10; i++)
+        {
+            int ranX = Random.Range(-5, 5);
+            int ranY = Random.Range(-5, 5);
+            key.transform.position = new Vector2(transform.position.x + ranX, transform.position.y + ranY);
+            soundMan.playAudioClip("Teleport");
+            yield return new WaitForSeconds(0.4f);
+        }
+
         soundMan.playAudioClip("Teleport");
         key.transform.position = new Vector2(13, 343);
-
         yield return new WaitForSeconds(3);
+
         dialogueBox.SetActive(true);
         dialogueText.color = new Color(0, 202, 232);
         dialogueText.text = "I am screwed.";
@@ -247,8 +244,30 @@ public class Player : MonoBehaviour
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
         dialogueBox.SetActive(false);
 
+        yield return new WaitForSeconds(3);
+        
+        for (int i = 0; i < 50; i++)
+        {
+            int ranX = Random.Range(-5, 5);
+            int ranY = Random.Range(-5, 5);
+            key.transform.position = new Vector2(transform.position.x + ranX, transform.position.y + ranY);
+            soundMan.playAudioClip("Teleport");
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        key.transform.position = new Vector2(13, 343);
+        soundMan.playAudioClip("Teleport");
+
         yield return new WaitForSeconds(10);
+
+        for (int i = 0; i < 30; i++)
+        {
+            soundMan.playAudioClip("Teleport");
+            yield return null;
+        }
+
         key.transform.position = new Vector2(12, 333);
+        key.GetComponent<SpriteRenderer>().flipY = true;
         alternateKeyTrigger.transform.position = key.transform.position;
         soundMan.playAudioClip("Teleport");
 
@@ -270,7 +289,7 @@ public class Player : MonoBehaviour
         GameObject.Find("AlternateKeyTrigger").GetComponent<FinalTrigger>().canTrigger = true;
 
         yield return new WaitUntil(() => triedToCollectKey == true);
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
         soundMan.playAudioClip("ShopClerkSympathetic");
         dialogueBox.SetActive(true);
         dialogueText.color = Color.white;
@@ -313,7 +332,7 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(1);
         particles.transform.position = key.transform.position;
-        particles.SetActive(true);
+        particles.GetComponent<ParticleSystem>().Play();
         yield return new WaitForSeconds(3);
         particles.GetComponent<ParticleSystem>().Stop();
 
