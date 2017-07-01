@@ -279,13 +279,14 @@ public class Turtle : MonoBehaviour {
 
         // Destroy that duckling
         alive = false;
-        Instantiate(money, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
         Instantiate(keyPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
         statue.GetComponent<SpriteRenderer>().sprite = statueActivated;
 
         player.GetComponent<Player>().crazy += 1;
         player.GetComponent<Player>().anim.SetInteger("Crazy", player.GetComponent<Player>().crazy);
         playerParticles.GetComponent<PlayerParticleSystem>().enableParticleSystem();
+
+        GameObject.Find("Villain").GetComponent<Villain>().afterTurtle();
 
         Destroy(this.gameObject);
     }

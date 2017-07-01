@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         // Uncomment this for testing
-        //health = 100;
+        health = 100;
 
         if(dialogueBox.activeSelf == true && Input.GetKeyDown("e"))
         {
@@ -204,7 +204,7 @@ public class Player : MonoBehaviour
         dialogueBox.SetActive(false);
 
         // Give Player some time inside teleport room
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(15);
 
         soundMan.playAudioClip("Teleport");
         transform.position = new Vector2(0, 0);
@@ -216,6 +216,9 @@ public class Player : MonoBehaviour
 
         soundMan.playAudioClip("Teleport");
         transform.position = new Vector2(12.3f, -13.2f);
+
+        GameObject villain = GameObject.Find("Villain");
+        villain.GetComponent<Villain>().villainTalkAboutCollapse();
     }
 
     IEnumerator whatsGoingOn()

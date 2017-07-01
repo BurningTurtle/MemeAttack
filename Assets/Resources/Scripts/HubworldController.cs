@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.PostProcessing;
 using UnityEngine;
 
 public class HubworldController : MonoBehaviour
@@ -29,6 +30,14 @@ public class HubworldController : MonoBehaviour
     // So that the Player doesn't get teleported into the Arena while it's still closed and Player hits Hubworld Trigger
     public bool mentorIntroductionFinished = false;
 
+    [SerializeField]
+    private PostProcessingProfile grayscale;
+
+    private GameObject player, villain;
+
+    [SerializeField]
+    private SoundManager soundMan;
+
     // Use this for initialization
     void Start()
     {
@@ -40,12 +49,22 @@ public class HubworldController : MonoBehaviour
         special1Ctrl = FindObjectOfType<Special1Controller>();
         tunnelCtrl = FindObjectOfType<TunnelController>();
         villainCtrl = FindObjectOfType<VillainArenaController>();
+        player = GameObject.Find("Player");
+        villain = GameObject.Find("Villain");
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(resetting);
+        if(area == "tunnel")
+        {
+            float progress = player.transform.position.y - 107;
+            float saturation = 1 - progress / 205;
+            var satSetting = grayscale.colorGrading.settings;
+            satSetting.basic.saturation = saturation;
+            grayscale.colorGrading.settings = satSetting;
+            Debug.Log(saturation);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -167,6 +186,7 @@ public class HubworldController : MonoBehaviour
                 case "tunnelTrigger":
                     if (parentController.GetComponent<HubworldController>().area != "tunnel")
                     {
+                        soundMan.playTunnel();
                         if (villainCtrl.GetComponent<VillainArenaController>().cantEscapeActivated)
                         {
                             other.transform.position = new Vector2(12, 315);
@@ -187,6 +207,7 @@ public class HubworldController : MonoBehaviour
                 case "finalRoomTrigger":
                     if (parentController.GetComponent<HubworldController>().area != "finalRoom")
                     {
+                        villain.GetComponent<Villain>().startTalking();
                         parentController.GetComponent<HubworldController>().area = "finalRoom";
                         if (bubble != null)
                         {
