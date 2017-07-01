@@ -29,7 +29,7 @@ public class CameraShaking : MonoBehaviour
         }
     }
 
-    void ShakeCamera(float shakePower, float shakeDuration)
+    public void ShakeCamera(float shakePower, float shakeDuration)
     {
         shakeAmount = shakePower;
         shakeTimer = shakeDuration;

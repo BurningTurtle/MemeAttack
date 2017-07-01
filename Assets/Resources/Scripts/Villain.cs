@@ -360,9 +360,14 @@ public class Villain : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
 
-        dialogueBox.SetActive(false);
-
         StartCoroutine(fadeVillainOut());
+
+        dialogueText.color = new Color(0, 202, 232);
+        dialogueText.text = "I have to get to the portal quickly.";
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => Input.GetKeyDown("e") == true);
+
+        dialogueBox.SetActive(false);
     }
 
     IEnumerator fadeVillainIn()
